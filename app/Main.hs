@@ -10,6 +10,7 @@ calc = do
     constrain snores During sleeps
     constrain sleeps Starts snores
 
+    -- Returns the relations between the sleeps and snores intervals
     constraints sleeps snores
 
 main :: IO ()

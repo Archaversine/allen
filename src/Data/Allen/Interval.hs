@@ -31,8 +31,8 @@ fromID n = gets (! n)
 -- | Add a relation to an interval
 -- Ensures no duplicates are created
 addRelation :: Interval -> Relation -> Interval -> Interval 
-addRelation i1 r i2 = i1 { intervalRelations = (r, i2) : filtered }
-    where filtered = filter (/= (r, i2)) (intervalRelations i2)
+addRelation i1 r i2 = i1 { intervalRelations = (r, intervalID i2) : filtered }
+    where filtered = filter (/= (r, intervalID i2)) (intervalRelations i2)
 
 -- | Define a relation between two intervals. 
 constrain :: IntervalID -> Relation -> IntervalID -> Allen ()
@@ -49,6 +49,6 @@ constraints :: IntervalID -> IntervalID -> Allen [IntervalConstraint]
 constraints id1 id2 = do 
     i1 <- fromID id1 
 
-    return $ filter ((== id2) . intervalID . snd) $ intervalRelations i1
+    return $ filter ((== id2) . snd) $ intervalRelations i1
     
 

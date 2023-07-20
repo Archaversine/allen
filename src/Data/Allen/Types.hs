@@ -13,18 +13,18 @@ import Data.Vector (Vector)
 
 type IntervalID = Int
 type IntervalGraph = Vector Interval
-type IntervalConstraint = (Relation, Interval)
+type IntervalConstraint = (Relation, IntervalID)
 
 data Interval = Interval { intervalID        :: Int 
                          , intervalRelations :: [IntervalConstraint]
-                         } deriving Eq
+                         } 
 
 -- | Show instance for Interval 
 -- Ex: Interval 3 (During 1, Contains 2)
 instance Show Interval where 
     show (Interval iD rels) = "Interval " <> show iD <> " (" <> rels' <> ")"
         where rels' = intercalate ", " $ map showRel rels
-              showRel (r, Interval rID _) = show r <> " " <> show rID
+              showRel (r, n) = show r <> " " <> show n
 
 type Allen = State IntervalGraph
 
