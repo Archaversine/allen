@@ -2,6 +2,7 @@ module Data.Allen.Types ( Interval(..)
                         , Allen
                         , IntervalGraph
                         , Relation(..)
+                        , IntervalConstraint
                         ) where  
 
 import Control.Monad.State
@@ -10,9 +11,10 @@ import Data.List (intercalate)
 import Data.Vector (Vector)
 
 type IntervalGraph = Vector Interval
+type IntervalConstraint = (Relation, Interval)
 
 data Interval = Interval { intervalID        :: Int 
-                         , intervalRelations :: [(Relation, Interval)]
+                         , intervalRelations :: [IntervalConstraint]
                          } deriving Eq
 
 -- | Show instance for Interval 
