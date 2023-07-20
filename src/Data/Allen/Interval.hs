@@ -30,9 +30,9 @@ fromID n = gets (! n)
 
 -- | Add a relation to an interval
 -- Ensures no duplicates are created
-addRelation :: Interval -> Relation -> Interval -> Interval 
-addRelation i1 r i2 = i1 { intervalRelations = (r, intervalID i2) : filtered }
-    where filtered = filter (/= (r, intervalID i2)) (intervalRelations i2)
+addRelation :: Interval -> Relation -> IntervalID -> Interval 
+addRelation i1 r i2 = i1 { intervalRelations = (r, i2) : filtered }
+    where filtered = filter (/= (r, i2)) (intervalRelations i1)
 
 -- | Define a relation between two intervals. 
 constrain :: IntervalID -> Relation -> IntervalID -> Allen ()
@@ -40,8 +40,8 @@ constrain id1 r id2 = do
     i1 <- fromID id1 
     i2 <- fromID id2
 
-    let i1' = addRelation i1 r i2 
-        i2' = addRelation i2 (inverse r) i1
+    let i1' = addRelation i1 r id2 
+        i2' = addRelation i2 (inverse r) id1
 
     modify (V.// [(id1, i1'), (id2, i2')])
 
