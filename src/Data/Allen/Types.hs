@@ -7,9 +7,9 @@ module Data.Allen.Types ( Interval(..)
 import Control.Monad.State
 
 import Data.List (intercalate)
-import Data.Map.Strict (Map)
+import Data.Vector (Vector)
 
-type IntervalGraph = Map Int Interval
+type IntervalGraph = Vector Interval
 
 data Interval = Interval { intervalID        :: Int 
                          , intervalRelations :: [(Relation, Interval)]

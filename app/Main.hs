@@ -10,6 +10,4 @@ calc = do
     constrain snores During sleeps
 
 main :: IO ()
-main = do 
-    let graph = runAllen calc
-    mapM_ print graph
+main = mapM_ print $ runAllen calc

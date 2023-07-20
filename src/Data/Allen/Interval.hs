@@ -5,19 +5,17 @@ import Control.Monad.State
 import Data.Allen.Types
 import Data.Allen.Relation
 
-import qualified Data.Map.Strict as M
+import qualified Data.Vector as V
 
 -- | Create a new interval. 
 interval :: Allen Interval 
 interval = do
     intervals <- get
 
-    let n = M.size intervals
-        i = Interval n []
+    let i = Interval (V.length intervals) []
 
-    put $ M.insert n i intervals
-
-    return i
+    put $ V.snoc intervals i 
+    return i 
 
 -- | Add a relation to an interval
 -- Ensures no duplicates are created
@@ -28,6 +26,8 @@ addRelation i1 r i2 = i1 { intervalRelations = (r, i2) : filtered }
 -- | Define a relation between two intervals. 
 constrain :: Interval -> Relation -> Interval -> Allen ()
 constrain i1 r i2 = do 
-    modify $ M.adjust (\i -> addRelation i r i2) (intervalID i1) 
-    modify $ M.adjust (\i -> addRelation i (inverse r) i1) (intervalID i2)
+    let i1' = addRelation i1 r i2 
+        i2' = addRelation i2 (inverse r) i1
+
+    modify (V.// [(intervalID i1, i1'), (intervalID i2, i2')])
 
