@@ -10,10 +10,12 @@ import qualified Data.Map.Strict as M
 -- | Create a new interval. 
 interval :: Allen Interval 
 interval = do
-    is <- get
+    intervals <- get
 
-    let i = Interval (length is) []
-    put (M.insert (length is) i is)
+    let n = M.size intervals
+        i = Interval n []
+
+    put $ M.insert n i intervals
 
     return i
 
