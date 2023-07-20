@@ -2,10 +2,8 @@ module Data.Allen.Interval ( interval
                            , fromID
                            , constrain
                            , constraints
-                           , inconsistent
                            ) where
 
-import Control.Monad (when)
 import Control.Monad.State
 
 import Data.Allen.Types
@@ -45,6 +43,9 @@ constrain id1 r id2 = do
     let i1' = addRelation i1 r id2 
         i2' = addRelation i2 (inverse r) id1
 
+    when (inconsistent i1') $ error $ "Interval " <> show id1 <> " has inconsistent constraints."
+    when (inconsistent i2') $ error $ "Interval " <> show id2 <> " has inconsistent constraints."
+
     modify (V.// [(id1, i1'), (id2, i2')])
 
 constraints :: IntervalID -> IntervalID -> Allen [IntervalConstraint]
@@ -52,7 +53,3 @@ constraints id1 id2 = do
     i1 <- fromID id1 
 
     return $ filter ((== id2) . snd) $ intervalRelations i1
-    
-inconsistent :: Interval -> Bool
-inconsistent i1 = any (`elem` [Precedes, Meets, PrecededBy, MetBy]) relations
-    where relations = map fst $ intervalRelations i1
