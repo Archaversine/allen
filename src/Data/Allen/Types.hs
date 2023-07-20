@@ -1,8 +1,9 @@
 module Data.Allen.Types ( Interval(..)
                         , Allen
+                        , IntervalID
                         , IntervalGraph
-                        , Relation(..)
                         , IntervalConstraint
+                        , Relation(..)
                         ) where  
 
 import Control.Monad.State
@@ -10,6 +11,7 @@ import Control.Monad.State
 import Data.List (intercalate)
 import Data.Vector (Vector)
 
+type IntervalID = Int
 type IntervalGraph = Vector Interval
 type IntervalConstraint = (Relation, Interval)
 

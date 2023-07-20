@@ -10,7 +10,7 @@ calc = do
     constrain snores During sleeps
     constrain sleeps Starts snores
 
-    return []
+    constraints sleeps snores
 
 main :: IO ()
 main = do 

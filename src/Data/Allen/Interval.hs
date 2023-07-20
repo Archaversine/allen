@@ -1,21 +1,32 @@
-module Data.Allen.Interval (interval, constrain, constraints) where
+module Data.Allen.Interval ( interval
+                           , fromID
+                           , constrain
+                           , constraints
+                           ) where
 
 import Control.Monad.State
 
 import Data.Allen.Types
 import Data.Allen.Relation
 
+import Data.Vector ((!))
+
 import qualified Data.Vector as V
 
 -- | Create a new interval. 
-interval :: Allen Interval 
+-- Returns the interval ID
+interval :: Allen IntervalID 
 interval = do
     intervals <- get
 
-    let i = Interval (V.length intervals) []
+    let n = V.length intervals
+        i = Interval n []
 
     put $ V.snoc intervals i 
-    return i 
+    return n 
+
+fromID :: IntervalID -> Allen Interval 
+fromID n = gets (! n)
 
 -- | Add a relation to an interval
 -- Ensures no duplicates are created
@@ -24,13 +35,20 @@ addRelation i1 r i2 = i1 { intervalRelations = (r, i2) : filtered }
     where filtered = filter (/= (r, i2)) (intervalRelations i2)
 
 -- | Define a relation between two intervals. 
-constrain :: Interval -> Relation -> Interval -> Allen ()
-constrain i1 r i2 = do 
+constrain :: IntervalID -> Relation -> IntervalID -> Allen ()
+constrain id1 r id2 = do 
+    i1 <- fromID id1 
+    i2 <- fromID id2
+
     let i1' = addRelation i1 r i2 
         i2' = addRelation i2 (inverse r) i1
 
-    modify (V.// [(intervalID i1, i1'), (intervalID i2, i2')])
+    modify (V.// [(id1, i1'), (id2, i2')])
 
-constraints :: Interval -> Interval -> [IntervalConstraint]
-constraints i1 i2 = intervalRelations i1
+constraints :: IntervalID -> IntervalID -> Allen [IntervalConstraint]
+constraints id1 id2 = do 
+    i1 <- fromID id1 
+
+    return $ filter ((== id2) . intervalID . snd) $ intervalRelations i1
+    
 
