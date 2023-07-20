@@ -1,4 +1,23 @@
-module Data.Allen (allen) where
+module Data.Allen ( module Data.Allen.Types 
+                  , module Data.Allen.Interval
+                  , module Data.Allen.Relation
+                  , runAllen
+                  , runAllenState
+                  ) where
 
-allen :: IO ()
-allen = putStrLn "Allen"
+import Control.Monad.State
+
+import Data.Allen.Types
+import Data.Allen.Interval
+import Data.Allen.Relation
+
+import qualified Data.Map.Strict as M
+
+-- | Same as runAllenState, but discards the final state
+runAllen :: Allen a -> IntervalGraph
+runAllen = snd . runAllenState
+
+-- | Runs an allen computation starting with an inital empty graph.
+-- Returns the resulting graph and the final state
+runAllenState :: Allen a -> (a, IntervalGraph)
+runAllenState = flip runState M.empty
