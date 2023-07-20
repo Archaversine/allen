@@ -2,6 +2,7 @@ module Data.Allen.Interval ( interval
                            , fromID
                            , constrain
                            , constraints
+                           , inconsistent
                            ) where
 
 import Control.Monad.State
@@ -51,4 +52,7 @@ constraints id1 id2 = do
 
     return $ filter ((== id2) . snd) $ intervalRelations i1
     
-
+inconsistent :: IntervalID -> Allen Bool
+inconsistent id1 = fromID id1 >>= \i1 -> do
+    let relations = map fst $ intervalRelations i1
+    return $ any (`elem` [Precedes, Meets, PrecededBy, MetBy]) relations
