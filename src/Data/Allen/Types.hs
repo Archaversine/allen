@@ -4,12 +4,13 @@ module Data.Allen.Types ( Interval(..)
                         , IntervalGraph
                         , IntervalConstraint
                         , Relation(..)
+                        , fromID
                         ) where  
 
 import Control.Monad.State
 
 import Data.List (intercalate)
-import Data.Vector (Vector)
+import Data.Vector (Vector, (!))
 
 type IntervalID = Int
 type IntervalGraph = Vector Interval
@@ -25,6 +26,9 @@ instance Show Interval where
     show (Interval iD rels) = "Interval " <> show iD <> " (" <> rels' <> ")"
         where rels' = intercalate ", " $ map showRel rels
               showRel (r, n) = show r <> " " <> show n
+
+fromID :: IntervalID -> Allen Interval 
+fromID n = gets (! n)
 
 type Allen = State IntervalGraph
 

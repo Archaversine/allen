@@ -9,8 +9,6 @@ import Control.Monad.State
 import Data.Allen.Types
 import Data.Allen.Relation
 
-import Data.Vector ((!))
-
 import qualified Data.Vector as V
 
 -- | Create a new interval. 
@@ -24,9 +22,6 @@ interval = do
 
     put $ V.snoc intervals i 
     return n 
-
-fromID :: IntervalID -> Allen Interval 
-fromID n = gets (! n)
 
 -- | Add a relation to an interval
 -- Ensures no duplicates are created
@@ -42,9 +37,6 @@ constrain id1 r id2 = do
 
     let i1' = addRelation i1 r id2 
         i2' = addRelation i2 (inverse r) id1
-
-    when (inconsistent i1') $ error $ "Interval " <> show id1 <> " has inconsistent constraints."
-    when (inconsistent i2') $ error $ "Interval " <> show id2 <> " has inconsistent constraints."
 
     modify (V.// [(id1, i1'), (id2, i2')])
 
