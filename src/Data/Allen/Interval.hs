@@ -1,4 +1,4 @@
-module Data.Allen.Interval (interval, constrain, addRelation) where
+module Data.Allen.Interval (interval, constrain) where
 
 import Control.Monad.State
 
