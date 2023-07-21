@@ -2,7 +2,7 @@ module Data.Allen.Interval ( interval
                            , withInterval
                            , fromID
                            , assume
-                           , constraints
+                           , getConstraints
                            ) where
 
 import Control.Monad.State
@@ -46,8 +46,8 @@ assume id1 r id2 = do
 
     modify (V.// [(id1, i1'), (id2, i2')])
 
-constraints :: IntervalID -> IntervalID -> Allen [IntervalConstraint]
-constraints id1 id2 = do 
+getConstraints :: IntervalID -> IntervalID -> Allen [IntervalConstraint]
+getConstraints id1 id2 = do 
     i1 <- fromID id1 
 
     return $ filter ((== id2) . snd) $ intervalRelations i1

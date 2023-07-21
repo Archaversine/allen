@@ -11,7 +11,7 @@ calc = do
     assume sleeps Starts snores
 
     -- Returns the relations between the sleeps and snores intervals
-    constraints sleeps snores
+    getConstraints sleeps snores
 
 main :: IO ()
 main = do 
