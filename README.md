@@ -62,7 +62,7 @@ To compute the inverse of a relation, you may use the `inverse` function:
 ```haskell 
 main :: IO ()
 main = do 
-    let r = During 
+    let r  = During 
         r' = inverse r
 
     print r  -- Prints "During"
@@ -76,11 +76,13 @@ type.
 ```haskell 
 main :: IO ()
 main = do 
-    let a = Contains 
-        b = Overlaps 
-        composed = a `compose` b
+    let a  = Contains 
+        b  = Overlaps 
+        c  = a `compose` b
+        c' = fromBits c
 
-    print $ fromBits composed -- Prints "[Overlaps,FinishedBy,Contains]"
+    print c  -- Prints "28" (bit representation)
+    print c' -- Prints "[Overlaps,FinishedBy,Contains]"
 ```
 
 ## Constraints
