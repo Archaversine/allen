@@ -69,6 +69,20 @@ main = do
     print r' -- Prints "Contains"
 ```
 
+To compose two relations together, you may use the `compose` function. Note  
+that the compose function returns the `RelationBits` type, not the `Relation`
+type.
+
+```haskell 
+main :: IO ()
+main = do 
+    let a = Contains 
+        b = Overlaps 
+        composed = a `compose` b
+
+    print $ fromBits composed -- Prints "[Overlaps,FinishedBy,Contains]"
+```
+
 ## Constraints
 
 To specify relations to two intervals, or a constraint, you may use the 
