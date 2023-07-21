@@ -2,14 +2,17 @@ module Main (main) where
 
 import Data.Allen
 
-calc :: Allen ()
+calc :: Allen [Relation]
 calc = do 
+    eats   <- interval 
     sleeps <- interval 
-    snores <- interval 
+    works  <- interval 
 
-    assume snores During sleeps
-    assume sleeps Starts snores
+    assume eats Precedes sleeps 
+    assume sleeps PrecededBy works 
+
+    return $ fromBits $ Precedes `compose` PrecededBy
 
 main :: IO ()
-main = mapM_ print $ runAllen calc
+main = putStrLn $ "Results: " <> show (evalAllen calc)
 
