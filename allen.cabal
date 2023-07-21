@@ -63,7 +63,8 @@ test-suite allen-test
       test
   ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints -threaded -rtsopts -with-rtsopts=-N
   build-depends:
-      allen
+      QuickCheck
+    , allen
     , base >=4.7 && <5
     , mtl
     , vector

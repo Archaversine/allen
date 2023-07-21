@@ -4,17 +4,23 @@ module Data.Allen.Types ( Interval(..)
                         , IntervalGraph
                         , IntervalConstraint
                         , Relation(..)
+                        , RelationBits
+                        , allRelations
+                        , toBits
+                        , fromBits
                         , fromID
                         ) where  
 
 import Control.Monad.State
 
+import Data.Bits
 import Data.List (intercalate)
 import Data.Vector (Vector, (!))
+import Data.Word (Word16)
 
 type IntervalID = Int
 type IntervalGraph = Vector Interval
-type IntervalConstraint = (Relation, IntervalID)
+type IntervalConstraint = (RelationBits, IntervalID)
 
 data Interval = Interval { intervalID        :: Int 
                          , intervalRelations :: [IntervalConstraint]
@@ -25,7 +31,7 @@ data Interval = Interval { intervalID        :: Int
 instance Show Interval where 
     show (Interval iD rels) = "Interval " <> show iD <> " (" <> rels' <> ")"
         where rels' = intercalate ", " $ map showRel rels
-              showRel (r, n) = show r <> " " <> show n
+              showRel (r, n) = unwords (map show $ fromBits r) <> " " <> show n
 
 fromID :: IntervalID -> Allen Interval 
 fromID n = gets (! n)
@@ -46,3 +52,15 @@ data Relation = Precedes
               | MetBy
               | PrecededBy
               deriving (Eq, Show, Enum, Bounded)
+
+type RelationBits = Word16
+
+allRelations :: [Relation]
+allRelations  = [minBound..]
+
+toBits :: Relation -> RelationBits
+toBits r = 2 ^ fromEnum r
+
+fromBits :: RelationBits -> [Relation]
+fromBits x = map snd $ filter (\(bits, _) -> x .&. bits /= 0) zipped
+    where zipped = zip (map toBits allRelations) allRelations

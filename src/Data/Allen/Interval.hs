@@ -1,3 +1,5 @@
+{-# LANGUAGE ViewPatterns #-}
+
 module Data.Allen.Interval ( interval
                            , fromID
                            , assume
@@ -8,6 +10,8 @@ import Control.Monad.State
 
 import Data.Allen.Types
 import Data.Allen.Relation
+import Data.Bits
+import Data.List (partition)
 
 import qualified Data.Vector as V
 
@@ -25,13 +29,16 @@ interval = do
 
 -- | Add a relation to an interval
 -- Ensures no duplicates are created
-addRelation :: Interval -> Relation -> IntervalID -> Interval 
-addRelation i1 r i2 = i1 { intervalRelations = (r, i2) : filtered }
-    where filtered = filter (/= (r, i2)) (intervalRelations i1)
+addRelation :: Interval -> RelationBits -> IntervalID -> Interval 
+addRelation i1 r i2 = i1 { intervalRelations = r' : filtered }
+    where (existing, filtered) = partition ((== i2) . snd) $ intervalRelations i1
+          r' = case existing of 
+            []        -> (r, i2)        -- If there are no pre-existing relations
+            ((x,_):_) -> (x .|. r, i2)  -- If there ARE pre-existing relations
 
 -- | Define a relation between two intervals. 
 assume :: IntervalID -> Relation -> IntervalID -> Allen ()
-assume id1 r id2 = do 
+assume id1 (toBits -> r) id2 = do 
     i1 <- fromID id1 
     i2 <- fromID id2
 
