@@ -71,8 +71,8 @@ main = do
 
 ## Constraints
 
-To apply relations to two intervals, or a constraint, you may use the 
-`constrain` function:
+To specify relations to two intervals, or a constraint, you may use the 
+`assume` function:
 
 ```haskell 
 calc :: Allen ()
@@ -80,7 +80,7 @@ calc = do
     sleeps <- interval 
     snores <- interval 
 
-    constrain snores During sleeps
+    assume snores During sleeps
 
 main :: IO ()
 main = do 
