@@ -62,5 +62,4 @@ toBits :: Relation -> RelationBits
 toBits r = 2 ^ fromEnum r
 
 fromBits :: RelationBits -> [Relation]
-fromBits x = map snd $ filter (\(bits, _) -> x .&. bits /= 0) zipped
-    where zipped = zip (map toBits allRelations) allRelations
+fromBits bits = [x | x <- allRelations, bits .&. toBits x /= 0]
