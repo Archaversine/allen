@@ -7,8 +7,8 @@ calc = do
     sleeps <- interval 
     snores <- interval 
 
-    constrain snores During sleeps
-    constrain sleeps Starts snores
+    assume snores During sleeps
+    assume sleeps Starts snores
 
     -- Returns the relations between the sleeps and snores intervals
     constraints sleeps snores

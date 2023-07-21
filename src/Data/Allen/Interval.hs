@@ -1,7 +1,7 @@
 module Data.Allen.Interval ( interval
                            , withInterval
                            , fromID
-                           , constrain
+                           , assume
                            , constraints
                            ) where
 
@@ -36,8 +36,8 @@ addRelation i1 r i2 = i1 { intervalRelations = (r, i2) : filtered }
     where filtered = filter (/= (r, i2)) (intervalRelations i1)
 
 -- | Define a relation between two intervals. 
-constrain :: IntervalID -> Relation -> IntervalID -> Allen ()
-constrain id1 r id2 = do 
+assume :: IntervalID -> Relation -> IntervalID -> Allen ()
+assume id1 r id2 = do 
     i1 <- fromID id1 
     i2 <- fromID id2
 
