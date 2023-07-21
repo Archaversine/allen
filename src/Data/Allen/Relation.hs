@@ -1,7 +1,7 @@
 {-# LANGUAGE ViewPatterns #-}
 
 module Data.Allen.Relation ( inverse
-                           , hasConstraint
+                           , hasRelation
                            ) where
 
 import Data.Allen.Types
@@ -15,8 +15,8 @@ inverseLookup = zip bits (reverse bits)
 inverse :: RelationBits -> RelationBits
 inverse r = snd $ head $ filter ((== r) . fst) inverseLookup
 
-hasConstraint :: Relation -> IntervalID -> IntervalID -> Allen Bool
-hasConstraint (toBits -> r) (fromID -> a) b = do 
+hasRelation :: Relation -> IntervalID -> IntervalID -> Allen Bool
+hasRelation (toBits -> r) (fromID -> a) b = do 
     let match (bits, i) | i == b = (r .&. bits) /= 0 
                         | otherwise = False
 
