@@ -47,8 +47,10 @@ assume id1 (toBits -> r) id2 = do
 
     modify (V.// [(id1, i1'), (id2, i2')])
 
-getConstraints :: IntervalID -> IntervalID -> Allen [IntervalConstraint]
+getConstraints :: IntervalID -> IntervalID -> Allen RelationBits
 getConstraints id1 id2 = do 
     i1 <- fromID id1 
 
-    return $ filter ((== id2) . snd) $ intervalRelations i1
+    return $ case filter ((== id2) . snd) $ intervalRelations i1 of 
+        []        -> 0 -- If there is NOT a relation
+        ((x,_):_) -> x -- If there IS a relation
