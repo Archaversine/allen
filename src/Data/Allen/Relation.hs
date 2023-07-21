@@ -2,7 +2,7 @@
 
 module Data.Allen.Relation ( inverse
                            , hasRelation
-                           , compose
+                           , composeSingle
                            , bitsFromString
                            ) where
 
@@ -69,6 +69,6 @@ composeLookup = U.fromList $ map bitsFromString table
                   ,  "full", "dfOMP", "dfOMOP",     "P",     "P", "dfOMP", "P",     "P",  "dfOMP",     "P",      "P",     "P",     "P" -- P
                   ]
 
-compose :: Relation -> Relation -> RelationBits 
-compose (fromEnum -> r1) (fromEnum -> r2) = composeLookup U.! index
+composeSingle :: Relation -> Relation -> RelationBits 
+composeSingle (fromEnum -> r1) (fromEnum -> r2) = composeLookup U.! index
     where index = 13 * r1 + r2

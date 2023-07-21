@@ -11,7 +11,7 @@ calc = do
     assume eats Precedes sleeps 
     assume sleeps PrecededBy works 
 
-    return $ fromBits $ Precedes `compose` PrecededBy
+    return $ fromBits $ Precedes `composeSingle` PrecededBy
 
 main :: IO ()
 main = putStrLn $ "Results: " <> show (evalAllen calc)
