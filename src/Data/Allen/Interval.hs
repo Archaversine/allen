@@ -24,8 +24,8 @@ interval = do
     put $ V.snoc intervals i 
     return n 
 
-withInterval :: (Interval -> Interval) -> IntervalID -> Allen () 
-withInterval f i = do 
+withInterval :: IntervalID -> (Interval -> Interval) -> Allen () 
+withInterval i f = do 
     i' <- fromID i 
     modify (V.// [(i, f i')])
 
