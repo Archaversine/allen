@@ -1,5 +1,4 @@
 module Data.Allen.Interval ( interval
-                           , withInterval
                            , fromID
                            , assume
                            , getConstraints
@@ -23,11 +22,6 @@ interval = do
 
     put $ V.snoc intervals i 
     return n 
-
-withInterval :: IntervalID -> (Interval -> Interval) -> Allen () 
-withInterval i f = do 
-    i' <- fromID i 
-    modify (V.// [(i, f i')])
 
 -- | Add a relation to an interval
 -- Ensures no duplicates are created
