@@ -2,7 +2,9 @@
 
 module Data.Allen.Relation ( inverse
                            , hasRelation
+                           , relationUnion
                            , composeSingle
+                           , compose
                            , bitsFromString
                            ) where
 
@@ -43,11 +45,14 @@ relationFromChar x = case x of
     'P' -> PrecededBy 
     _   -> error $ "relationFromChar: invalid relation " <> [x]
 
+relationUnion :: [RelationBits] -> RelationBits
+relationUnion = foldl (.|.) 0
+
 bitsFromString :: String -> RelationBits
 bitsFromString x | x == "full"   = rBits allRelations 
                  | x == "concur" = rBits [Overlaps .. OverlappedBy]
                  | otherwise = rBits $ map relationFromChar x
-    where rBits = foldl (.|.) 0 . map toBits
+    where rBits = relationUnion . map toBits
 
 -- Table referenced from here: https://www.ics.uci.edu/~alspaugh/cls/shr/allen.html
 composeLookup :: U.Vector RelationBits
@@ -72,3 +77,7 @@ composeLookup = U.fromList $ map bitsFromString table
 composeSingle :: Relation -> Relation -> RelationBits 
 composeSingle (fromEnum -> r1) (fromEnum -> r2) = composeLookup U.! index
     where index = 13 * r1 + r2
+
+-- TODO: Verify correctness of this function
+compose :: RelationBits -> RelationBits -> RelationBits
+compose (fromBits -> r1) (fromBits -> r2) = relationUnion [composeSingle a b | a <- r1, b <- r2]
