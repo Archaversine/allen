@@ -11,8 +11,19 @@ calc = do
     assume eats Precedes sleeps 
     assume sleeps PrecededBy works 
 
-    return $ fromBits $ Precedes `composeSingle` PrecededBy
+    c1 <- getConstraints eats sleeps
+    c2 <- getConstraints sleeps works
+
+    let c3 = compose c1 c2
+
+    assumeBits eats c3 works
+    return $ fromBits c3
 
 main :: IO ()
-main = putStrLn $ "Results: " <> show (evalAllen calc)
+main = do 
+    let relations = evalAllen calc
+
+    putStrLn "Results: "
+    putStrLn "-------------"
+    mapM_ print relations
 

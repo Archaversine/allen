@@ -3,6 +3,7 @@
 module Data.Allen.Interval ( interval
                            , fromID
                            , assume
+                           , assumeBits
                            , getConstraints
                            ) where
 
@@ -38,12 +39,16 @@ addRelation i1 r i2 = i1 { intervalRelations = r' : filtered }
 
 -- | Define a relation between two intervals. 
 assume :: IntervalID -> Relation -> IntervalID -> Allen ()
-assume id1 (toBits -> r) id2 = do 
+assume id1 (toBits -> r) = assumeBits id1 r
+
+-- | Define a relation between two intervals using RelationBits.
+assumeBits :: IntervalID -> RelationBits -> IntervalID -> Allen ()
+assumeBits id1 r id2 = do 
     i1 <- fromID id1 
-    i2 <- fromID id2
+    i2 <- fromID id2 
 
     let i1' = addRelation i1 r id2 
-        i2' = addRelation i2 (inverse r) id1
+        i2' = addRelation i2 (converse r) id2
 
     modify (V.// [(id1, i1'), (id2, i2')])
 

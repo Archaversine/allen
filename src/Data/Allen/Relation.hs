@@ -1,6 +1,6 @@
 {-# LANGUAGE ViewPatterns #-}
 
-module Data.Allen.Relation ( inverse
+module Data.Allen.Relation ( converse
                            , hasRelation
                            , relationUnion
                            , composeSingle
@@ -18,8 +18,11 @@ inverseLookup :: [(RelationBits, RelationBits)]
 inverseLookup = zip bits (reverse bits)
     where bits = map toBits allRelations
 
-inverse :: RelationBits -> RelationBits
-inverse r = snd $ head $ filter ((== r) . fst) inverseLookup
+converse :: RelationBits -> RelationBits 
+converse 0 = 0
+converse x = relationUnion $ map func [0 .. fromEnum (maxBound :: Relation)]
+    where func i | testBit x i = snd $ head $ filter ((== bit i) . fst) inverseLookup
+                 | otherwise = 0
 
 hasRelation :: Relation -> IntervalID -> IntervalID -> Allen Bool
 hasRelation (toBits -> r) (fromID -> a) b = do 
