@@ -31,7 +31,7 @@ calc = do
 ```
 
 Both `sleeps` and `snores` will have unique IDs to distinguish themselves 
-from each other. ()
+from each other.
 
 ## Relations
 
