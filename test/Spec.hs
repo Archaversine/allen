@@ -2,6 +2,8 @@
 
 import Test.QuickCheck
 
+import Control.Monad (unless)
+
 import Data.Allen
 
 -- To Avoid orphaned instance warning
@@ -21,16 +23,23 @@ main :: IO ()
 main = do 
     putStrLn "Testing Relations...\n"
 
-    quickCheck prop_relationBits
-    quickCheck prop_relationInverse
-    quickCheck prop_relationBitAmount
+    test prop_relationBits
+    test prop_relationInverse
+    test prop_relationBitAmount
+
+-- Throw error on test failure so that 
+-- Spec.hs can properly recognize that a test has failed.
+test :: Testable prop => prop -> IO ()
+test func = do 
+    result <- quickCheckWithResult stdArgs func 
+    unless (isSuccess result) $ error "Test Failed!"
 
 prop_relationBits :: ValidRelation -> Bool 
 prop_relationBits (toRelation -> r) = r == head (fromBits $ toBits r)
 
 prop_relationInverse :: ValidRelation -> Bool 
 prop_relationInverse (toRelation -> r) = [r] == doubleInvert r
-    where doubleInvert = fromBits . inverse . inverse . toBits
+    where doubleInvert = fromBits . converse . converse . toBits
 
 prop_relationBitAmount :: Bool 
 prop_relationBitAmount = and $ zipWith (==) twos relations 
