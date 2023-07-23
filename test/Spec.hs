@@ -28,6 +28,10 @@ main = do
     test prop_relationInverse
     test prop_relationBitAmount
 
+    putStrLn "Testing Intervals...\n"
+
+    test False
+
 -- Throw error on test failure so that 
 -- Spec.hs can properly recognize that a test has failed.
 test :: Testable prop => prop -> IO ()
