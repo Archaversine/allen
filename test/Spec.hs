@@ -5,6 +5,7 @@ import Test.QuickCheck
 import Control.Monad (unless)
 
 import Data.Allen
+import Data.Bits
 
 -- To Avoid orphaned instance warning
 newtype ValidRelation = ValidRelation { toRelation :: Relation }
@@ -43,5 +44,5 @@ prop_relationInverse (toRelation -> r) = [r] == doubleInvert r
 
 prop_relationBitAmount :: Bool 
 prop_relationBitAmount = and $ zipWith (==) twos relations 
-    where twos = map (2^) [0.. fromEnum (maxBound :: Relation)]
+    where twos = map bit [0.. fromEnum (maxBound :: Relation)]
           relations = map toBits allRelations

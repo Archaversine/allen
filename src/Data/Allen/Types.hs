@@ -1,3 +1,5 @@
+{-# LANGUAGE ViewPatterns #-}
+
 module Data.Allen.Types ( Interval(..)
                         , Allen
                         , IntervalID
@@ -59,7 +61,7 @@ allRelations :: [Relation]
 allRelations  = [minBound..]
 
 toBits :: Relation -> RelationBits
-toBits r = 2 ^ fromEnum r
+toBits (fromEnum -> r) = bit r
 
 fromBits :: RelationBits -> [Relation]
 fromBits bits = [x | x <- allRelations, bits .&. toBits x /= 0]
