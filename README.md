@@ -100,7 +100,7 @@ calc = do
 
 main :: IO ()
 main = do 
-    let graph = runAllen calc 
+    let graph = execAllen calc 
 
     mapM_ print graph
 ```
