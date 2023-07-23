@@ -2,28 +2,18 @@ module Main (main) where
 
 import Data.Allen
 
-calc :: Allen [Relation]
+calc :: Allen ([Relation], [Relation]) 
 calc = do 
-    eats   <- interval 
-    sleeps <- interval 
-    works  <- interval 
+    a <- interval 
+    b <- interval 
 
-    assume eats Precedes sleeps 
-    assume sleeps PrecededBy works 
+    assume a Precedes b 
 
-    c1 <- getConstraints eats sleeps
-    c2 <- getConstraints sleeps works
+    r1 <- fromBits <$> getConstraints a b 
+    r2 <- fromBits <$> getConstraints b a 
 
-    let c3 = compose c1 c2
-
-    assumeBits eats c3 works
-    return $ fromBits c3
+    return (r1, r2)
 
 main :: IO ()
-main = do 
-    let relations = evalAllen calc
-
-    putStrLn "Results: "
-    putStrLn "-------------"
-    mapM_ print relations
+main = print $ evalAllen calc
 

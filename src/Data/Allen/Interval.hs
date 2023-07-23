@@ -48,7 +48,7 @@ assumeBits id1 r id2 = do
     i2 <- fromID id2 
 
     let i1' = addRelation i1 r id2 
-        i2' = addRelation i2 (converse r) id2
+        i2' = addRelation i2 (converse r) id1
 
     modify (V.// [(id1, i1'), (id2, i2')])
 

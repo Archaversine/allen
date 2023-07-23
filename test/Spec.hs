@@ -30,7 +30,7 @@ main = do
 
     putStrLn "Testing Intervals...\n"
 
-    test False
+    test prop_intervalAssume
 
 -- Throw error on test failure so that 
 -- Spec.hs can properly recognize that a test has failed.
@@ -50,3 +50,17 @@ prop_relationBitAmount :: Bool
 prop_relationBitAmount = and $ zipWith (==) twos relations 
     where twos = map bit [0.. fromEnum (maxBound :: Relation)]
           relations = map toBits allRelations
+
+prop_intervalAssume :: ValidRelation -> Bool 
+prop_intervalAssume (toRelation -> r) = evalAllen calc 
+    where calc :: Allen Bool
+          calc = do 
+            a <- interval 
+            b <- interval 
+
+            assume a r b
+
+            r1 <- getConstraints a b
+            r2 <- getConstraints b a
+
+            return $ r1 == converse r2
