@@ -1,9 +1,9 @@
 module Data.Allen ( module Data.Allen.Types 
                   , module Data.Allen.Interval
                   , module Data.Allen.Relation
-                  , runAllen
+                  , execAllen
                   , evalAllen
-                  , runAllenState
+                  , runAllen
                   ) where
 
 import Control.Monad.State
@@ -15,14 +15,14 @@ import Data.Allen.Relation
 import qualified Data.Vector as V
 
 -- | Same as runAllenState, but discards the final value
-runAllen :: Allen a -> IntervalGraph
-runAllen = snd . runAllenState
+execAllen :: Allen a -> IntervalGraph
+execAllen = snd . runAllen
 
 -- | Same as runAllen, but discards the final state
 evalAllen :: Allen a -> a
-evalAllen = fst . runAllenState
+evalAllen = fst . runAllen
 
 -- | Runs an allen computation starting with an inital empty graph.
 -- Returns the resulting graph and the final state
-runAllenState :: Allen a -> (a, IntervalGraph)
-runAllenState = flip runState V.empty
+runAllen :: Allen a -> (a, IntervalGraph)
+runAllen = flip runState V.empty
