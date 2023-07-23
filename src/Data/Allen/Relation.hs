@@ -10,6 +10,7 @@ module Data.Allen.Relation ( converse
 
 import Data.Allen.Types
 import Data.Bits
+import Data.List (foldl')
 
 import qualified Data.Vector.Unboxed as U
 
@@ -49,7 +50,7 @@ relationFromChar x = case x of
     _   -> error $ "relationFromChar: invalid relation " <> [x]
 
 relationUnion :: [RelationBits] -> RelationBits
-relationUnion = foldl (.|.) 0
+relationUnion = foldl' (.|.) 0
 
 bitsFromString :: String -> RelationBits
 bitsFromString x | x == "full"   = rBits allRelations 
