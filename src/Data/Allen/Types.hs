@@ -35,6 +35,8 @@ instance Show Interval where
         where rels' = intercalate ", " $ map showRel rels
               showRel (r, n) = unwords (map show $ fromBits r) <> " " <> show n
 
+-- | Return the interval given it's ID
+-- Panics if ID doesn't exist
 fromID :: IntervalID -> Allen Interval 
 fromID n = gets (! n)
 
@@ -57,11 +59,14 @@ data Relation = Precedes
 
 type RelationBits = Word16
 
+-- | List of all possible relations.
 allRelations :: [Relation]
 allRelations  = [minBound..]
 
+-- | Convert a Relation type to its bit representation.
 toBits :: Relation -> RelationBits
 toBits (fromEnum -> r) = bit r
 
+-- | Convert a bit representation to a list of Relation types.
 fromBits :: RelationBits -> [Relation]
 fromBits bits = [x | x <- allRelations, bits .&. toBits x /= 0]
