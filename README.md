@@ -57,16 +57,16 @@ data Relation = Precedes
               deriving (Eq, Show, Enum, Bounded)
 ```
 
-To compute the inverse of a relation, you may use the `inverse` function:
+To compute the converse of a relation, you may use the `converse` function:
 
 ```haskell 
 main :: IO ()
 main = do 
-    let r  = During 
-        r' = inverse r
+    let r  = toBits During 
+        r' = converse r
 
-    print r  -- Prints "During"
-    print r' -- Prints "Contains"
+    print $ fromBits r  -- Prints "During"
+    print $ fromBits r' -- Prints "Contains"
 ```
 
 To compose two relations together, you may use the `compose` function. Note  
