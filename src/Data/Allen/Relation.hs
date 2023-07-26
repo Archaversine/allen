@@ -1,5 +1,3 @@
-{-# LANGUAGE ViewPatterns #-}
-
 module Data.Allen.Relation ( converse
                            , hasRelation
                            , relationUnion
@@ -28,11 +26,11 @@ converse x = relationUnion $ map func [0 .. fromEnum (maxBound :: Relation)]
 
 -- | Return if a relation exists between two intervals.
 hasRelation :: Relation -> IntervalID -> IntervalID -> Allen Bool
-hasRelation (toBits -> r) (fromID -> a) b = do 
-    let match (bits, i) | i == b = (r .&. bits) /= 0 
+hasRelation r a b = do 
+    let match (bits, i) | i == b = (toBits r .&. bits) /= 0 
                         | otherwise = False
 
-    any match . intervalRelations <$> a
+    any match . intervalRelations <$> fromID a
 
 -- | Valid Chars: pmoFDseSdfoMP.
 relationFromChar :: Char -> Relation
@@ -85,10 +83,10 @@ composeLookup = U.fromList $ map bitsFromString table
 
 -- | Compose two relations.
 composeSingle :: Relation -> Relation -> RelationBits 
-composeSingle (fromEnum -> r1) (fromEnum -> r2) = composeLookup U.! index
-    where index = 13 * r1 + r2
+composeSingle r1 r2 = composeLookup U.! index
+    where index = 13 * fromEnum r1 + fromEnum r2
 
 -- TODO: Verify correctness of this function
 -- | Compose two sets of relations.
 compose :: RelationBits -> RelationBits -> RelationBits
-compose (fromBits -> r1) (fromBits -> r2) = relationUnion [composeSingle a b | a <- r1, b <- r2]
+compose r1 r2 = relationUnion [composeSingle a b | a <- fromBits r1, b <- fromBits r2]
