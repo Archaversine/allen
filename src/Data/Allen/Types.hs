@@ -65,7 +65,7 @@ allRelations  = [minBound..]
 
 -- | Convert a Relation type to its bit representation.
 toBits :: Relation -> RelationBits
-toBits (fromEnum -> r) = bit r
+toBits = bit . fromEnum
 
 -- | Convert a bit representation to a list of Relation types.
 fromBits :: RelationBits -> [Relation]
