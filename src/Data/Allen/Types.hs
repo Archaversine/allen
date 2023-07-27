@@ -15,11 +15,10 @@ import Control.Monad.State
 
 import Data.Bits
 import Data.List (intercalate)
-import Data.Vector (Vector, (!))
 import Data.Word (Word16)
 
 type IntervalID = Int
-type IntervalGraph = Vector Interval
+type IntervalGraph = [Interval]
 type IntervalConstraint = (RelationBits, IntervalID)
 
 data Interval = Interval { intervalID        :: Int 
@@ -36,7 +35,7 @@ instance Show Interval where
 -- | Return the interval given it's ID
 -- Panics if ID doesn't exist
 fromID :: IntervalID -> Allen Interval 
-fromID n = gets (! n)
+fromID n = gets (!! n)
 
 type Allen = State IntervalGraph
 

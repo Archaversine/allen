@@ -12,8 +12,6 @@ import Data.Allen.Types
 import Data.Allen.Interval
 import Data.Allen.Relation
 
-import qualified Data.Vector as V
-
 -- | Same as runAllenState, but discards the final value
 execAllen :: Allen a -> IntervalGraph
 execAllen = snd . runAllen
@@ -25,4 +23,4 @@ evalAllen = fst . runAllen
 -- | Runs an allen computation starting with an inital empty graph.
 -- Returns the resulting graph and the final state
 runAllen :: Allen a -> (a, IntervalGraph)
-runAllen = flip runState V.empty
+runAllen = flip runState []

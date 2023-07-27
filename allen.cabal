@@ -27,6 +27,7 @@ library
   exposed-modules:
       Data.Allen
       Data.Allen.Interval
+      Data.Allen.IntervalGraph
       Data.Allen.Relation
       Data.Allen.Types
   other-modules:
