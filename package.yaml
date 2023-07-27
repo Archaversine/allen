@@ -60,3 +60,15 @@ tests:
     dependencies:
     - allen
     - QuickCheck
+
+benchmarks:
+  allen-benchmarks:
+    main:               Bench.hs
+    source-dirs:        bench
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies: 
+    - allen
+    - criterion

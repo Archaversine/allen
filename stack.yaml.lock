@@ -3,54 +3,10 @@
 # For more information, please see the documentation at:
 #   https://docs.haskellstack.org/en/stable/lock_files
 
-packages:
+packages: []
+snapshots:
 - completed:
-    hackage: vector-0.13.0.0@sha256:fa5cac81a17a5af388716792e8b99c24b3b66770086756d0d8b23f8272a0244c,9112
-    pantry-tree:
-      sha256: d2461d28022c8c0a91da08b579b1bff478f617102d2f5ef596cc5b28d14b8b6a
-      size: 4092
-  original:
-    hackage: vector-0.13.0.0
-- completed:
-    hackage: primitive-0.7.3.0@sha256:ce9361b4d2ed296ef639380411b4cfc217a19e4b3cd4170e03e6fce52daa0176,3080
-    pantry-tree:
-      sha256: 021af7ee919dfa8533e501b9447d7bc399ebde9ed5b87596ecc2b156aa2390bb
-      size: 1655
-  original:
-    hackage: primitive-0.7.3.0
-- completed:
-    hackage: vector-stream-0.1.0.0@sha256:f5d6d5291cd1b5f2f063403593f1f5c8127d692c888eedeb3e1eb40497a88dca,1404
-    pantry-tree:
-      sha256: 7abf33cdd9ebda41c864f83e860612eee6bd2dfae0484eb8922900ad5a79160d
-      size: 325
-  original:
-    hackage: vector-stream-0.1.0.0
-- completed:
-    hackage: data-array-byte-0.1.0.1@sha256:2ef1bd3511e82ba56f7f23cd793dd2da84338a1e7c2cbea5b151417afe3baada,1989
-    pantry-tree:
-      sha256: 3e2e40055eef1b63c43900296d2584d2911a24ad7016d3d73bd9c73150287212
-      size: 326
-  original:
-    hackage: data-array-byte-0.1.0.1
-- completed:
-    hackage: QuickCheck-2.14.3@sha256:f03d2f404d5ba465453d0fbc1944832789a759fe7c4f9bf8616bc1378a02fde4,7847
-    pantry-tree:
-      sha256: e920d61bcc10ef2aee0cc3e2a216d05b8491564ad27c1c5e2fbbb221b00b7f8e
-      size: 2315
-  original:
-    hackage: QuickCheck-2.14.3
-- completed:
-    hackage: random-1.2.1.1@sha256:dea1f11e5569332dc6c8efaad1cb301016a5587b6754943a49f9de08ae0e56d9,6541
-    pantry-tree:
-      sha256: 646ee77fe01178837ee928b61ae8653dcf190e9b5353ebebd094079c77a18b76
-      size: 1528
-  original:
-    hackage: random-1.2.1.1
-- completed:
-    hackage: splitmix-0.1.0.4@sha256:db25c2e17967aa6b6046ab8b1b96ba3f344ca59a62b60fb6113d51ea305a3d8e,6537
-    pantry-tree:
-      sha256: d0ee67a1005ff3b666d3edce14e0b1f9ff966de7d090f6340fd436d958293839
-      size: 1519
-  original:
-    hackage: splitmix-0.1.0.4
-snapshots: []
+    sha256: caa77fdbc5b9f698262b21ee78030133272ec53116ad6ddbefdc4c321f668e0c
+    size: 640014
+    url: https://raw.githubusercontent.com/commercialhaskell/stackage-snapshots/master/lts/21/4.yaml
+  original: lts-21.4
