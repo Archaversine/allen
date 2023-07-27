@@ -11,10 +11,11 @@ is a State Monad accompanied with helper functions.
 type Allen = State IntervalGraph
 ```
 
-To get the resulting IntervalGraph, you may use the `runAllen` function, which 
-is similar to the `runState` function but instead begins with an empty 
+To get the resulting IntervalGraph, you may use the `execAllen` function, which 
+is similar to the `execState` function but instead begins with an empty 
 intervalGraph and discards the resulting value. If you want the resuling value 
-still, there is a `runAllenState` which does just that.
+still, there is a `evalAllen` which does just that. There also exists a 
+`runAllen` similar to `runState` as well.
 
 ## Intervals 
 
