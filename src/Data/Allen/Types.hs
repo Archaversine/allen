@@ -1,5 +1,3 @@
-{-# LANGUAGE ViewPatterns #-}
-
 module Data.Allen.Types ( Interval(..)
                         , Allen
                         , IntervalID

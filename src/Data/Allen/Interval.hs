@@ -1,5 +1,3 @@
-{-# LANGUAGE ViewPatterns #-}
-
 module Data.Allen.Interval ( interval
                            , fromID
                            , assume
@@ -39,7 +37,7 @@ addRelation i1 r i2 = i1 { intervalRelations = r' : filtered }
 
 -- | Define a relation between two intervals. 
 assume :: IntervalID -> Relation -> IntervalID -> Allen ()
-assume id1 (toBits -> r) = assumeBits id1 r
+assume id1 = assumeBits id1 . toBits
 
 -- | Define a relation between two intervals using RelationBits.
 assumeBits :: IntervalID -> RelationBits -> IntervalID -> Allen ()
