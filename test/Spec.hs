@@ -28,9 +28,10 @@ main = do
     test prop_relationInverse
     test prop_relationBitAmount
 
-    putStrLn "Testing Intervals...\n"
+    putStrLn "\nTesting Intervals...\n"
 
     test prop_intervalAssume
+    test prop_intervalComparable
 
 -- Throw error on test failure so that 
 -- Spec.hs can properly recognize that a test has failed.
@@ -64,3 +65,19 @@ prop_intervalAssume (toRelation -> r) = evalAllen calc
             r2 <- getConstraints b a
 
             return $ r1 == converse r2
+
+prop_intervalComparable :: Bool 
+prop_intervalComparable = evalAllen calc
+    where calc :: Allen Bool
+          calc = do 
+            a <- interval 
+            b <- interval 
+            c <- interval 
+
+            assume a During b
+
+            c1 <- comparable a b
+            c2 <- comparable b c 
+            c3 <- comparable c a
+
+            return (c1 && not c2 && not c3)
