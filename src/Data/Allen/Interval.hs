@@ -58,4 +58,4 @@ getConstraints id1 id2 = Map.findWithDefault 0 id2 . intervalRelations <$> fromI
 
 -- | Update intervals in the graph
 updateIntervals :: [(IntervalID, Interval)] -> Allen ()
-updateIntervals = mapM_ (\(iD, i) -> modify $ Map.insert iD i)
+updateIntervals xs = modify $ Map.union (Map.fromList xs)
