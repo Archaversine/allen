@@ -17,7 +17,7 @@ import qualified Data.Vector.Unboxed as U
 -- | Lookup table for inverse function.
 inverseLookup :: [(RelationBits, RelationBits)]
 inverseLookup = zip bits (reverse bits)
-    where bits = map relationSet allRelations
+    where bits = map toBits allRelations
 
 -- | Return the converse of a Relation bitset.
 converse :: RelationBits -> RelationBits 
@@ -30,7 +30,7 @@ converse x = relationUnion $ map func [0 .. fromEnum (maxBound :: Relation)]
 hasRelation :: Relation -> IntervalID -> IntervalID -> Allen Bool
 hasRelation r id1 id2 = do 
     relations <- Map.findWithDefault 0 id2 . intervalRelations <$> fromID id1 
-    return $ relationSet r .&. relations /= 0
+    return $ toBits r .&. relations /= 0
 
 -- | Valid Chars: pmoFDseSdfoMP.
 relationFromChar :: Char -> Relation
@@ -63,7 +63,7 @@ bitsFromString :: String -> RelationBits
 bitsFromString x | x == "full"   = rBits allRelations 
                  | x == "concur" = rBits [Overlaps .. OverlappedBy]
                  | otherwise = rBits $ map relationFromChar x
-    where rBits = relationUnion . map relationSet
+    where rBits = relationUnion . map toBits
 
 -- Table referenced from here: https://www.ics.uci.edu/~alspaugh/cls/shr/allen.html
 composeLookup :: U.Vector RelationBits
@@ -93,4 +93,4 @@ composeSingle r1 r2 = composeLookup U.! index
 -- TODO: Verify correctness of this function
 -- | Compose two sets of relations.
 compose :: RelationBits -> RelationBits -> RelationBits
-compose r1 r2 = relationUnion [composeSingle a b | a <- relationList r1, b <- relationList r2]
+compose r1 r2 = relationUnion [composeSingle a b | a <- fromBits r1, b <- fromBits r2]

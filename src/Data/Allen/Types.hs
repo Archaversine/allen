@@ -9,8 +9,8 @@ module Data.Allen.Types ( Interval(..)
                         , RelationBits
                         , allRelations
                         , allRelationBits
-                        , relationSet
-                        , relationList
+                        , toBits
+                        , fromBits
                         , fromID
                         ) where  
 
@@ -36,7 +36,7 @@ data Interval = Interval { intervalID        :: Int
 instance Show Interval where 
     show (Interval iD rels) = "Interval " <> show iD <> " (" <> rels' <> ")"
         where rels' = intercalate ", " $ map showRel $ Map.toList rels
-              showRel (n, r) = unwords (map show $ relationList r) <> " " <> show n
+              showRel (n, r) = unwords (map show $ fromBits r) <> " " <> show n
 
 -- | Return the interval given it's ID
 -- Panics if ID doesn't exist
@@ -71,10 +71,10 @@ allRelationBits :: RelationBits
 allRelationBits = 0b0001111111111111
 
 -- | Convert a Relation type to its bit representation.
-relationSet :: Relation -> RelationBits
-relationSet = bit . fromEnum
+toBits :: Relation -> RelationBits
+toBits = bit . fromEnum
 
 -- | Convert a bit representation to a list of Relation types.
-relationList :: RelationBits -> [Relation]
-relationList bits = [x | x <- allRelations, bits .&. relationSet x /= 0]
+fromBits :: RelationBits -> [Relation]
+fromBits bits = [x | x <- allRelations, bits .&. toBits x /= 0]
 
