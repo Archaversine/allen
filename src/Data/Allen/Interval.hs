@@ -58,5 +58,6 @@ assumeBits id1 r id2 = do
 
     updateGraph [(id1, i1'), (id2, i2')]
 
+-- | Return the set of possible constraints/relations between two intervals
 getConstraints :: IntervalID -> IntervalID -> Allen RelationBits
 getConstraints id1 id2 = Map.findWithDefault 0 id2 . intervalRelations <$> fromID id1
