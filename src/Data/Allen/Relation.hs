@@ -1,6 +1,7 @@
 module Data.Allen.Relation ( converse
                            , hasRelation
                            , relationUnion
+                           , relationIntersection
                            , composeSingle
                            , compose
                            , bitsFromString
@@ -15,7 +16,7 @@ import qualified Data.Vector.Unboxed as U
 -- | Lookup table for inverse function.
 inverseLookup :: [(RelationBits, RelationBits)]
 inverseLookup = zip bits (reverse bits)
-    where bits = map toBits allRelations
+    where bits = map relationSet allRelations
 
 -- | Return the converse of a Relation bitset.
 converse :: RelationBits -> RelationBits 
@@ -27,7 +28,7 @@ converse x = relationUnion $ map func [0 .. fromEnum (maxBound :: Relation)]
 -- | Return if a relation exists between two intervals.
 hasRelation :: Relation -> IntervalID -> IntervalID -> Allen Bool
 hasRelation r a b = do 
-    let match (bits, i) | i == b = (toBits r .&. bits) /= 0 
+    let match (bits, i) | i == b = (relationSet r .&. bits) /= 0 
                         | otherwise = False
 
     any match . intervalRelations <$> fromID a
@@ -54,12 +55,16 @@ relationFromChar x = case x of
 relationUnion :: [RelationBits] -> RelationBits
 relationUnion = foldl' (.|.) 0
 
+-- | Calculate the intersection of a list of relations.
+relationIntersection :: [RelationBits] -> RelationBits 
+relationIntersection = foldl' (.&.) 0
+
 -- | Same as `relationFromChar` but for multiple chars.
 bitsFromString :: String -> RelationBits
 bitsFromString x | x == "full"   = rBits allRelations 
                  | x == "concur" = rBits [Overlaps .. OverlappedBy]
                  | otherwise = rBits $ map relationFromChar x
-    where rBits = relationUnion . map toBits
+    where rBits = relationUnion . map relationSet
 
 -- Table referenced from here: https://www.ics.uci.edu/~alspaugh/cls/shr/allen.html
 composeLookup :: U.Vector RelationBits
@@ -89,4 +94,4 @@ composeSingle r1 r2 = composeLookup U.! index
 -- TODO: Verify correctness of this function
 -- | Compose two sets of relations.
 compose :: RelationBits -> RelationBits -> RelationBits
-compose r1 r2 = relationUnion [composeSingle a b | a <- fromBits r1, b <- fromBits r2]
+compose r1 r2 = relationUnion [composeSingle a b | a <- relationList r1, b <- relationList r2]
