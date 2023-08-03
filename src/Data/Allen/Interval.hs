@@ -12,7 +12,6 @@ import Control.Monad.State
 
 import Data.Allen.Types
 import Data.Allen.Relation
-import Data.Allen.IntervalGraph
 
 import Data.Bits
 
@@ -56,8 +55,12 @@ assumeBits id1 r id2 = do
     let i1' = addRelation i1 r id2 
         i2' = addRelation i2 (converse r) id1
 
-    updateGraph [(id1, i1'), (id2, i2')]
+    updateIntervals [(id1, i1'), (id2, i2')]
 
 -- | Return the set of possible constraints/relations between two intervals
 getConstraints :: IntervalID -> IntervalID -> Allen RelationBits
 getConstraints id1 id2 = Map.findWithDefault 0 id2 . intervalRelations <$> fromID id1
+
+-- | Update intervals in the graph
+updateIntervals :: [(IntervalID, Interval)] -> Allen ()
+updateIntervals = mapM_ (\(iD, i) -> modify $ Map.insert iD i)
