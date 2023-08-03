@@ -3,7 +3,6 @@ module Data.Allen.Interval ( interval
                            , assume
                            , assumeBits
                            , getConstraints
-                           , comparable
                            ) where
 
 import Control.Monad.State
@@ -53,23 +52,6 @@ assumeBits id1 r id2 = do
         i2' = addRelation i2 (converse r) id1
 
     updateGraph [(id1, i1'), (id2, i2')]
-
-
--- | Depth first search 
--- Searches if the second interval is reachable from the first interval
-comparable :: IntervalID -> IntervalID -> Allen Bool 
-comparable id1 id2 = elem id2 <$> comparable' [] id1
-
-comparable' :: [IntervalID] -> IntervalID -> Allen [IntervalID]
-comparable' visited visiting = do 
-    relations <- map snd . intervalRelations <$> fromID visiting
-
-    let (seen, new) = partition (`elem` visited) relations
-
-    if null new then 
-        return (visited <> seen)
-    else
-        concat <$> mapM (comparable' $ visited <> new) new
 
 getConstraints :: IntervalID -> IntervalID -> Allen RelationBits
 getConstraints id1 id2 = do 
