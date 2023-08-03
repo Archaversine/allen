@@ -1,3 +1,5 @@
+{-# LANGUAGE BinaryLiterals #-}
+
 module Data.Allen.Types ( Interval(..)
                         , Allen
                         , IntervalID
@@ -6,6 +8,7 @@ module Data.Allen.Types ( Interval(..)
                         , Relation(..)
                         , RelationBits
                         , allRelations
+                        , allRelationBits
                         , toBits
                         , fromBits
                         , fromID
@@ -59,6 +62,10 @@ type RelationBits = Word16
 -- | List of all possible relations.
 allRelations :: [Relation]
 allRelations  = [minBound..]
+
+-- | Bit representation of all possible relations.
+allRelationBits :: RelationBits
+allRelationBits = 0b0001111111111111
 
 -- | Convert a Relation type to its bit representation.
 toBits :: Relation -> RelationBits
