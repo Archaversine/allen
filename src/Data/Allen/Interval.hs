@@ -12,7 +12,8 @@ import Data.Allen.Relation
 import Data.Allen.IntervalGraph
 
 import Data.Bits
-import Data.List (partition)
+
+import qualified Data.Map as Map
 
 -- | Create a new interval. 
 -- Returns the interval ID
@@ -21,9 +22,8 @@ interval = do
     intervals <- get
 
     let iD         = length intervals
-        iRelations = [(allRelationBits, x) | x <- [0 .. iD - 1]]
-        addRel iv  = iv { intervalRelations = (allRelationBits, iD) : intervalRelations iv }
-        intervals' = map addRel intervals
+        iRelations = Map.fromList [(x, allRelationBits) | x <- [0 .. iD - 1]]
+        intervals' = [addRelation x allRelationBits iD  | x <- intervals]
         i          = Interval iD iRelations
 
     put $ intervals' <> [i]
@@ -32,11 +32,10 @@ interval = do
 -- | Add a relation to an interval
 -- Ensures no duplicates are created
 addRelation :: Interval -> RelationBits -> IntervalID -> Interval 
-addRelation i1 r i2 = i1 { intervalRelations = r' : filtered }
-    where (existing, filtered) = partition ((== i2) . snd) $ intervalRelations i1
-          r' = case existing of 
-            []        -> (r, i2)        -- If there are no pre-existing relations
-            ((x,_):_) -> (x .|. r, i2)  -- If there ARE pre-existing relations
+addRelation i1 r i2  = i1 { intervalRelations = relations' }
+    where relations  = intervalRelations i1 
+          relation   = Map.findWithDefault 0 i2 relations
+          relations' = Map.insert i2 (relation .|. r) relations
 
 -- | Define a relation between two intervals. 
 assume :: IntervalID -> Relation -> IntervalID -> Allen ()
@@ -54,9 +53,4 @@ assumeBits id1 r id2 = do
     updateGraph [(id1, i1'), (id2, i2')]
 
 getConstraints :: IntervalID -> IntervalID -> Allen RelationBits
-getConstraints id1 id2 = do 
-    i1 <- fromID id1 
-
-    return $ case filter ((== id2) . snd) $ intervalRelations i1 of 
-        []        -> 0 -- If there is NOT a relation
-        ((x,_):_) -> x -- If there IS a relation
+getConstraints id1 id2 = Map.findWithDefault 0 id2 . intervalRelations <$> fromID id1

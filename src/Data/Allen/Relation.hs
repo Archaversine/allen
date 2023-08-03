@@ -11,6 +11,7 @@ import Data.Allen.Types
 import Data.Bits
 import Data.List (foldl')
 
+import qualified Data.Map as Map
 import qualified Data.Vector.Unboxed as U
 
 -- | Lookup table for inverse function.
@@ -27,11 +28,9 @@ converse x = relationUnion $ map func [0 .. fromEnum (maxBound :: Relation)]
 
 -- | Return if a relation exists between two intervals.
 hasRelation :: Relation -> IntervalID -> IntervalID -> Allen Bool
-hasRelation r a b = do 
-    let match (bits, i) | i == b = (relationSet r .&. bits) /= 0 
-                        | otherwise = False
-
-    any match . intervalRelations <$> fromID a
+hasRelation r id1 id2 = do 
+    relations <- Map.findWithDefault 0 id2 . intervalRelations <$> fromID id1 
+    return $ relationSet r .&. relations /= 0
 
 -- | Valid Chars: pmoFDseSdfoMP.
 relationFromChar :: Char -> Relation

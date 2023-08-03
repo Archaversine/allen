@@ -20,20 +20,23 @@ import Data.Bits
 import Data.List (intercalate)
 import Data.Word (Word16)
 
+import Data.Map (Map)
+import qualified Data.Map as Map
+
 type IntervalID = Int
 type IntervalGraph = [Interval]
 type IntervalConstraint = (RelationBits, IntervalID)
 
 data Interval = Interval { intervalID        :: Int 
-                         , intervalRelations :: [IntervalConstraint]
+                         , intervalRelations :: Map IntervalID RelationBits
                          } 
 
 -- | Show instance for Interval 
 -- Ex: Interval 3 (During 1, Contains 2)
 instance Show Interval where 
     show (Interval iD rels) = "Interval " <> show iD <> " (" <> rels' <> ")"
-        where rels' = intercalate ", " $ map showRel rels
-              showRel (r, n) = unwords (map show $ relationList r) <> " " <> show n
+        where rels' = intercalate ", " $ map showRel $ Map.toList rels
+              showRel (n, r) = unwords (map show $ relationList r) <> " " <> show n
 
 -- | Return the interval given it's ID
 -- Panics if ID doesn't exist
