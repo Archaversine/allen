@@ -37,7 +37,7 @@ interval = do
 addRelation :: Interval -> RelationBits -> IntervalID -> Interval 
 addRelation i1 r i2  = i1 { intervalRelations = relations' }
     where relations' = Map.alter alterRel i2 $ intervalRelations i1
-          alterRel rel = ((.|. r) <$> rel) <|> pure r
+          alterRel rel = (.|. r) <$> rel <|> pure r
 
 -- | Define a relation between two intervals. 
 assume :: IntervalID -> Relation -> IntervalID -> Allen ()
