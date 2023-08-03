@@ -4,7 +4,6 @@ module Data.Allen.Types ( Interval(..)
                         , Allen
                         , IntervalID
                         , IntervalGraph
-                        , IntervalConstraint
                         , Relation(..)
                         , RelationBits
                         , allRelations
@@ -25,7 +24,6 @@ import qualified Data.Map as Map
 
 type IntervalID = Int
 type IntervalGraph = [Interval]
-type IntervalConstraint = (RelationBits, IntervalID)
 
 data Interval = Interval { intervalID        :: Int 
                          , intervalRelations :: Map IntervalID RelationBits
