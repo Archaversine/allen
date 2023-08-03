@@ -33,9 +33,7 @@ interval = do
 -- Ensures no duplicates are created
 addRelation :: Interval -> RelationBits -> IntervalID -> Interval 
 addRelation i1 r i2  = i1 { intervalRelations = relations' }
-    where relations  = intervalRelations i1 
-          relation   = Map.findWithDefault 0 i2 relations
-          relations' = Map.insert i2 (relation .|. r) relations
+    where relations' = Map.adjust (.|. r) i2 $ intervalRelations i1
 
 -- | Define a relation between two intervals. 
 assume :: IntervalID -> Relation -> IntervalID -> Allen ()
