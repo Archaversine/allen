@@ -10,13 +10,15 @@ module Data.Allen.Types ( Interval(..)
                         , allRelationBits
                         , toBits
                         , fromBits
+                        , relationUnion
+                        , relationIntersection
                         , fromID
                         ) where  
 
 import Control.Monad.State
 
 import Data.Bits
-import Data.List (intercalate)
+import Data.List (intercalate, foldl')
 import Data.Word (Word16)
 
 import Data.Map (Map)
@@ -66,7 +68,7 @@ allRelations  = [minBound..]
 
 -- | Bit representation of all possible relations.
 allRelationBits :: RelationBits
-allRelationBits = 0b0001111111111111
+allRelationBits = relationUnion $ map toBits allRelations
 
 -- | Convert a Relation type to its bit representation.
 toBits :: Relation -> RelationBits
@@ -75,4 +77,12 @@ toBits = bit . fromEnum
 -- | Convert a bit representation to a list of Relation types.
 fromBits :: RelationBits -> [Relation]
 fromBits bits = [x | x <- allRelations, bits .&. toBits x /= 0]
+
+-- | Calculate the union of a list of relations.
+relationUnion :: [RelationBits] -> RelationBits
+relationUnion = foldl' (.|.) 0
+
+-- | Calculate the intersection of a list of relations.
+relationIntersection :: [RelationBits] -> RelationBits 
+relationIntersection = foldl' (.&.) 0
 

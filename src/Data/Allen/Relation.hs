@@ -1,7 +1,5 @@
 module Data.Allen.Relation ( converse
                            , hasRelation
-                           , relationUnion
-                           , relationIntersection
                            , composeSingle
                            , compose
                            , bitsFromString
@@ -9,7 +7,6 @@ module Data.Allen.Relation ( converse
 
 import Data.Allen.Types
 import Data.Bits
-import Data.List (foldl')
 
 import qualified Data.Map as Map
 import qualified Data.Vector.Unboxed as U
@@ -50,13 +47,6 @@ relationFromChar x = case x of
     'P' -> PrecededBy 
     _   -> error $ "relationFromChar: invalid relation " <> [x]
 
--- | Calculate the union of a list of relations.
-relationUnion :: [RelationBits] -> RelationBits
-relationUnion = foldl' (.|.) 0
-
--- | Calculate the intersection of a list of relations.
-relationIntersection :: [RelationBits] -> RelationBits 
-relationIntersection = foldl' (.&.) 0
 
 -- | Same as `relationFromChar` but for multiple chars.
 bitsFromString :: String -> RelationBits
