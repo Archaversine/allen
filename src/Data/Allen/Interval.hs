@@ -4,6 +4,7 @@ module Data.Allen.Interval ( interval
                            , assumeSet
                            , assumeBits
                            , addRelation
+                           , setRelation
                            , getConstraints
                            ) where
 
@@ -25,7 +26,7 @@ interval = do
 
     let iD         = Map.size intervals
         iRelations = Map.fromList [(x, allRelationBits) | x <- [0 .. iD - 1]]
-        intervals' = Map.map (\x -> addRelation x allRelationBits iD) intervals
+        intervals' = Map.map (\x -> setRelation x allRelationBits iD) intervals
         i          = Interval iD iRelations
 
     put $ Map.insert iD i intervals'
@@ -37,6 +38,11 @@ addRelation :: Interval -> RelationBits -> IntervalID -> Interval
 addRelation i1 r i2  = i1 { intervalRelations = relations' }
     where relations' = Map.alter alterRel i2 $ intervalRelations i1
           alterRel rel = (.|. r) <$> rel <|> pure r
+
+-- | Set the relations between two intervals 
+setRelation :: Interval -> RelationBits -> IntervalID -> Interval 
+setRelation i1 r i2 = i1 { intervalRelations = relations }
+    where relations = Map.insert i2 r $ intervalRelations i1
 
 -- | Define a relation between two intervals. 
 assume :: IntervalID -> Relation -> IntervalID -> Allen ()
@@ -52,8 +58,8 @@ assumeBits id1 r id2 = do
     i1 <- fromID id1 
     i2 <- fromID id2 
 
-    let i1' = addRelation i1 r id2 
-        i2' = addRelation i2 (converse r) id1
+    let i1' = setRelation i1 r id2 
+        i2' = setRelation i2 (converse r) id1
 
     updateIntervals [(id1, i1'), (id2, i2')]
 

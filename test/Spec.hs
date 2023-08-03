@@ -39,6 +39,7 @@ main = do
     test prop_relationInverse
     test prop_relationBitAmount
     test prop_relationAdd
+    test prop_relationSet
 
     putStrLn "\nTesting Intervals...\n"
 
@@ -69,6 +70,12 @@ prop_relationAdd (toInterval -> i) (toRelation -> toBits -> r) iD = newRelation 
     where newInterval = addRelation i r iD
           newRelation = Map.findWithDefault 0 iD $ intervalRelations newInterval 
 
+prop_relationSet :: ValidInterval -> ValidRelation -> ValidRelation -> IntervalID -> Bool 
+prop_relationSet (toInterval -> i) (toRelation -> toBits -> r1) (toRelation -> toBits -> r2) iD = r == r2
+    where i'  = setRelation i r1 iD
+          i'' = setRelation i' r2 iD 
+          r   = intervalRelations i'' Map.! iD
+
 prop_intervalAssume :: ValidRelation -> Bool 
 prop_intervalAssume (toRelation -> r) = evalAllen calc 
     where calc :: Allen Bool
@@ -94,3 +101,4 @@ prop_intervalAllBitsDefault = evalAllen calc
             c2 <- getConstraints b a
 
             return (c1 == c2 && c1 == allRelationBits)
+
