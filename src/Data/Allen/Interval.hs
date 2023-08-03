@@ -3,9 +3,11 @@ module Data.Allen.Interval ( interval
                            , assume
                            , assumeSet
                            , assumeBits
+                           , addRelation
                            , getConstraints
                            ) where
 
+import Control.Applicative ((<|>))
 import Control.Monad.State
 
 import Data.Allen.Types
@@ -22,23 +24,24 @@ interval :: Allen IntervalID
 interval = do
     intervals <- get
 
-    let iD         = length intervals
+    let iD         = Map.size intervals
         iRelations = Map.fromList [(x, allRelationBits) | x <- [0 .. iD - 1]]
-        intervals' = [addRelation x allRelationBits iD  | x <- intervals]
+        intervals' = Map.map (\x -> addRelation x allRelationBits iD) intervals
         i          = Interval iD iRelations
 
-    put $ intervals' <> [i]
+    put $ Map.insert iD i intervals'
     return iD 
 
 -- | Add a relation to an interval
 -- Ensures no duplicates are created
 addRelation :: Interval -> RelationBits -> IntervalID -> Interval 
 addRelation i1 r i2  = i1 { intervalRelations = relations' }
-    where relations' = Map.adjust (.|. r) i2 $ intervalRelations i1
+    where relations' = Map.alter alterRel i2 $ intervalRelations i1
+          alterRel rel = ((.|. r) <$> rel) <|> pure r
 
 -- | Define a relation between two intervals. 
 assume :: IntervalID -> Relation -> IntervalID -> Allen ()
-assume id1 = assumeBits id1 . toBits
+assume id1 r = assumeBits id1 (toBits r)
 
 -- | Define a set of relations between two intervals
 assumeSet :: IntervalID -> [Relation] -> IntervalID -> Allen ()

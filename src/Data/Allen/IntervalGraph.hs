@@ -1,15 +1,10 @@
-module Data.Allen.IntervalGraph (updateGraph, modifyList) where
+module Data.Allen.IntervalGraph (updateGraph) where
 
-import Control.Monad.State (modify)
+import Control.Monad.State 
 
 import Data.Allen.Types
 
-updateGraph :: [(Int, Interval)] -> Allen ()
-updateGraph values = modify $ flip modifyList values
+import qualified Data.Map as Map
 
-modifyList :: [a] -> [(Int, a)] -> [a]
-modifyList []  _ = []
-modifyList xs [] = xs
-modifyList xs ((index, y):ys) = modifyList newList ys
-    where (left, right)       = splitAt index xs
-          newList             = left <> [y] <> tail right
+updateGraph :: [(Int, Interval)] -> Allen ()
+updateGraph = mapM_ (\(iD, i) -> modify $ Map.insert iD i)

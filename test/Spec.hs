@@ -7,8 +7,11 @@ import Control.Monad (unless)
 import Data.Allen
 import Data.Bits
 
+import qualified Data.Map as Map
+
 -- To Avoid orphaned instance warning
 newtype ValidRelation = ValidRelation { toRelation :: Relation }
+newtype ValidInterval = ValidInterval { toInterval :: Interval }
 
 instance Arbitrary ValidRelation where 
     arbitrary = do 
@@ -17,8 +20,16 @@ instance Arbitrary ValidRelation where
 
         return $ ValidRelation $ toEnum $ index `mod` n
 
+instance Arbitrary ValidInterval where 
+    arbitrary = do 
+        iD <- abs <$> arbitrary 
+        return $ ValidInterval $ Interval iD Map.empty
+
 instance Show ValidRelation where 
     show = show . toRelation
+
+instance Show ValidInterval where 
+    show = show . toInterval
 
 main :: IO ()
 main = do 
@@ -27,6 +38,7 @@ main = do
     test prop_relationBits
     test prop_relationInverse
     test prop_relationBitAmount
+    test prop_relationAdd
 
     putStrLn "\nTesting Intervals...\n"
 
@@ -51,6 +63,11 @@ prop_relationBitAmount :: Bool
 prop_relationBitAmount = and $ zipWith (==) twos relations 
     where twos = map bit [0.. fromEnum (maxBound :: Relation)]
           relations = map toBits allRelations
+
+prop_relationAdd :: ValidInterval -> ValidRelation -> IntervalID -> Bool 
+prop_relationAdd (toInterval -> i) (toRelation -> toBits -> r) iD = newRelation == r
+    where newInterval = addRelation i r iD
+          newRelation = Map.findWithDefault 0 iD $ intervalRelations newInterval 
 
 prop_intervalAssume :: ValidRelation -> Bool 
 prop_intervalAssume (toRelation -> r) = evalAllen calc 

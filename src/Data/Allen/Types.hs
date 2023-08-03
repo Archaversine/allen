@@ -25,7 +25,7 @@ import Data.Map (Map)
 import qualified Data.Map as Map
 
 type IntervalID = Int
-type IntervalGraph = [Interval]
+type IntervalGraph = Map IntervalID Interval
 
 data Interval = Interval { intervalID        :: Int 
                          , intervalRelations :: Map IntervalID RelationBits
@@ -41,7 +41,7 @@ instance Show Interval where
 -- | Return the interval given it's ID
 -- Panics if ID doesn't exist
 fromID :: IntervalID -> Allen Interval 
-fromID n = gets (!! n)
+fromID n = gets (Map.! n)
 
 type Allen = State IntervalGraph
 
