@@ -21,11 +21,14 @@ interval :: Allen IntervalID
 interval = do
     intervals <- get
 
-    let n = length intervals
-        i = Interval n []
+    let iD         = length intervals
+        iRelations = [(allRelationBits, x) | x <- [0 .. iD - 1]]
+        addRel iv  = iv { intervalRelations = (allRelationBits, iD) : intervalRelations iv }
+        intervals' = map addRel intervals
+        i          = Interval iD iRelations
 
-    put $ i : intervals 
-    return n 
+    put $ intervals' <> [i]
+    return iD 
 
 -- | Add a relation to an interval
 -- Ensures no duplicates are created

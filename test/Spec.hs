@@ -31,7 +31,7 @@ main = do
     putStrLn "\nTesting Intervals...\n"
 
     test prop_intervalAssume
-    test prop_intervalComparable
+    test prop_intervalAllBitsDefault
 
 -- Throw error on test failure so that 
 -- Spec.hs can properly recognize that a test has failed.
@@ -66,18 +66,14 @@ prop_intervalAssume (toRelation -> r) = evalAllen calc
 
             return $ r1 == converse r2
 
-prop_intervalComparable :: Bool 
-prop_intervalComparable = evalAllen calc
-    where calc :: Allen Bool
+prop_intervalAllBitsDefault :: Bool 
+prop_intervalAllBitsDefault = evalAllen calc
+    where calc :: Allen Bool 
           calc = do 
             a <- interval 
             b <- interval 
-            c <- interval 
 
-            assume a During b
+            c1 <- getConstraints a b
+            c2 <- getConstraints b a
 
-            c1 <- comparable a b
-            c2 <- comparable b c 
-            c3 <- comparable c a
-
-            return (c1 && not c2 && not c3)
+            return (c1 == c2 && c1 == allRelationBits)
