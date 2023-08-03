@@ -38,7 +38,6 @@ main = do
     test prop_relationBits
     test prop_relationInverse
     test prop_relationBitAmount
-    test prop_relationAdd
     test prop_relationSet
 
     putStrLn "\nTesting Intervals...\n"
@@ -64,11 +63,6 @@ prop_relationBitAmount :: Bool
 prop_relationBitAmount = and $ zipWith (==) twos relations 
     where twos = map bit [0.. fromEnum (maxBound :: Relation)]
           relations = map toBits allRelations
-
-prop_relationAdd :: ValidInterval -> ValidRelation -> IntervalID -> Bool 
-prop_relationAdd (toInterval -> i) (toRelation -> toBits -> r) iD = newRelation == r
-    where newInterval = addRelation i r iD
-          newRelation = Map.findWithDefault 0 iD $ intervalRelations newInterval 
 
 prop_relationSet :: ValidInterval -> ValidRelation -> ValidRelation -> IntervalID -> Bool 
 prop_relationSet (toInterval -> i) (toRelation -> toBits -> r1) (toRelation -> toBits -> r2) iD = r == r2

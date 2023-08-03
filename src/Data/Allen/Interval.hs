@@ -3,18 +3,14 @@ module Data.Allen.Interval ( interval
                            , assume
                            , assumeSet
                            , assumeBits
-                           , addRelation
                            , setRelation
                            , getConstraints
                            ) where
 
-import Control.Applicative ((<|>))
 import Control.Monad.State
 
 import Data.Allen.Types
 import Data.Allen.Relation
-
-import Data.Bits
 
 import qualified Data.Map as Map
 
@@ -31,13 +27,6 @@ interval = do
 
     put $ Map.insert iD i intervals'
     return iD 
-
--- | Add a relation to an interval
--- Ensures no duplicates are created
-addRelation :: Interval -> RelationBits -> IntervalID -> Interval 
-addRelation i1 r i2  = i1 { intervalRelations = relations' }
-    where relations' = Map.alter alterRel i2 $ intervalRelations i1
-          alterRel rel = (.|. r) <$> rel <|> pure r
 
 -- | Set the relations between two intervals 
 setRelation :: Interval -> RelationBits -> IntervalID -> Interval 
