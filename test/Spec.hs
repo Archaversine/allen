@@ -45,6 +45,11 @@ main = do
     test prop_intervalAssume
     test prop_intervalAllBitsDefault
 
+    putStrLn "\nTests from Allen (1983)...\n"
+
+    test prop_Section4Subsection2
+
+
 -- Throw error on test failure so that 
 -- Spec.hs can properly recognize that a test has failed.
 test :: Testable prop => prop -> IO ()
@@ -95,4 +100,27 @@ prop_intervalAllBitsDefault = evalAllen calc
             c2 <- getConstraints b a
 
             return (c1 == c2 && c1 == allRelationBits)
+
+-- Examples from Section 4.2 of the Allen (1983) paper.
+prop_Section4Subsection2 :: Bool
+prop_Section4Subsection2 = evalAllen calc
+    where calc :: Allen Bool
+          calc = do
+            r <- interval
+            s <- interval
+            l <- interval
+
+            -- srRelationSet <- relationUnion $ map toBits [Precedes, Meets, MetBy, PrecededBy] 
+            -- slRelationSet <- relationUnion $ map toBits [Overlaps, Meets]
+            srRelationBits <- bitsFromString "pmMP" 
+            slRelationBits <- bitsFromString "om"
+
+            assumeBits s srRelationBits r
+            assumeBits s slRelationBits l
+
+            lrRelationBits <- getConstraints l r
+            -- expected <- relationUnion $ map toBits [Precedes, PrecededBy, Overlaps, Meets, Contains, Starts, StartedBy, FinishedBy, Equals]
+            expectedBits <- bitsFromString "pPomDsSFe"
+
+            return (lrRelationBits == expectedBits)
 
