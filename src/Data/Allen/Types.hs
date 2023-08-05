@@ -21,8 +21,8 @@ import Data.Bits
 import Data.List (intercalate, foldl')
 import Data.Word (Word16)
 
-import Data.Map (Map)
-import qualified Data.Map as Map
+import Data.Map.Strict (Map)
+import qualified Data.Map.Strict as Map
 
 type IntervalID = Int
 type IntervalGraph = Map IntervalID Interval

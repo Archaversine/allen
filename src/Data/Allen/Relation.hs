@@ -8,7 +8,7 @@ module Data.Allen.Relation ( converse
 import Data.Allen.Types
 import Data.Bits
 
-import qualified Data.Map as Map
+import qualified Data.Map.Strict as Map
 import qualified Data.Vector.Unboxed as U
 
 -- | Lookup table for inverse function.

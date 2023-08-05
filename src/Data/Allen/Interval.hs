@@ -12,7 +12,7 @@ import Control.Monad.State
 import Data.Allen.Types
 import Data.Allen.Relation
 
-import qualified Data.Map as Map
+import qualified Data.Map.Strict as Map
 
 -- | Create a new interval. 
 -- Returns the interval ID

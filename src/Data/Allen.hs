@@ -12,7 +12,7 @@ import Data.Allen.Types
 import Data.Allen.Interval
 import Data.Allen.Relation
 
-import qualified Data.Map as Map
+import qualified Data.Map.Strict as Map
 
 -- | Same as runAllenState, but discards the final value
 execAllen :: Allen a -> IntervalGraph
