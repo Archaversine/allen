@@ -45,6 +45,13 @@ main = do
     test prop_intervalAssume
     test prop_intervalAllBitsDefault
 
+    putStrLn "\nTests from Allen (1983)...\n"
+
+    test prop_Section4Subsection2Part1
+    test prop_Section4Subsection2Part2
+    test prop_Section4Subsection2Part3
+
+
 -- Throw error on test failure so that 
 -- Spec.hs can properly recognize that a test has failed.
 test :: Testable prop => prop -> IO ()
@@ -95,4 +102,91 @@ prop_intervalAllBitsDefault = evalAllen calc
             c2 <- getConstraints b a
 
             return (c1 == c2 && c1 == allRelationBits)
+
+--
+-- Examples from Section 4.2 of the Allen (1983) paper.
+--
+
+-- First inference from Section 4.2
+prop_Section4Subsection2Part1 :: Bool
+prop_Section4Subsection2Part1 = evalAllen calc
+    where calc :: Allen Bool
+          calc = do
+            -- Set up basic network.
+            r <- interval
+            s <- interval
+            l <- interval
+            -- srRelationSet [Precedes, Meets, MetBy, PrecededBy] 
+            -- slRelationSet [Overlaps, Meets]
+            let srRelationBits = bitsFromString "pmMP" 
+                slRelationBits = bitsFromString "om"
+            assumeBits s srRelationBits r
+            assumeBits s slRelationBits l
+
+            lrInferredBits <- getConstraints l r
+            -- expected [Precedes, PrecededBy, Overlaps, Meets, Contains, Starts, StartedBy, FinishedBy, Equals]
+            let lrExpectedBits = bitsFromString "pPomDsSFe"
+
+            return (lrInferredBits == lrExpectedBits)
+
+-- Additional inference from Section 4.2.
+-- Assumes part 1 inference works.
+prop_Section4Subsection2Part2 :: Bool
+prop_Section4Subsection2Part2 = evalAllen calc
+    where calc :: Allen Bool
+          calc = do
+            -- Set up same network as Part 1, but with added l->r relations.
+            r <- interval
+            s <- interval
+            l <- interval
+            -- lrRelationSet [Overlaps, Starts, During]
+            let srRelationBits = bitsFromString "pmMP" 
+                slRelationBits = bitsFromString "om"
+                lrRelationBits = bitsFromString "osd"
+            assumeBits s srRelationBits r
+            assumeBits s slRelationBits l
+            assumeBits l lrRelationBits r
+
+            lrInferredBits <- getConstraints l r
+            srInferredBits <- getConstraints s r
+            -- lrExpected [Overlaps, Starts]
+            -- srExpected [Precedes, Meets]
+            let lrExpectedBits = bitsFromString "os"
+                srExpectedBits = bitsFromString "pm"
+
+            return (lrInferredBits == lrExpectedBits
+                 && srInferredBits == srExpectedBits)
+
+-- Final inference from Section 4.2.
+-- Assumes inferences from parts 1 and 2 works.
+prop_Section4Subsection2Part3 :: Bool
+prop_Section4Subsection2Part3 = evalAllen calc
+    where calc :: Allen Bool
+          calc = do
+            -- Set up same network as Part 2.
+            r <- interval
+            s <- interval
+            l <- interval
+            let srRelationBits = bitsFromString "pmMP" 
+                slRelationBits = bitsFromString "om"
+                lrRelationBits = bitsFromString "osd"
+            assumeBits s srRelationBits r
+            assumeBits s slRelationBits l
+            assumeBits l lrRelationBits r
+
+            -- Add new interval D
+            -- w/ D -[During]-> S
+            d <- interval
+            let dsRelationBits = bitsFromString "d"
+            assumeBits d dsRelationBits s
+
+            drInferredBits <- getConstraints d r
+            dlInferredBits <- getConstraints d l
+            -- drExpected [Precedes]
+            -- dlExpected [Precedes, Overlaps, Meets, During, Starts]
+            let drExpectedBits = bitsFromString "p"
+                dlExpectedBits = bitsFromString "pomds"
+
+            return (drInferredBits == drExpectedBits
+                 && dlInferredBits == dlExpectedBits)
 
