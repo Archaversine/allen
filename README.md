@@ -63,6 +63,29 @@ calc = do
     assume a Precedes c
 ```
 
+### Accessing Specific Intervals
+
+The `interval` function returns an interval's ID instead of the interval itself.
+This is done to avoid possible immutability bugs such as using an oudated 
+version of an interval and instead treat the ID has an unchanging value 
+(which is crucial to the graph implementation). To get the actual `Interval`
+type from an ID, you may use the `fromID` function:
+
+```haskell 
+calc :: Allen ()
+calc = do
+    a <- interval 
+    i <- fromID a
+
+    return ()
+```
+
+Note that in the above example, if any changes are made to the graph, they will 
+not be reflected in the value `i`. For example, if you created another interval 
+`b` after the `fromID` function call and set a specific constraint between the 
+two, `i` will not have this information. Thus, it is better to use fromID at 
+the end of a calculation to return an `Interval` type.
+
 ## Relations
 
 Intervals can have relations with one another. For example, in the above
