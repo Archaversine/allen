@@ -19,6 +19,8 @@ still, there is a `evalAllen` which does just that. There also exists a
 
 ## Intervals 
 
+### Trivial Example
+
 Intervals can be created inside the Allen Monad using the `interval` 
 function:
 
@@ -33,6 +35,33 @@ calc = do
 
 Both `sleeps` and `snores` will have unique IDs to distinguish themselves 
 from each other.
+
+### Using Pre-existing Networks in a Computation
+
+To use a pre-existing network in your computation, you may simply treat it as a
+monadic action. For example, assume we have the network:
+
+```haskell 
+network :: Allen (IntervalID, IntervalID)
+network = do 
+    a <- interval 
+    b <- interval 
+
+    assume a During b
+    return (a, b)
+```
+
+and we want to use `network` in our own calculation, we can simply do:
+
+```haskell 
+calc :: Allen ()
+calc = do 
+    (a, b) <- network 
+
+    c <- interval
+
+    assume a Precedes c
+```
 
 ## Relations
 
@@ -112,3 +141,6 @@ This prints the following:
 Interval 0 (Contains 1)
 Interval 1 (During 0)
 ```
+
+Note that the act of adding a constraint automatically modifies the values 
+of the interval graph.
