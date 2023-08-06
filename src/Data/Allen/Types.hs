@@ -36,7 +36,7 @@ data Interval = Interval { intervalID        :: Int
 instance Show Interval where 
     show (Interval iD rels) = "Interval " <> show iD <> " (" <> rels' <> ")"
         where rels' = intercalate ", " $ map showRel $ Map.toList rels
-              showRel (n, r) = unwords (map show $ fromBits r) <> " " <> show n
+              showRel (n, r) = map relationToChar (fromBits r) <> " " <> show n
 
 -- | Return the interval given it's ID
 -- Panics if ID doesn't exist
@@ -59,6 +59,22 @@ data Relation = Precedes
               | MetBy
               | PrecededBy
               deriving (Eq, Show, Enum, Bounded)
+
+relationToChar :: Relation -> Char 
+relationToChar r = case r of 
+    Precedes     -> 'p'
+    Meets        -> 'm'
+    Overlaps     -> 'o'
+    FinishedBy   -> 'F'
+    Contains     -> 'D'
+    Starts       -> 's'
+    Equals       -> 'e'
+    StartedBy    -> 'S'
+    During       -> 'd'
+    Finishes     -> 'f'
+    OverlappedBy -> 'O'
+    MetBy        -> 'M'
+    PrecededBy   -> 'P'
 
 type RelationBits = Word16
 
