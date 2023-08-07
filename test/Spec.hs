@@ -47,7 +47,8 @@ main = do
 
     putStrLn "\nTests from Allen (1983)...\n"
 
-    test prop_Section4Subsection2Part1
+    --test prop_Section4Subsection2Part1
+    testAllen prop_Section4Subsection2Part1
     test prop_Section4Subsection2Part2
     test prop_Section4Subsection2Part3
 
@@ -58,6 +59,19 @@ test :: Testable prop => prop -> IO ()
 test func = do 
     result <- quickCheckWithResult stdArgs func 
     unless (isSuccess result) $ error "Test Failed!"
+
+-- Similar to the `test` function but for Allen calculations
+-- Upon failure: throws error and prints results of the calculation
+testAllen :: Allen Bool -> IO ()
+testAllen calc = do 
+    let (successful, result) = runAllen calc
+    unless successful $ do 
+        putStrLn "--- [ Test Failed! ] ---"
+        putStrLn "Result: "
+        putStrLn "------------------------"
+        mapM_ (print . snd) $ Map.toList result
+        putStrLn "------------------------"
+        errorWithoutStackTrace "Test Failure."
 
 prop_relationBits :: ValidRelation -> Bool 
 prop_relationBits (toRelation -> r) = r == head (fromBits $ toBits r)
@@ -108,26 +122,24 @@ prop_intervalAllBitsDefault = evalAllen calc
 --
 
 -- First inference from Section 4.2
-prop_Section4Subsection2Part1 :: Bool
-prop_Section4Subsection2Part1 = evalAllen calc
-    where calc :: Allen Bool
-          calc = do
-            -- Set up basic network.
-            r <- interval
-            s <- interval
-            l <- interval
-            -- srRelationSet [Precedes, Meets, MetBy, PrecededBy] 
-            -- slRelationSet [Overlaps, Meets]
-            let srRelationBits = bitsFromString "pmMP" 
-                slRelationBits = bitsFromString "om"
-            assumeBits s srRelationBits r
-            assumeBits s slRelationBits l
+prop_Section4Subsection2Part1 :: Allen Bool
+prop_Section4Subsection2Part1 = do 
+    -- Set up basic network.
+    r <- interval
+    s <- interval
+    l <- interval
+    -- srRelationSet [Precedes, Meets, MetBy, PrecededBy] 
+    -- slRelationSet [Overlaps, Meets]
+    let srRelationBits = bitsFromString "pmMP" 
+        slRelationBits = bitsFromString "omM"
+    assumeBits s srRelationBits r
+    assumeBits s slRelationBits l
 
-            lrInferredBits <- getConstraints l r
-            -- expected [Precedes, PrecededBy, Overlaps, Meets, Contains, Starts, StartedBy, FinishedBy, Equals]
-            let lrExpectedBits = bitsFromString "pPomDsSFe"
+    lrInferredBits <- getConstraints l r
+    -- expected [Precedes, PrecededBy, Overlaps, Meets, Contains, Starts, StartedBy, FinishedBy, Equals]
+    let lrExpectedBits = bitsFromString "pPomDsSFe"
 
-            return (lrInferredBits == lrExpectedBits)
+    return (lrInferredBits == lrExpectedBits)
 
 -- Additional inference from Section 4.2.
 -- Assumes part 1 inference works.
