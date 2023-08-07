@@ -36,7 +36,8 @@ data Interval = Interval { intervalID        :: Int
 instance Show Interval where 
     show (Interval iD rels) = "Interval " <> show iD <> " (" <> rels' <> ")"
         where rels' = intercalate ", " $ map showRel $ Map.toList rels
-              showRel (n, r) = map relationToChar (fromBits r) <> " " <> show n
+              showRel (n, r) | r == allRelationBits = "??? " <> show n
+                             | otherwise = map relationToChar (fromBits r) <> " " <> show n
 
 -- | Return the interval given it's ID
 -- Panics if ID doesn't exist

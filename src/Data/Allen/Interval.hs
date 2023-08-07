@@ -1,4 +1,5 @@
 module Data.Allen.Interval ( interval
+                           , intervalCount
                            , fromID
                            , assume
                            , assumeSet
@@ -30,6 +31,9 @@ interval = do
 
     put $ Map.insert iD i intervals'
     return iD 
+
+intervalCount :: Allen Int 
+intervalCount = gets Map.size
 
 -- | Set the relations between two intervals 
 setRelation :: Interval -> RelationBits -> IntervalID -> Interval 
@@ -71,44 +75,40 @@ propogate' = do
         ((i, j):_) -> do 
             modify tail -- Remove the first element from the queue
             propogate'' (i, j)
+            propogate'' (j, i)
             lift get
 
 propogate'' :: (IntervalID, IntervalID) -> StateT [(IntervalID, IntervalID)] Allen () 
 propogate'' (i, j) = do 
-    intervals <- lift $ gets Map.toList
-    
-    -- For every node k, update the relations between k and j
-    i' <- forM intervals $ \(k, intervalK) -> do 
-        if not (i == j || j == k || k == i) then do
-            constraints <- lift $ compose <$> getConstraints k i <*> getConstraints i j
-            nkj         <- lift $ getConstraints k j
+    count <- lift intervalCount
 
-            let rkj = nkj .&. constraints 
+    let range = [k | k <- [0 .. count - 1], k /= i, k /= j]
 
-            -- If rkj is a subset of nkj, then add (k, j) to the queue
-            when (rkj .|. nkj == nkj && rkj <= nkj) $ do 
-                modify ((k, j):)
+    forM_ range $ \k -> do 
+        constraints <- lift $ compose <$> getConstraints k i <*> getConstraints i j
+        nkj         <- lift $ getConstraints k j
 
-            return (k, setRelation intervalK rkj j)
+        let rkj = nkj .&. constraints 
 
-        else return (k, intervalK)
+        -- If rkj is a proper subset of nkj, then add (k, j) to the queue
+        when (rkj .|. nkj == nkj && rkj < nkj) $ do 
+            modify ((k, j):)
 
-    -- For every node k, update the relations between i and k
-    i'' <- forM i' $ \(k, intervalK) -> do 
-        if not (i == j || j == k || k == i) then do
-            constraints <- lift $ compose <$> getConstraints i j <*> getConstraints j k
-            nik         <- lift $ getConstraints i k 
+        intervalK <- lift $ fromID k
+        lift $ modify $ Map.insert k (setRelation intervalK rkj j)
 
-            let rik = nik .&. constraints 
+    forM_ range $ \k -> do 
+        constraints <- lift $ compose <$> getConstraints i j <*> getConstraints j k
+        nik         <- lift $ getConstraints i k 
 
-            -- If rik is a subset of nik, then add (i, k) to the queue
-            when (rik .|. nik == nik && rik <= nik) $ do 
-                modify ((i, k):)
+        let rik = nik .&. constraints
 
-            return (k, setRelation intervalK rik i)
-        else return (k, intervalK)
+        -- If rik is a proper subset of nik, then add (i, k) to the queue
+        when (rik .|. nik == nik && rik < nik) $ do 
+            modify ((i, k):)
 
-    lift $ put $ Map.fromList i''
+        intervalI <- lift $ fromID i
+        lift $ modify $ Map.insert i (setRelation intervalI rik k)
    
 -- | Return the set of possible constraints/relations between two intervals
 getConstraints :: IntervalID -> IntervalID -> Allen RelationBits
