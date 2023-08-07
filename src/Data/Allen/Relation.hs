@@ -1,3 +1,9 @@
+{-|
+ - Module      : Data.Allen.Relation
+ - Description : Functions for working with Allen's interval algebra relations.
+ - Maintainer  : Archaversine 
+ -}
+
 module Data.Allen.Relation ( converse
                            , hasRelation
                            , composeSingle
@@ -48,7 +54,11 @@ relationFromChar x = case x of
     _   -> error $ "relationFromChar: invalid relation " <> [x]
 
 
--- | Same as `relationFromChar` but for multiple chars.
+-- | Given a string, return the bit representation of the set of relations.
+-- Valid characters: pmoFDseSdfoMP.
+--
+-- You may also use @full@ to represent all relations, or @concur@ to represent
+-- all relations excluding Precedes and PrecededBy.
 bitsFromString :: String -> RelationBits
 bitsFromString x | x == "full"   = rBits allRelations 
                  | x == "concur" = rBits [Overlaps .. OverlappedBy]

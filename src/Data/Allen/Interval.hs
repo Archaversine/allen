@@ -1,3 +1,9 @@
+{-|
+ - Module      : Data.Allen.Interval
+ - Description : Functions for working with intervals.
+ - Maintainer  : Archaversine 
+ -}
+
 module Data.Allen.Interval ( interval
                            , intervalCount
                            , fromID
@@ -19,7 +25,7 @@ import Data.Bits
 import qualified Data.Map.Strict as Map
 
 -- | Create a new interval. 
--- Returns the interval ID
+-- Returns the interval ID.
 interval :: Allen IntervalID 
 interval = do
     intervals <- get
@@ -32,10 +38,11 @@ interval = do
     put $ Map.insert iD i intervals'
     return iD 
 
+-- | Return the number of intervals that are currently in the graph.
 intervalCount :: Allen Int 
 intervalCount = gets Map.size
 
--- | Set the relations between two intervals 
+-- | Set the relations between two intervals.
 setRelation :: Interval -> RelationBits -> IntervalID -> Interval 
 setRelation i1 r i2 = i1 { intervalRelations = relations }
     where relations = Map.insert i2 r $ intervalRelations i1
@@ -44,7 +51,7 @@ setRelation i1 r i2 = i1 { intervalRelations = relations }
 assume :: IntervalID -> Relation -> IntervalID -> Allen ()
 assume id1 r = assumeBits id1 (toBits r)
 
--- | Define a set of relations between two intervals
+-- | Define a set of relations between two intervals.
 assumeSet :: IntervalID -> [Relation] -> IntervalID -> Allen ()
 assumeSet id1 = assumeBits id1 . relationUnion . map toBits
 
@@ -61,7 +68,7 @@ assumeBits id1 r id2 = do
     propogate (id1, id2)
 
 -- | Propogate the relations between two intervals to all other intervals 
--- that are related to either of the two intervals
+-- that are related to either of the two intervals.
 propogate :: (IntervalID, IntervalID) -> Allen ()
 propogate r = evalStateT propogate' [r]
 
@@ -108,7 +115,7 @@ propogate'' (i, j) = do
         intervalI <- lift $ fromID i
         lift $ modify $ Map.insert i (setRelation intervalI rik k)
    
--- | Return the set of possible constraints/relations between two intervals
+-- | Return the set of possible constraints/relations between two intervals.
 getConstraints :: IntervalID -> IntervalID -> Allen RelationBits
 getConstraints id1 id2 = Map.findWithDefault 0 id2 . intervalRelations <$> fromID id1
 
