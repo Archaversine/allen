@@ -76,7 +76,7 @@ propogate' = do
             modify tail -- Remove the first element from the queue
             propogate'' (i, j)
             propogate'' (j, i)
-            lift get
+            propogate'
 
 propogate'' :: (IntervalID, IntervalID) -> StateT [(IntervalID, IntervalID)] Allen () 
 propogate'' (i, j) = do 
