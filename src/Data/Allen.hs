@@ -1,25 +1,24 @@
-{-|
- - Module      : Data.Allen 
- - Description : Main module for Allen's interval algebra.
- - Maintainer  : Archaversine 
- -}
-
--- | This module provides a monad for computing with Allen's interval algebra. 
---  The monad keeps track of the interval graph that is being built up during 
---  the computation. The interval graph is represented as a map from interval 
---  identifiers to intervals. 
+-- | 
+-- Module      : Data.Allen 
+-- Description : Main module for Allen's interval algebra. 
+-- Maintainer  : Archaversine
 --
---  = Intervals
---  Intervals can be created using the 'interval' function:
+-- This module provides a monad for computing with Allen's interval algebra. 
+-- The monad keeps track of the interval graph that is being built up during 
+-- the computation. The interval graph is represented as a map from interval 
+-- identifiers to intervals. 
 --
---  @ 
---  calc :: Allen ()
---  calc = do 
---    sleeps <- interval
---    snores <- interval
---    wakeup <- interval
---    ...
---  @ 
+-- = Intervals
+-- Intervals can be created using the 'interval' function:
+--
+-- @ 
+-- calc :: Allen ()
+-- calc = do 
+--   sleeps <- interval
+--   snores <- interval
+--   wakeup <- interval
+--   ...
+-- @ 
 --
 -- == Retrieving interval data
 -- Most functions perform operations on intervals solely with the use of their 
