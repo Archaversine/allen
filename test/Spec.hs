@@ -64,7 +64,9 @@ test func = do
 testAllen :: Allen Bool -> IO ()
 testAllen calc = do 
     let (successful, result) = runAllen calc
-    unless successful $ do 
+    if successful then 
+        putStrLn "+++ OK, passed 1 test."
+    else do
         putStrLn "--- [ Test Failed! ] ---"
         putStrLn "Result: "
         putStrLn "------------------------"
