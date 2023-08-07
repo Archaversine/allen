@@ -128,7 +128,7 @@ prop_Section4Subsection2Part1 = do
     -- srRelationSet [Precedes, Meets, MetBy, PrecededBy] 
     -- slRelationSet [Overlaps, Meets]
     let srRelationBits = bitsFromString "pmMP" 
-        slRelationBits = bitsFromString "omM"
+        slRelationBits = bitsFromString "om"
     assumeBits s srRelationBits r
     assumeBits s slRelationBits l
 
