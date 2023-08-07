@@ -1,6 +1,5 @@
 module Data.Allen.Interval ( interval
                            , intervalCount
-                           , clearIntervals
                            , fromID
                            , assume
                            , assumeSet
@@ -35,9 +34,6 @@ interval = do
 
 intervalCount :: Allen Int 
 intervalCount = gets Map.size
-
-clearIntervals :: Allen ()
-clearIntervals = put Map.empty
 
 -- | Set the relations between two intervals 
 setRelation :: Interval -> RelationBits -> IntervalID -> Interval 
