@@ -11,7 +11,7 @@
 -- | <ul>
 --   <li>Module : Data.Allen.Types</li>
 --   <li>Description : Types for Allen's interval algebra.</li>
---   <li>Maintainer : Archaversine |</li>
+--   <li>Maintainer : Archaversine</li>
 --   </ul>
 module Data.Allen.Types
 data Interval
@@ -68,7 +68,7 @@ instance GHC.Show.Show Data.Allen.Types.Interval
 --   <li>Module : Data.Allen.Relation</li>
 --   <li>Description : Functions for working with Allen's interval algebra
 --   relations.</li>
---   <li>Maintainer : Archaversine |</li>
+--   <li>Maintainer : Archaversine</li>
 --   </ul>
 module Data.Allen.Relation
 
@@ -84,14 +84,19 @@ composeSingle :: Relation -> Relation -> RelationBits
 -- | Compose two sets of relations.
 compose :: RelationBits -> RelationBits -> RelationBits
 
--- | Same as <a>relationFromChar</a> but for multiple chars.
+-- | Given a string, return the bit representation of the set of relations.
+--   Valid characters: pmoFDseSdfoMP.
+--   
+--   You may also use <tt>full</tt> to represent all relations, or
+--   <tt>concur</tt> to represent all relations excluding Precedes and
+--   PrecededBy.
 bitsFromString :: String -> RelationBits
 
 
 -- | <ul>
 --   <li>Module : Data.Allen.Interval</li>
 --   <li>Description : Functions for working with intervals.</li>
---   <li>Maintainer : Archaversine |</li>
+--   <li>Maintainer : Archaversine</li>
 --   </ul>
 module Data.Allen.Interval
 
@@ -124,7 +129,7 @@ getConstraints :: IntervalID -> IntervalID -> Allen RelationBits
 -- | <ul>
 --   <li>Module : Data.Allen</li>
 --   <li>Description : Main module for Allen's interval algebra.</li>
---   <li>Maintainer : Archaversine |</li>
+--   <li>Maintainer : Archaversine</li>
 --   </ul>
 module Data.Allen
 
