@@ -19,6 +19,8 @@ still, there is a `evalAllen` which does just that. There also exists a
 
 ## Intervals 
 
+### Trivial Example
+
 Intervals can be created inside the Allen Monad using the `interval` 
 function:
 
@@ -33,6 +35,56 @@ calc = do
 
 Both `sleeps` and `snores` will have unique IDs to distinguish themselves 
 from each other.
+
+### Using Pre-existing Networks in a Computation
+
+To use a pre-existing network in your computation, you may simply treat it as a
+monadic action. For example, assume we have the network:
+
+```haskell 
+network :: Allen (IntervalID, IntervalID)
+network = do 
+    a <- interval 
+    b <- interval 
+
+    assume a During b
+    return (a, b)
+```
+
+and we want to use `network` in our own calculation, we can simply do:
+
+```haskell 
+calc :: Allen ()
+calc = do 
+    (a, b) <- network 
+
+    c <- interval
+
+    assume a Precedes c
+```
+
+### Accessing Specific Intervals
+
+The `interval` function returns an interval's ID instead of the interval itself.
+This is done to avoid possible immutability bugs such as using an oudated 
+version of an interval and instead treat the ID has an unchanging value 
+(which is crucial to the graph implementation). To get the actual `Interval`
+type from an ID, you may use the `fromID` function:
+
+```haskell 
+calc :: Allen ()
+calc = do
+    a <- interval 
+    i <- fromID a
+
+    return ()
+```
+
+Note that in the above example, if any changes are made to the graph, they will 
+not be reflected in the value `i`. For example, if you created another interval 
+`b` after the `fromID` function call and set a specific constraint between the 
+two, `i` will not have this information. Thus, it is better to use fromID at 
+the end of a calculation to return an `Interval` type.
 
 ## Relations
 
@@ -112,3 +164,6 @@ This prints the following:
 Interval 0 (Contains 1)
 Interval 1 (During 0)
 ```
+
+Note that the act of adding a constraint automatically modifies the values 
+of the interval graph.

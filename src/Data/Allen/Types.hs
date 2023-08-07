@@ -1,5 +1,11 @@
 {-# LANGUAGE BinaryLiterals #-}
 
+{-|
+ - Module      : Data.Allen.Types
+ - Description : Types for Allen's interval algebra.
+ - Maintainer  : Archaversine 
+ -}
+
 module Data.Allen.Types ( Interval(..)
                         , Allen
                         , IntervalID
@@ -31,16 +37,15 @@ data Interval = Interval { intervalID        :: Int
                          , intervalRelations :: Map IntervalID RelationBits
                          } 
 
--- | Show instance for Interval 
--- Ex: Interval 3 (During 1, Contains 2)
+-- | Ex: Interval 3 (d 1, D 2)
 instance Show Interval where 
     show (Interval iD rels) = "Interval " <> show iD <> " (" <> rels' <> ")"
         where rels' = intercalate ", " $ map showRel $ Map.toList rels
               showRel (n, r) | r == allRelationBits = "??? " <> show n
                              | otherwise = map relationToChar (fromBits r) <> " " <> show n
 
--- | Return the interval given it's ID
--- Panics if ID doesn't exist
+-- | Return the interval given it's ID.
+-- Panics if ID doesn't exist.
 fromID :: IntervalID -> Allen Interval 
 fromID n = gets (Map.! n)
 
