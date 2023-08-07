@@ -1,3 +1,9 @@
+{-|
+ - Module      : Data.Allen.Relation
+ - Description : Functions for working with Allen's interval algebra relations.
+ - Maintainer  : Archaversine 
+ -}
+
 module Data.Allen.Relation ( converse
                            , hasRelation
                            , composeSingle

@@ -1,0 +1,470 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><link rel="stylesheet" type="text/css" href="style.css" /><script type="text/javascript" src="highlight.js"></script></head><body><pre><span class="annot"><span class="hs-comment">{-|
+ - Module      : Data.Allen.Relation
+ - Description : Functions for working with Allen's interval algebra relations.
+ - Maintainer  : Archaversine 
+|-}</span></span><span>
+</span><span id="line-6"></span><span>
+</span><span id="line-7"></span><span class="hs-keyword">module</span><span> </span><span class="hs-identifier">Data.Allen.Relation</span><span> </span><span class="hs-special">(</span><span> </span><span class="annot"><a href="Data.Allen.Relation.html#converse"><span class="hs-identifier">converse</span></a></span><span>
+</span><span id="line-8"></span><span>                           </span><span class="hs-special">,</span><span> </span><span class="annot"><a href="Data.Allen.Relation.html#hasRelation"><span class="hs-identifier">hasRelation</span></a></span><span>
+</span><span id="line-9"></span><span>                           </span><span class="hs-special">,</span><span> </span><span class="annot"><a href="Data.Allen.Relation.html#composeSingle"><span class="hs-identifier">composeSingle</span></a></span><span>
+</span><span id="line-10"></span><span>                           </span><span class="hs-special">,</span><span> </span><span class="annot"><a href="Data.Allen.Relation.html#compose"><span class="hs-identifier">compose</span></a></span><span>
+</span><span id="line-11"></span><span>                           </span><span class="hs-special">,</span><span> </span><span class="annot"><a href="Data.Allen.Relation.html#bitsFromString"><span class="hs-identifier">bitsFromString</span></a></span><span>
+</span><span id="line-12"></span><span>                           </span><span class="hs-special">)</span><span> </span><span class="hs-keyword">where</span><span>
+</span><span id="line-13"></span><span>
+</span><span id="line-14"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><a href="Data.Allen.Types.html"><span class="hs-identifier">Data.Allen.Types</span></a></span><span>
+</span><span id="line-15"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><span class="hs-identifier">Data.Bits</span></span><span>
+</span><span id="line-16"></span><span>
+</span><span id="line-17"></span><span class="hs-keyword">import</span><span> </span><span class="hs-keyword">qualified</span><span> </span><span class="annot"><span class="hs-identifier">Data.Map.Strict</span></span><span> </span><span class="hs-keyword">as</span><span> </span><span class="annot"><span class="hs-identifier">Map</span></span><span>
+</span><span id="line-18"></span><span class="hs-keyword">import</span><span> </span><span class="hs-keyword">qualified</span><span> </span><span class="annot"><span class="hs-identifier">Data.Vector.Unboxed</span></span><span> </span><span class="hs-keyword">as</span><span> </span><span class="annot"><span class="hs-identifier">U</span></span><span>
+</span><span id="line-19"></span><span>
+</span><span id="line-20"></span><span class="annot"><span class="hs-comment">-- | Lookup table for inverse function.</span></span><span>
+</span><span id="line-21"></span><span class="annot"><a href="Data.Allen.Relation.html#inverseLookup"><span class="hs-identifier hs-type">inverseLookup</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="hs-special">[</span><span class="hs-special">(</span><span class="annot"><a href="Data.Allen.Types.html#RelationBits"><span class="hs-identifier hs-type">RelationBits</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><a href="Data.Allen.Types.html#RelationBits"><span class="hs-identifier hs-type">RelationBits</span></a></span><span class="hs-special">)</span><span class="hs-special">]</span><span>
+</span><span id="line-22"></span><span id="inverseLookup"><span class="annot"><span class="annottext">inverseLookup :: [(RelationBits, RelationBits)]
+</span><a href="Data.Allen.Relation.html#inverseLookup"><span class="hs-identifier hs-var hs-var">inverseLookup</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">[RelationBits] -&gt; [RelationBits] -&gt; [(RelationBits, RelationBits)]
+forall a b. [a] -&gt; [b] -&gt; [(a, b)]
+</span><span class="hs-identifier hs-var">zip</span></span><span> </span><span class="annot"><span class="annottext">[RelationBits]
+</span><a href="#local-6989586621679051419"><span class="hs-identifier hs-var">bits</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">[RelationBits] -&gt; [RelationBits]
+forall a. [a] -&gt; [a]
+</span><span class="hs-identifier hs-var">reverse</span></span><span> </span><span class="annot"><span class="annottext">[RelationBits]
+</span><a href="#local-6989586621679051419"><span class="hs-identifier hs-var">bits</span></a></span><span class="hs-special">)</span><span>
+</span><span id="line-23"></span><span>    </span><span class="hs-keyword">where</span><span> </span><span id="local-6989586621679051419"><span class="annot"><span class="annottext">bits :: [RelationBits]
+</span><a href="#local-6989586621679051419"><span class="hs-identifier hs-var hs-var">bits</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">(Relation -&gt; RelationBits) -&gt; [Relation] -&gt; [RelationBits]
+forall a b. (a -&gt; b) -&gt; [a] -&gt; [b]
+</span><span class="hs-identifier hs-var">map</span></span><span> </span><span class="annot"><span class="annottext">Relation -&gt; RelationBits
+</span><a href="Data.Allen.Types.html#toBits"><span class="hs-identifier hs-var">toBits</span></a></span><span> </span><span class="annot"><span class="annottext">[Relation]
+</span><a href="Data.Allen.Types.html#allRelations"><span class="hs-identifier hs-var">allRelations</span></a></span><span>
+</span><span id="line-24"></span><span>
+</span><span id="line-25"></span><span class="annot"><span class="hs-comment">-- | Return the converse of a Relation bitset.</span></span><span>
+</span><span id="line-26"></span><span class="annot"><a href="Data.Allen.Relation.html#converse"><span class="hs-identifier hs-type">converse</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="Data.Allen.Types.html#RelationBits"><span class="hs-identifier hs-type">RelationBits</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="Data.Allen.Types.html#RelationBits"><span class="hs-identifier hs-type">RelationBits</span></a></span><span> </span><span>
+</span><span id="line-27"></span><span id="converse"><span class="annot"><span class="annottext">converse :: RelationBits -&gt; RelationBits
+</span><a href="Data.Allen.Relation.html#converse"><span class="hs-identifier hs-var hs-var">converse</span></a></span></span><span> </span><span class="annot"><span class="annottext">RelationBits
+</span><span class="hs-number">0</span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">RelationBits
+</span><span class="hs-number">0</span></span><span>
+</span><span id="line-28"></span><span class="annot"><a href="Data.Allen.Relation.html#converse"><span class="hs-identifier hs-var">converse</span></a></span><span> </span><span id="local-6989586621679051423"><span class="annot"><span class="annottext">RelationBits
+</span><a href="#local-6989586621679051423"><span class="hs-identifier hs-var">x</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">[RelationBits] -&gt; RelationBits
+</span><a href="Data.Allen.Types.html#relationUnion"><span class="hs-identifier hs-var">relationUnion</span></a></span><span> </span><span class="annot"><span class="annottext">([RelationBits] -&gt; RelationBits) -&gt; [RelationBits] -&gt; RelationBits
+forall a b. (a -&gt; b) -&gt; a -&gt; b
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">(IntervalID -&gt; RelationBits) -&gt; [IntervalID] -&gt; [RelationBits]
+forall a b. (a -&gt; b) -&gt; [a] -&gt; [b]
+</span><span class="hs-identifier hs-var">map</span></span><span> </span><span class="annot"><span class="annottext">IntervalID -&gt; RelationBits
+</span><a href="#local-6989586621679051425"><span class="hs-identifier hs-var">func</span></a></span><span> </span><span class="hs-special">[</span><span class="annot"><span class="annottext">IntervalID
+</span><span class="hs-number">0</span></span><span> </span><span class="hs-glyph">..</span><span> </span><span class="annot"><span class="annottext">Relation -&gt; IntervalID
+forall a. Enum a =&gt; a -&gt; IntervalID
+</span><span class="hs-identifier hs-var">fromEnum</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Relation
+forall a. Bounded a =&gt; a
+</span><span class="hs-identifier hs-var">maxBound</span></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="Data.Allen.Types.html#Relation"><span class="hs-identifier hs-type">Relation</span></a></span><span class="hs-special">)</span><span class="hs-special">]</span><span>
+</span><span id="line-29"></span><span>    </span><span class="hs-keyword">where</span><span> </span><span id="local-6989586621679051425"><span class="annot"><span class="annottext">func :: IntervalID -&gt; RelationBits
+</span><a href="#local-6989586621679051425"><span class="hs-identifier hs-var hs-var">func</span></a></span></span><span> </span><span id="local-6989586621679051434"><span class="annot"><span class="annottext">IntervalID
+</span><a href="#local-6989586621679051434"><span class="hs-identifier hs-var">i</span></a></span></span><span> </span><span class="hs-glyph">|</span><span> </span><span class="annot"><span class="annottext">RelationBits -&gt; IntervalID -&gt; Bool
+forall a. Bits a =&gt; a -&gt; IntervalID -&gt; Bool
+</span><span class="hs-identifier hs-var">testBit</span></span><span> </span><span class="annot"><span class="annottext">RelationBits
+</span><a href="#local-6989586621679051423"><span class="hs-identifier hs-var">x</span></a></span><span> </span><span class="annot"><span class="annottext">IntervalID
+</span><a href="#local-6989586621679051434"><span class="hs-identifier hs-var">i</span></a></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">(RelationBits, RelationBits) -&gt; RelationBits
+forall a b. (a, b) -&gt; b
+</span><span class="hs-identifier hs-var">snd</span></span><span> </span><span class="annot"><span class="annottext">((RelationBits, RelationBits) -&gt; RelationBits)
+-&gt; (RelationBits, RelationBits) -&gt; RelationBits
+forall a b. (a -&gt; b) -&gt; a -&gt; b
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">[(RelationBits, RelationBits)] -&gt; (RelationBits, RelationBits)
+forall a. HasCallStack =&gt; [a] -&gt; a
+</span><span class="hs-identifier hs-var">head</span></span><span> </span><span class="annot"><span class="annottext">([(RelationBits, RelationBits)] -&gt; (RelationBits, RelationBits))
+-&gt; [(RelationBits, RelationBits)] -&gt; (RelationBits, RelationBits)
+forall a b. (a -&gt; b) -&gt; a -&gt; b
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">((RelationBits, RelationBits) -&gt; Bool)
+-&gt; [(RelationBits, RelationBits)] -&gt; [(RelationBits, RelationBits)]
+forall a. (a -&gt; Bool) -&gt; [a] -&gt; [a]
+</span><span class="hs-identifier hs-var">filter</span></span><span> </span><span class="hs-special">(</span><span class="hs-special">(</span><span class="annot"><span class="annottext">RelationBits -&gt; RelationBits -&gt; Bool
+forall a. Eq a =&gt; a -&gt; a -&gt; Bool
+</span><span class="hs-operator hs-var">==</span></span><span> </span><span class="annot"><span class="annottext">IntervalID -&gt; RelationBits
+forall a. Bits a =&gt; IntervalID -&gt; a
+</span><span class="hs-identifier hs-var">bit</span></span><span> </span><span class="annot"><span class="annottext">IntervalID
+</span><a href="#local-6989586621679051434"><span class="hs-identifier hs-var">i</span></a></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">(RelationBits -&gt; Bool)
+-&gt; ((RelationBits, RelationBits) -&gt; RelationBits)
+-&gt; (RelationBits, RelationBits)
+-&gt; Bool
+forall b c a. (b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; c
+</span><span class="hs-operator hs-var">.</span></span><span> </span><span class="annot"><span class="annottext">(RelationBits, RelationBits) -&gt; RelationBits
+forall a b. (a, b) -&gt; a
+</span><span class="hs-identifier hs-var">fst</span></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">[(RelationBits, RelationBits)]
+</span><a href="Data.Allen.Relation.html#inverseLookup"><span class="hs-identifier hs-var">inverseLookup</span></a></span><span>
+</span><span id="line-30"></span><span>                 </span><span class="hs-glyph">|</span><span> </span><span class="annot"><span class="annottext">Bool
+</span><span class="hs-identifier hs-var">otherwise</span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">RelationBits
+</span><span class="hs-number">0</span></span><span>
+</span><span id="line-31"></span><span>
+</span><span id="line-32"></span><span class="annot"><span class="hs-comment">-- | Return if a relation exists between two intervals.</span></span><span>
+</span><span id="line-33"></span><span class="annot"><a href="Data.Allen.Relation.html#hasRelation"><span class="hs-identifier hs-type">hasRelation</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="Data.Allen.Types.html#Relation"><span class="hs-identifier hs-type">Relation</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="Data.Allen.Types.html#IntervalID"><span class="hs-identifier hs-type">IntervalID</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="Data.Allen.Types.html#IntervalID"><span class="hs-identifier hs-type">IntervalID</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="Data.Allen.Types.html#Allen"><span class="hs-identifier hs-type">Allen</span></a></span><span> </span><span class="annot"><span class="hs-identifier hs-type">Bool</span></span><span>
+</span><span id="line-34"></span><span id="hasRelation"><span class="annot"><span class="annottext">hasRelation :: Relation -&gt; IntervalID -&gt; IntervalID -&gt; Allen Bool
+</span><a href="Data.Allen.Relation.html#hasRelation"><span class="hs-identifier hs-var hs-var">hasRelation</span></a></span></span><span> </span><span id="local-6989586621679051441"><span class="annot"><span class="annottext">Relation
+</span><a href="#local-6989586621679051441"><span class="hs-identifier hs-var">r</span></a></span></span><span> </span><span id="local-6989586621679051442"><span class="annot"><span class="annottext">IntervalID
+</span><a href="#local-6989586621679051442"><span class="hs-identifier hs-var">id1</span></a></span></span><span> </span><span id="local-6989586621679051443"><span class="annot"><span class="annottext">IntervalID
+</span><a href="#local-6989586621679051443"><span class="hs-identifier hs-var">id2</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-keyword">do</span><span> </span><span>
+</span><span id="line-35"></span><span>    </span><span id="local-6989586621679051444"><span class="annot"><span class="annottext">RelationBits
+</span><a href="#local-6989586621679051444"><span class="hs-identifier hs-var">relations</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">RelationBits
+-&gt; IntervalID -&gt; Map IntervalID RelationBits -&gt; RelationBits
+forall k a. Ord k =&gt; a -&gt; k -&gt; Map k a -&gt; a
+</span><span class="hs-identifier hs-var">Map.findWithDefault</span></span><span> </span><span class="annot"><span class="annottext">RelationBits
+</span><span class="hs-number">0</span></span><span> </span><span class="annot"><span class="annottext">IntervalID
+</span><a href="#local-6989586621679051443"><span class="hs-identifier hs-var">id2</span></a></span><span> </span><span class="annot"><span class="annottext">(Map IntervalID RelationBits -&gt; RelationBits)
+-&gt; (Interval -&gt; Map IntervalID RelationBits)
+-&gt; Interval
+-&gt; RelationBits
+forall b c a. (b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; c
+</span><span class="hs-operator hs-var">.</span></span><span> </span><span class="annot"><span class="annottext">Interval -&gt; Map IntervalID RelationBits
+</span><a href="Data.Allen.Types.html#intervalRelations"><span class="hs-identifier hs-var">intervalRelations</span></a></span><span> </span><span class="annot"><span class="annottext">(Interval -&gt; RelationBits)
+-&gt; StateT IntervalGraph Identity Interval
+-&gt; StateT IntervalGraph Identity RelationBits
+forall (f :: * -&gt; *) a b. Functor f =&gt; (a -&gt; b) -&gt; f a -&gt; f b
+</span><span class="hs-operator hs-var">&lt;$&gt;</span></span><span> </span><span class="annot"><span class="annottext">IntervalID -&gt; StateT IntervalGraph Identity Interval
+</span><a href="Data.Allen.Types.html#fromID"><span class="hs-identifier hs-var">fromID</span></a></span><span> </span><span class="annot"><span class="annottext">IntervalID
+</span><a href="#local-6989586621679051442"><span class="hs-identifier hs-var">id1</span></a></span><span> </span><span>
+</span><span id="line-36"></span><span>    </span><span class="annot"><span class="annottext">Bool -&gt; Allen Bool
+forall a. a -&gt; StateT IntervalGraph Identity a
+forall (m :: * -&gt; *) a. Monad m =&gt; a -&gt; m a
+</span><span class="hs-identifier hs-var">return</span></span><span> </span><span class="annot"><span class="annottext">(Bool -&gt; Allen Bool) -&gt; Bool -&gt; Allen Bool
+forall a b. (a -&gt; b) -&gt; a -&gt; b
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">Relation -&gt; RelationBits
+</span><a href="Data.Allen.Types.html#toBits"><span class="hs-identifier hs-var">toBits</span></a></span><span> </span><span class="annot"><span class="annottext">Relation
+</span><a href="#local-6989586621679051441"><span class="hs-identifier hs-var">r</span></a></span><span> </span><span class="annot"><span class="annottext">RelationBits -&gt; RelationBits -&gt; RelationBits
+forall a. Bits a =&gt; a -&gt; a -&gt; a
+</span><span class="hs-operator hs-var">.&amp;.</span></span><span> </span><span class="annot"><span class="annottext">RelationBits
+</span><a href="#local-6989586621679051444"><span class="hs-identifier hs-var">relations</span></a></span><span> </span><span class="annot"><span class="annottext">RelationBits -&gt; RelationBits -&gt; Bool
+forall a. Eq a =&gt; a -&gt; a -&gt; Bool
+</span><span class="hs-operator hs-var">/=</span></span><span> </span><span class="annot"><span class="annottext">RelationBits
+</span><span class="hs-number">0</span></span><span>
+</span><span id="line-37"></span><span>
+</span><span id="line-38"></span><span class="annot"><span class="hs-comment">-- | Valid Chars: pmoFDseSdfoMP.</span></span><span>
+</span><span id="line-39"></span><span class="annot"><a href="Data.Allen.Relation.html#relationFromChar"><span class="hs-identifier hs-type">relationFromChar</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Char</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="Data.Allen.Types.html#Relation"><span class="hs-identifier hs-type">Relation</span></a></span><span>
+</span><span id="line-40"></span><span id="relationFromChar"><span class="annot"><span class="annottext">relationFromChar :: Char -&gt; Relation
+</span><a href="Data.Allen.Relation.html#relationFromChar"><span class="hs-identifier hs-var hs-var">relationFromChar</span></a></span></span><span> </span><span id="local-6989586621679051452"><span class="annot"><span class="annottext">Char
+</span><a href="#local-6989586621679051452"><span class="hs-identifier hs-var">x</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-keyword">case</span><span> </span><span class="annot"><span class="annottext">Char
+</span><a href="#local-6989586621679051452"><span class="hs-identifier hs-var">x</span></a></span><span> </span><span class="hs-keyword">of</span><span> </span><span>
+</span><span id="line-41"></span><span>    </span><span class="annot"><span class="annottext">Char
+</span><span class="hs-char">'p'</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Relation
+</span><a href="Data.Allen.Types.html#Precedes"><span class="hs-identifier hs-var">Precedes</span></a></span><span> </span><span>
+</span><span id="line-42"></span><span>    </span><span class="annot"><span class="annottext">Char
+</span><span class="hs-char">'m'</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Relation
+</span><a href="Data.Allen.Types.html#Meets"><span class="hs-identifier hs-var">Meets</span></a></span><span> </span><span>
+</span><span id="line-43"></span><span>    </span><span class="annot"><span class="annottext">Char
+</span><span class="hs-char">'o'</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Relation
+</span><a href="Data.Allen.Types.html#Overlaps"><span class="hs-identifier hs-var">Overlaps</span></a></span><span> </span><span>
+</span><span id="line-44"></span><span>    </span><span class="annot"><span class="annottext">Char
+</span><span class="hs-char">'F'</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Relation
+</span><a href="Data.Allen.Types.html#FinishedBy"><span class="hs-identifier hs-var">FinishedBy</span></a></span><span> </span><span>
+</span><span id="line-45"></span><span>    </span><span class="annot"><span class="annottext">Char
+</span><span class="hs-char">'D'</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Relation
+</span><a href="Data.Allen.Types.html#Contains"><span class="hs-identifier hs-var">Contains</span></a></span><span> </span><span>
+</span><span id="line-46"></span><span>    </span><span class="annot"><span class="annottext">Char
+</span><span class="hs-char">'s'</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Relation
+</span><a href="Data.Allen.Types.html#Starts"><span class="hs-identifier hs-var">Starts</span></a></span><span> </span><span>
+</span><span id="line-47"></span><span>    </span><span class="annot"><span class="annottext">Char
+</span><span class="hs-char">'e'</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Relation
+</span><a href="Data.Allen.Types.html#Equals"><span class="hs-identifier hs-var">Equals</span></a></span><span> </span><span>
+</span><span id="line-48"></span><span>    </span><span class="annot"><span class="annottext">Char
+</span><span class="hs-char">'S'</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Relation
+</span><a href="Data.Allen.Types.html#StartedBy"><span class="hs-identifier hs-var">StartedBy</span></a></span><span> </span><span>
+</span><span id="line-49"></span><span>    </span><span class="annot"><span class="annottext">Char
+</span><span class="hs-char">'d'</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Relation
+</span><a href="Data.Allen.Types.html#During"><span class="hs-identifier hs-var">During</span></a></span><span> </span><span>
+</span><span id="line-50"></span><span>    </span><span class="annot"><span class="annottext">Char
+</span><span class="hs-char">'f'</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Relation
+</span><a href="Data.Allen.Types.html#Finishes"><span class="hs-identifier hs-var">Finishes</span></a></span><span> </span><span>
+</span><span id="line-51"></span><span>    </span><span class="annot"><span class="annottext">Char
+</span><span class="hs-char">'O'</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Relation
+</span><a href="Data.Allen.Types.html#OverlappedBy"><span class="hs-identifier hs-var">OverlappedBy</span></a></span><span> </span><span>
+</span><span id="line-52"></span><span>    </span><span class="annot"><span class="annottext">Char
+</span><span class="hs-char">'M'</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Relation
+</span><a href="Data.Allen.Types.html#MetBy"><span class="hs-identifier hs-var">MetBy</span></a></span><span> </span><span>
+</span><span id="line-53"></span><span>    </span><span class="annot"><span class="annottext">Char
+</span><span class="hs-char">'P'</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Relation
+</span><a href="Data.Allen.Types.html#PrecededBy"><span class="hs-identifier hs-var">PrecededBy</span></a></span><span> </span><span>
+</span><span id="line-54"></span><span>    </span><span class="annot"><span class="annottext">Char
+</span><span class="hs-identifier">_</span></span><span>   </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">[Char] -&gt; Relation
+forall a. HasCallStack =&gt; [Char] -&gt; a
+</span><span class="hs-identifier hs-var">error</span></span><span> </span><span class="annot"><span class="annottext">([Char] -&gt; Relation) -&gt; [Char] -&gt; Relation
+forall a b. (a -&gt; b) -&gt; a -&gt; b
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;relationFromChar: invalid relation &quot;</span></span><span> </span><span class="annot"><span class="annottext">[Char] -&gt; [Char] -&gt; [Char]
+forall a. Semigroup a =&gt; a -&gt; a -&gt; a
+</span><span class="hs-operator hs-var">&lt;&gt;</span></span><span> </span><span class="hs-special">[</span><span class="annot"><span class="annottext">Char
+</span><a href="#local-6989586621679051452"><span class="hs-identifier hs-var">x</span></a></span><span class="hs-special">]</span><span>
+</span><span id="line-55"></span><span>
+</span><span id="line-56"></span><span>
+</span><span id="line-57"></span><span class="annot"><span class="hs-comment">-- | Same as `relationFromChar` but for multiple chars.</span></span><span>
+</span><span id="line-58"></span><span class="annot"><a href="Data.Allen.Relation.html#bitsFromString"><span class="hs-identifier hs-type">bitsFromString</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="Data.Allen.Types.html#RelationBits"><span class="hs-identifier hs-type">RelationBits</span></a></span><span>
+</span><span id="line-59"></span><span id="bitsFromString"><span class="annot"><span class="annottext">bitsFromString :: [Char] -&gt; RelationBits
+</span><a href="Data.Allen.Relation.html#bitsFromString"><span class="hs-identifier hs-var hs-var">bitsFromString</span></a></span></span><span> </span><span id="local-6989586621679051467"><span class="annot"><span class="annottext">[Char]
+</span><a href="#local-6989586621679051467"><span class="hs-identifier hs-var">x</span></a></span></span><span> </span><span class="hs-glyph">|</span><span> </span><span class="annot"><span class="annottext">[Char]
+</span><a href="#local-6989586621679051467"><span class="hs-identifier hs-var">x</span></a></span><span> </span><span class="annot"><span class="annottext">[Char] -&gt; [Char] -&gt; Bool
+forall a. Eq a =&gt; a -&gt; a -&gt; Bool
+</span><span class="hs-operator hs-var">==</span></span><span> </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;full&quot;</span></span><span>   </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">[Relation] -&gt; RelationBits
+</span><a href="#local-6989586621679051468"><span class="hs-identifier hs-var">rBits</span></a></span><span> </span><span class="annot"><span class="annottext">[Relation]
+</span><a href="Data.Allen.Types.html#allRelations"><span class="hs-identifier hs-var">allRelations</span></a></span><span> </span><span>
+</span><span id="line-60"></span><span>                 </span><span class="hs-glyph">|</span><span> </span><span class="annot"><span class="annottext">[Char]
+</span><a href="#local-6989586621679051467"><span class="hs-identifier hs-var">x</span></a></span><span> </span><span class="annot"><span class="annottext">[Char] -&gt; [Char] -&gt; Bool
+forall a. Eq a =&gt; a -&gt; a -&gt; Bool
+</span><span class="hs-operator hs-var">==</span></span><span> </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;concur&quot;</span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">[Relation] -&gt; RelationBits
+</span><a href="#local-6989586621679051468"><span class="hs-identifier hs-var">rBits</span></a></span><span> </span><span class="hs-special">[</span><span class="annot"><span class="annottext">Relation
+</span><a href="Data.Allen.Types.html#Overlaps"><span class="hs-identifier hs-var">Overlaps</span></a></span><span> </span><span class="hs-glyph">..</span><span> </span><span class="annot"><span class="annottext">Relation
+</span><a href="Data.Allen.Types.html#OverlappedBy"><span class="hs-identifier hs-var">OverlappedBy</span></a></span><span class="hs-special">]</span><span>
+</span><span id="line-61"></span><span>                 </span><span class="hs-glyph">|</span><span> </span><span class="annot"><span class="annottext">Bool
+</span><span class="hs-identifier hs-var">otherwise</span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">[Relation] -&gt; RelationBits
+</span><a href="#local-6989586621679051468"><span class="hs-identifier hs-var">rBits</span></a></span><span> </span><span class="annot"><span class="annottext">([Relation] -&gt; RelationBits) -&gt; [Relation] -&gt; RelationBits
+forall a b. (a -&gt; b) -&gt; a -&gt; b
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">(Char -&gt; Relation) -&gt; [Char] -&gt; [Relation]
+forall a b. (a -&gt; b) -&gt; [a] -&gt; [b]
+</span><span class="hs-identifier hs-var">map</span></span><span> </span><span class="annot"><span class="annottext">Char -&gt; Relation
+</span><a href="Data.Allen.Relation.html#relationFromChar"><span class="hs-identifier hs-var">relationFromChar</span></a></span><span> </span><span class="annot"><span class="annottext">[Char]
+</span><a href="#local-6989586621679051467"><span class="hs-identifier hs-var">x</span></a></span><span>
+</span><span id="line-62"></span><span>    </span><span class="hs-keyword">where</span><span> </span><span id="local-6989586621679051468"><span class="annot"><span class="annottext">rBits :: [Relation] -&gt; RelationBits
+</span><a href="#local-6989586621679051468"><span class="hs-identifier hs-var hs-var">rBits</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">[RelationBits] -&gt; RelationBits
+</span><a href="Data.Allen.Types.html#relationUnion"><span class="hs-identifier hs-var">relationUnion</span></a></span><span> </span><span class="annot"><span class="annottext">([RelationBits] -&gt; RelationBits)
+-&gt; ([Relation] -&gt; [RelationBits]) -&gt; [Relation] -&gt; RelationBits
+forall b c a. (b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; c
+</span><span class="hs-operator hs-var">.</span></span><span> </span><span class="annot"><span class="annottext">(Relation -&gt; RelationBits) -&gt; [Relation] -&gt; [RelationBits]
+forall a b. (a -&gt; b) -&gt; [a] -&gt; [b]
+</span><span class="hs-identifier hs-var">map</span></span><span> </span><span class="annot"><span class="annottext">Relation -&gt; RelationBits
+</span><a href="Data.Allen.Types.html#toBits"><span class="hs-identifier hs-var">toBits</span></a></span><span>
+</span><span id="line-63"></span><span>
+</span><span id="line-64"></span><span class="hs-comment">-- Table referenced from here: https://www.ics.uci.edu/~alspaugh/cls/shr/allen.html</span><span>
+</span><span id="line-65"></span><span class="annot"><a href="Data.Allen.Relation.html#composeLookup"><span class="hs-identifier hs-type">composeLookup</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">U.Vector</span></span><span> </span><span class="annot"><a href="Data.Allen.Types.html#RelationBits"><span class="hs-identifier hs-type">RelationBits</span></a></span><span>
+</span><span id="line-66"></span><span id="composeLookup"><span class="annot"><span class="annottext">composeLookup :: Vector RelationBits
+</span><a href="Data.Allen.Relation.html#composeLookup"><span class="hs-identifier hs-var hs-var">composeLookup</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">[RelationBits] -&gt; Vector RelationBits
+forall a. Unbox a =&gt; [a] -&gt; Vector a
+</span><span class="hs-identifier hs-var">U.fromList</span></span><span> </span><span class="annot"><span class="annottext">([RelationBits] -&gt; Vector RelationBits)
+-&gt; [RelationBits] -&gt; Vector RelationBits
+forall a b. (a -&gt; b) -&gt; a -&gt; b
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">([Char] -&gt; RelationBits) -&gt; [[Char]] -&gt; [RelationBits]
+forall a b. (a -&gt; b) -&gt; [a] -&gt; [b]
+</span><span class="hs-identifier hs-var">map</span></span><span> </span><span class="annot"><span class="annottext">[Char] -&gt; RelationBits
+</span><a href="Data.Allen.Relation.html#bitsFromString"><span class="hs-identifier hs-var">bitsFromString</span></a></span><span> </span><span class="annot"><span class="annottext">[[Char]]
+</span><a href="#local-6989586621679051471"><span class="hs-identifier hs-var">table</span></a></span><span> </span><span>
+</span><span id="line-67"></span><span class="hs-comment">--                |    p   |    m   |   o     |  F     |  D     |  s     |  e |   S    |     d   |    f   |     O   |    M   |    P</span><span>
+</span><span id="line-68"></span><span class="hs-comment">-- ---------------+--------+--------+---------+--------+--------+--------+----+--------+---------+--------+---------+--------+-------------</span><span>
+</span><span id="line-69"></span><span>    </span><span class="hs-keyword">where</span><span> </span><span id="local-6989586621679051471"><span class="annot"><span class="annottext">table :: [[Char]]
+</span><a href="#local-6989586621679051471"><span class="hs-identifier hs-var hs-var">table</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-special">[</span><span>     </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;p&quot;</span></span><span class="hs-special">,</span><span>     </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;p&quot;</span></span><span class="hs-special">,</span><span>      </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;p&quot;</span></span><span class="hs-special">,</span><span>     </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;p&quot;</span></span><span class="hs-special">,</span><span>     </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;p&quot;</span></span><span class="hs-special">,</span><span>     </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;p&quot;</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;p&quot;</span></span><span class="hs-special">,</span><span>     </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;p&quot;</span></span><span class="hs-special">,</span><span>  </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;pmosd&quot;</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;pmosd&quot;</span></span><span class="hs-special">,</span><span>  </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;pmosd&quot;</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;pmosd&quot;</span></span><span class="hs-special">,</span><span>  </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;full&quot;</span></span><span> </span><span class="hs-comment">-- p</span><span>
+</span><span id="line-70"></span><span>                  </span><span class="hs-special">,</span><span>     </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;p&quot;</span></span><span class="hs-special">,</span><span>     </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;p&quot;</span></span><span class="hs-special">,</span><span>      </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;p&quot;</span></span><span class="hs-special">,</span><span>     </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;p&quot;</span></span><span class="hs-special">,</span><span>     </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;p&quot;</span></span><span class="hs-special">,</span><span>     </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;m&quot;</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;m&quot;</span></span><span class="hs-special">,</span><span>     </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;m&quot;</span></span><span class="hs-special">,</span><span>    </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;osd&quot;</span></span><span class="hs-special">,</span><span>   </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;osd&quot;</span></span><span class="hs-special">,</span><span>    </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;osd&quot;</span></span><span class="hs-special">,</span><span>   </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;Fef&quot;</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;DSOMP&quot;</span></span><span> </span><span class="hs-comment">-- m</span><span>
+</span><span id="line-71"></span><span>                  </span><span class="hs-special">,</span><span>     </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;p&quot;</span></span><span class="hs-special">,</span><span>     </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;p&quot;</span></span><span class="hs-special">,</span><span>    </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;pmo&quot;</span></span><span class="hs-special">,</span><span>   </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;pmo&quot;</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;pmoFD&quot;</span></span><span class="hs-special">,</span><span>     </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;o&quot;</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;o&quot;</span></span><span class="hs-special">,</span><span>   </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;oFD&quot;</span></span><span class="hs-special">,</span><span>    </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;osd&quot;</span></span><span class="hs-special">,</span><span>   </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;osd&quot;</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;concur&quot;</span></span><span class="hs-special">,</span><span>   </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;DSO&quot;</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;DSOMP&quot;</span></span><span> </span><span class="hs-comment">-- o</span><span>
+</span><span id="line-72"></span><span>                  </span><span class="hs-special">,</span><span>     </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;p&quot;</span></span><span class="hs-special">,</span><span>     </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;m&quot;</span></span><span class="hs-special">,</span><span>      </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;o&quot;</span></span><span class="hs-special">,</span><span>     </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;F&quot;</span></span><span class="hs-special">,</span><span>     </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;D&quot;</span></span><span class="hs-special">,</span><span>     </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;o&quot;</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;F&quot;</span></span><span class="hs-special">,</span><span>     </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;D&quot;</span></span><span class="hs-special">,</span><span>    </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;osd&quot;</span></span><span class="hs-special">,</span><span>   </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;Fef&quot;</span></span><span class="hs-special">,</span><span>    </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;DSO&quot;</span></span><span class="hs-special">,</span><span>   </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;DSO&quot;</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;DSOMP&quot;</span></span><span> </span><span class="hs-comment">-- F</span><span>
+</span><span id="line-73"></span><span>                  </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;pmoFD&quot;</span></span><span class="hs-special">,</span><span>   </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;oFD&quot;</span></span><span class="hs-special">,</span><span>    </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;oFD&quot;</span></span><span class="hs-special">,</span><span>     </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;D&quot;</span></span><span class="hs-special">,</span><span>     </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;D&quot;</span></span><span class="hs-special">,</span><span>   </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;oFD&quot;</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;D&quot;</span></span><span class="hs-special">,</span><span>     </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;D&quot;</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;concur&quot;</span></span><span class="hs-special">,</span><span>   </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;DSO&quot;</span></span><span class="hs-special">,</span><span>    </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;DSO&quot;</span></span><span class="hs-special">,</span><span>   </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;DSO&quot;</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;DSOMP&quot;</span></span><span> </span><span class="hs-comment">-- D</span><span>
+</span><span id="line-74"></span><span>                  </span><span class="hs-special">,</span><span>     </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;p&quot;</span></span><span class="hs-special">,</span><span>     </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;p&quot;</span></span><span class="hs-special">,</span><span>    </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;pmo&quot;</span></span><span class="hs-special">,</span><span>   </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;pmo&quot;</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;pmoFD&quot;</span></span><span class="hs-special">,</span><span>     </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;s&quot;</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;s&quot;</span></span><span class="hs-special">,</span><span>   </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;seS&quot;</span></span><span class="hs-special">,</span><span>      </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;d&quot;</span></span><span class="hs-special">,</span><span>     </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;d&quot;</span></span><span class="hs-special">,</span><span>    </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;dfO&quot;</span></span><span class="hs-special">,</span><span>     </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;M&quot;</span></span><span class="hs-special">,</span><span>     </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;P&quot;</span></span><span> </span><span class="hs-comment">-- s</span><span>
+</span><span id="line-75"></span><span>                  </span><span class="hs-special">,</span><span>     </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;p&quot;</span></span><span class="hs-special">,</span><span>     </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;m&quot;</span></span><span class="hs-special">,</span><span>      </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;o&quot;</span></span><span class="hs-special">,</span><span>     </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;F&quot;</span></span><span class="hs-special">,</span><span>     </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;D&quot;</span></span><span class="hs-special">,</span><span>     </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;s&quot;</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;e&quot;</span></span><span class="hs-special">,</span><span>     </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;S&quot;</span></span><span class="hs-special">,</span><span>      </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;d&quot;</span></span><span class="hs-special">,</span><span>     </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;f&quot;</span></span><span class="hs-special">,</span><span>      </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;O&quot;</span></span><span class="hs-special">,</span><span>     </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;M&quot;</span></span><span class="hs-special">,</span><span>     </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;P&quot;</span></span><span> </span><span class="hs-comment">-- e</span><span>
+</span><span id="line-76"></span><span>                  </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;pmoFD&quot;</span></span><span class="hs-special">,</span><span>   </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;oFD&quot;</span></span><span class="hs-special">,</span><span>    </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;oFD&quot;</span></span><span class="hs-special">,</span><span>     </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;D&quot;</span></span><span class="hs-special">,</span><span>     </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;D&quot;</span></span><span class="hs-special">,</span><span>   </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;seS&quot;</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;S&quot;</span></span><span class="hs-special">,</span><span>     </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;S&quot;</span></span><span class="hs-special">,</span><span>    </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;dfO&quot;</span></span><span class="hs-special">,</span><span>     </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;O&quot;</span></span><span class="hs-special">,</span><span>      </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;O&quot;</span></span><span class="hs-special">,</span><span>     </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;M&quot;</span></span><span class="hs-special">,</span><span>     </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;P&quot;</span></span><span> </span><span class="hs-comment">-- S</span><span>
+</span><span id="line-77"></span><span>                  </span><span class="hs-special">,</span><span>     </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;p&quot;</span></span><span class="hs-special">,</span><span>     </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;p&quot;</span></span><span class="hs-special">,</span><span>  </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;pmosd&quot;</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;pmosd&quot;</span></span><span class="hs-special">,</span><span>  </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;full&quot;</span></span><span class="hs-special">,</span><span>     </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;d&quot;</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;d&quot;</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;dfOMP&quot;</span></span><span class="hs-special">,</span><span>      </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;d&quot;</span></span><span class="hs-special">,</span><span>     </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;d&quot;</span></span><span class="hs-special">,</span><span>  </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;dfOMP&quot;</span></span><span class="hs-special">,</span><span>     </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;P&quot;</span></span><span class="hs-special">,</span><span>     </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;P&quot;</span></span><span> </span><span class="hs-comment">-- d</span><span>
+</span><span id="line-78"></span><span>                  </span><span class="hs-special">,</span><span>     </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;p&quot;</span></span><span class="hs-special">,</span><span>     </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;m&quot;</span></span><span class="hs-special">,</span><span>    </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;osd&quot;</span></span><span class="hs-special">,</span><span>   </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;Fef&quot;</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;DSOMP&quot;</span></span><span class="hs-special">,</span><span>     </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;d&quot;</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;f&quot;</span></span><span class="hs-special">,</span><span>   </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;OMP&quot;</span></span><span class="hs-special">,</span><span>      </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;d&quot;</span></span><span class="hs-special">,</span><span>     </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;f&quot;</span></span><span class="hs-special">,</span><span>    </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;OMP&quot;</span></span><span class="hs-special">,</span><span>     </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;P&quot;</span></span><span class="hs-special">,</span><span>     </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;P&quot;</span></span><span> </span><span class="hs-comment">-- f</span><span>
+</span><span id="line-79"></span><span>                  </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;pmoFD&quot;</span></span><span class="hs-special">,</span><span>   </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;oFD&quot;</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;concur&quot;</span></span><span class="hs-special">,</span><span>   </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;DSO&quot;</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;DSOMP&quot;</span></span><span class="hs-special">,</span><span>   </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;dfO&quot;</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;O&quot;</span></span><span class="hs-special">,</span><span>   </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;OMP&quot;</span></span><span class="hs-special">,</span><span>    </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;dfO&quot;</span></span><span class="hs-special">,</span><span>     </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;O&quot;</span></span><span class="hs-special">,</span><span>    </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;OMP&quot;</span></span><span class="hs-special">,</span><span>     </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;P&quot;</span></span><span class="hs-special">,</span><span>     </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;P&quot;</span></span><span> </span><span class="hs-comment">-- O</span><span>
+</span><span id="line-80"></span><span>                  </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;pmoFD&quot;</span></span><span class="hs-special">,</span><span>   </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;seS&quot;</span></span><span class="hs-special">,</span><span>    </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;dfO&quot;</span></span><span class="hs-special">,</span><span>     </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;M&quot;</span></span><span class="hs-special">,</span><span>     </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;P&quot;</span></span><span class="hs-special">,</span><span>   </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;dfO&quot;</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;M&quot;</span></span><span class="hs-special">,</span><span>     </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;P&quot;</span></span><span class="hs-special">,</span><span>    </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;dfO&quot;</span></span><span class="hs-special">,</span><span>     </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;M&quot;</span></span><span class="hs-special">,</span><span>      </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;P&quot;</span></span><span class="hs-special">,</span><span>     </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;P&quot;</span></span><span class="hs-special">,</span><span>     </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;P&quot;</span></span><span> </span><span class="hs-comment">-- M</span><span>
+</span><span id="line-81"></span><span>                  </span><span class="hs-special">,</span><span>  </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;full&quot;</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;dfOMP&quot;</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;dfOMOP&quot;</span></span><span class="hs-special">,</span><span>     </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;P&quot;</span></span><span class="hs-special">,</span><span>     </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;P&quot;</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;dfOMP&quot;</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;P&quot;</span></span><span class="hs-special">,</span><span>     </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;P&quot;</span></span><span class="hs-special">,</span><span>  </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;dfOMP&quot;</span></span><span class="hs-special">,</span><span>     </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;P&quot;</span></span><span class="hs-special">,</span><span>      </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;P&quot;</span></span><span class="hs-special">,</span><span>     </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;P&quot;</span></span><span class="hs-special">,</span><span>     </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;P&quot;</span></span><span> </span><span class="hs-comment">-- P</span><span>
+</span><span id="line-82"></span><span>                  </span><span class="hs-special">]</span><span>
+</span><span id="line-83"></span><span>
+</span><span id="line-84"></span><span class="annot"><span class="hs-comment">-- | Compose two relations.</span></span><span>
+</span><span id="line-85"></span><span class="annot"><a href="Data.Allen.Relation.html#composeSingle"><span class="hs-identifier hs-type">composeSingle</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="Data.Allen.Types.html#Relation"><span class="hs-identifier hs-type">Relation</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="Data.Allen.Types.html#Relation"><span class="hs-identifier hs-type">Relation</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="Data.Allen.Types.html#RelationBits"><span class="hs-identifier hs-type">RelationBits</span></a></span><span> </span><span>
+</span><span id="line-86"></span><span id="composeSingle"><span class="annot"><span class="annottext">composeSingle :: Relation -&gt; Relation -&gt; RelationBits
+</span><a href="Data.Allen.Relation.html#composeSingle"><span class="hs-identifier hs-var hs-var">composeSingle</span></a></span></span><span> </span><span id="local-6989586621679051472"><span class="annot"><span class="annottext">Relation
+</span><a href="#local-6989586621679051472"><span class="hs-identifier hs-var">r1</span></a></span></span><span> </span><span id="local-6989586621679051473"><span class="annot"><span class="annottext">Relation
+</span><a href="#local-6989586621679051473"><span class="hs-identifier hs-var">r2</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Vector RelationBits
+</span><a href="Data.Allen.Relation.html#composeLookup"><span class="hs-identifier hs-var">composeLookup</span></a></span><span> </span><span class="annot"><span class="annottext">Vector RelationBits -&gt; IntervalID -&gt; RelationBits
+forall a. Unbox a =&gt; Vector a -&gt; IntervalID -&gt; a
+</span><span class="hs-operator hs-var">U.!</span></span><span> </span><span class="annot"><span class="annottext">IntervalID
+</span><a href="#local-6989586621679051475"><span class="hs-identifier hs-var">index</span></a></span><span>
+</span><span id="line-87"></span><span>    </span><span class="hs-keyword">where</span><span> </span><span id="local-6989586621679051475"><span class="annot"><span class="annottext">index :: IntervalID
+</span><a href="#local-6989586621679051475"><span class="hs-identifier hs-var hs-var">index</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">IntervalID
+</span><span class="hs-number">13</span></span><span> </span><span class="annot"><span class="annottext">IntervalID -&gt; IntervalID -&gt; IntervalID
+forall a. Num a =&gt; a -&gt; a -&gt; a
+</span><span class="hs-operator hs-var">*</span></span><span> </span><span class="annot"><span class="annottext">Relation -&gt; IntervalID
+forall a. Enum a =&gt; a -&gt; IntervalID
+</span><span class="hs-identifier hs-var">fromEnum</span></span><span> </span><span class="annot"><span class="annottext">Relation
+</span><a href="#local-6989586621679051472"><span class="hs-identifier hs-var">r1</span></a></span><span> </span><span class="annot"><span class="annottext">IntervalID -&gt; IntervalID -&gt; IntervalID
+forall a. Num a =&gt; a -&gt; a -&gt; a
+</span><span class="hs-operator hs-var">+</span></span><span> </span><span class="annot"><span class="annottext">Relation -&gt; IntervalID
+forall a. Enum a =&gt; a -&gt; IntervalID
+</span><span class="hs-identifier hs-var">fromEnum</span></span><span> </span><span class="annot"><span class="annottext">Relation
+</span><a href="#local-6989586621679051473"><span class="hs-identifier hs-var">r2</span></a></span><span>
+</span><span id="line-88"></span><span>
+</span><span id="line-89"></span><span class="hs-comment">-- TODO: Verify correctness of this function</span><span>
+</span><span id="line-90"></span><span class="annot"><span class="hs-comment">-- | Compose two sets of relations.</span></span><span>
+</span><span id="line-91"></span><span class="annot"><a href="Data.Allen.Relation.html#compose"><span class="hs-identifier hs-type">compose</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="Data.Allen.Types.html#RelationBits"><span class="hs-identifier hs-type">RelationBits</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="Data.Allen.Types.html#RelationBits"><span class="hs-identifier hs-type">RelationBits</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="Data.Allen.Types.html#RelationBits"><span class="hs-identifier hs-type">RelationBits</span></a></span><span>
+</span><span id="line-92"></span><span id="compose"><span class="annot"><span class="annottext">compose :: RelationBits -&gt; RelationBits -&gt; RelationBits
+</span><a href="Data.Allen.Relation.html#compose"><span class="hs-identifier hs-var hs-var">compose</span></a></span></span><span> </span><span id="local-6989586621679051483"><span class="annot"><span class="annottext">RelationBits
+</span><a href="#local-6989586621679051483"><span class="hs-identifier hs-var">r1</span></a></span></span><span> </span><span id="local-6989586621679051484"><span class="annot"><span class="annottext">RelationBits
+</span><a href="#local-6989586621679051484"><span class="hs-identifier hs-var">r2</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">[RelationBits] -&gt; RelationBits
+</span><a href="Data.Allen.Types.html#relationUnion"><span class="hs-identifier hs-var">relationUnion</span></a></span><span> </span><span class="hs-special">[</span><span class="annot"><span class="annottext">Relation -&gt; Relation -&gt; RelationBits
+</span><a href="Data.Allen.Relation.html#composeSingle"><span class="hs-identifier hs-var">composeSingle</span></a></span><span> </span><span class="annot"><span class="annottext">Relation
+</span><a href="#local-6989586621679051485"><span class="hs-identifier hs-var">a</span></a></span><span> </span><span class="annot"><span class="annottext">Relation
+</span><a href="#local-6989586621679051486"><span class="hs-identifier hs-var">b</span></a></span><span> </span><span class="hs-glyph">|</span><span> </span><span id="local-6989586621679051485"><span class="annot"><span class="annottext">Relation
+</span><a href="#local-6989586621679051485"><span class="hs-identifier hs-var">a</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">RelationBits -&gt; [Relation]
+</span><a href="Data.Allen.Types.html#fromBits"><span class="hs-identifier hs-var">fromBits</span></a></span><span> </span><span class="annot"><span class="annottext">RelationBits
+</span><a href="#local-6989586621679051483"><span class="hs-identifier hs-var">r1</span></a></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679051486"><span class="annot"><span class="annottext">Relation
+</span><a href="#local-6989586621679051486"><span class="hs-identifier hs-var">b</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">RelationBits -&gt; [Relation]
+</span><a href="Data.Allen.Types.html#fromBits"><span class="hs-identifier hs-var">fromBits</span></a></span><span> </span><span class="annot"><span class="annottext">RelationBits
+</span><a href="#local-6989586621679051484"><span class="hs-identifier hs-var">r2</span></a></span><span class="hs-special">]</span><span>
+</span><span id="line-93"></span></pre></body></html>
