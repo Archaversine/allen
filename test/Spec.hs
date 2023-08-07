@@ -76,8 +76,8 @@ prop_relationBits :: ValidRelation -> Bool
 prop_relationBits (toRelation -> r) = r == head (fromBits $ toBits r)
 
 prop_relationInverse :: ValidRelation -> Bool 
-prop_relationInverse (toRelation -> r) = [r] == doubleInvert r
-    where doubleInvert = fromBits . converse . converse . toBits
+prop_relationInverse (toRelation -> toBits -> r) = r == doubleConverse r
+    where doubleConverse = converse . converse
 
 prop_relationBitAmount :: Bool 
 prop_relationBitAmount = and $ zipWith (==) twos relations 
