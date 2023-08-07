@@ -14,15 +14,14 @@ import Data.Allen.Relation
 
 import qualified Data.Map.Strict as Map
 
--- | Same as runAllenState, but discards the final value
+-- | Return the resulting interval graph of an allen computation
 execAllen :: Allen a -> IntervalGraph
 execAllen = snd . runAllen
 
--- | Same as runAllen, but discards the final state
+-- | Return the result of an allen computation
 evalAllen :: Allen a -> a
 evalAllen = fst . runAllen
 
--- | Runs an allen computation starting with an inital empty graph.
--- Returns the resulting graph and the final state
+-- | Return the result of an allen computation and the resulting interval graph
 runAllen :: Allen a -> (a, IntervalGraph)
 runAllen = flip runState Map.empty
