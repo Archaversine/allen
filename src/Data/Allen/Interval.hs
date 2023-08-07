@@ -65,13 +65,13 @@ assumeBits id1 r id2 = do
     --updateIntervals [(id1, i1'), (id2, i2')]
 
 propogate :: (IntervalID, IntervalID) -> Allen ()
-propogate r = put =<< evalStateT propogate' [r]
+propogate r = evalStateT propogate' [r]
 
-propogate' :: StateT [(IntervalID, IntervalID)] Allen IntervalGraph
+propogate' :: StateT [(IntervalID, IntervalID)] Allen ()
 propogate' = do 
     toDo <- get
     case toDo of 
-        [] -> lift get
+        [] -> return ()
         ((i, j):_) -> do 
             modify tail -- Remove the first element from the queue
             propogate'' (i, j)
