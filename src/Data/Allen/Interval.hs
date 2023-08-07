@@ -59,10 +59,6 @@ assumeBits id1 r id2 = do
 
     modify $ Map.insert id1 i1' . Map.insert id2 i2'
     propogate (id1, id2)
-    -- Propogate 
-    --evalStateT propogate' [(id1, id2), (id2, id1)]
-    --propogate [(id1, id2), (id2, id1)]
-    --updateIntervals [(id1, i1'), (id2, i2')]
 
 propogate :: (IntervalID, IntervalID) -> Allen ()
 propogate r = evalStateT propogate' [r]
@@ -114,6 +110,3 @@ propogate'' (i, j) = do
 getConstraints :: IntervalID -> IntervalID -> Allen RelationBits
 getConstraints id1 id2 = Map.findWithDefault 0 id2 . intervalRelations <$> fromID id1
 
----- | Update intervals in the graph
---updateIntervals :: [(IntervalID, Interval)] -> Allen ()
---updateIntervals xs = modify $ Map.union (Map.fromList xs)
