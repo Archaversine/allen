@@ -120,19 +120,23 @@ prop_intervalAllBitsDefault = do
 -- Examples from Section 4.2 of the Allen (1983) paper.
 --
 
+networkSection4Subsection2 :: Allen (IntervalID, IntervalID, IntervalID)
+networkSection4Subsection2 = do 
+    r <- interval 
+    s <- interval 
+    l <- interval
+
+    assumeSet s [Precedes, Meets, MetBy, PrecededBy] r
+    assumeSet s [Overlaps, Meets] l
+
+    return (r, s, l)
+
 -- First inference from Section 4.2
 prop_Section4Subsection2Part1 :: Allen Bool
 prop_Section4Subsection2Part1 = do 
     -- Set up basic network.
-    r <- interval
-    s <- interval
-    l <- interval
-    -- srRelationSet [Precedes, Meets, MetBy, PrecededBy] 
-    -- slRelationSet [Overlaps, Meets]
-    let srRelationBits = bitsFromString "pmMP" 
-        slRelationBits = bitsFromString "om"
-    assumeBits s srRelationBits r
-    assumeBits s slRelationBits l
+    -- s is discarded since it is not used
+    (r, _, l) <- networkSection4Subsection2
 
     lrInferredBits <- getConstraints l r
     -- expected [Precedes, PrecededBy, Overlaps, Meets, Contains, Starts, StartedBy, FinishedBy, Equals]
@@ -145,16 +149,9 @@ prop_Section4Subsection2Part1 = do
 prop_Section4Subsection2Part2 :: Allen Bool
 prop_Section4Subsection2Part2 = do
     -- Set up same network as Part 1, but with added l->r relations.
-    r <- interval
-    s <- interval
-    l <- interval
-    -- lrRelationSet [Overlaps, Starts, During]
-    let srRelationBits = bitsFromString "pmMP" 
-        slRelationBits = bitsFromString "om"
-        lrRelationBits = bitsFromString "osd"
-    assumeBits s srRelationBits r
-    assumeBits s slRelationBits l
-    assumeBits l lrRelationBits r
+    (r, s, l) <- networkSection4Subsection2
+
+    assumeSet l [Overlaps, Starts, During] r
 
     lrInferredBits <- getConstraints l r
     srInferredBits <- getConstraints s r
@@ -171,15 +168,9 @@ prop_Section4Subsection2Part2 = do
 prop_Section4Subsection2Part3 :: Allen Bool
 prop_Section4Subsection2Part3 = do
     -- Set up same network as Part 2.
-    r <- interval
-    s <- interval
-    l <- interval
-    let srRelationBits = bitsFromString "pmMP" 
-        slRelationBits = bitsFromString "om"
-        lrRelationBits = bitsFromString "osd"
-    assumeBits s srRelationBits r
-    assumeBits s slRelationBits l
-    assumeBits l lrRelationBits r
+    (r, s, l) <- networkSection4Subsection2
+
+    assumeSet l [Overlaps, Starts, During] r
 
     -- Add new interval D
     -- w/ D -[During]-> S
