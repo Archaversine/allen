@@ -60,6 +60,8 @@ assumeBits id1 r id2 = do
     modify $ Map.insert id1 i1' . Map.insert id2 i2'
     propogate (id1, id2)
 
+-- | Propogate the relations between two intervals to all other intervals 
+-- that are related to either of the two intervals
 propogate :: (IntervalID, IntervalID) -> Allen ()
 propogate r = evalStateT propogate' [r]
 
