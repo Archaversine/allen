@@ -86,7 +86,21 @@ module Data.Allen.Relation
 converse :: RelationBits -> RelationBits
 
 -- | Return if a relation exists between two intervals.
-hasRelation :: Relation -> IntervalID -> IntervalID -> Allen Bool
+testRelation :: Relation -> IntervalID -> IntervalID -> Allen Bool
+
+-- | Return if all relations in a set exist between two intervals.
+--   
+--   IF the set of relations between interval <tt>a</tt> and interval
+--   <tt>b</tt> is <tt>full</tt>, then the function will always return
+--   <tt>True</tt>.
+testRelationSet :: [Relation] -> IntervalID -> IntervalID -> Allen Bool
+
+-- | Return if all relations in a set exist between two intervals.
+--   
+--   If the set of relations between interval <tt>a</tt> and interval
+--   <tt>b</tt> is <tt>full</tt>, then the function will always return
+--   <tt>True</tt>.
+testRelationBits :: RelationBits -> IntervalID -> IntervalID -> Allen Bool
 
 -- | Compose two relations.
 composeSingle :: Relation -> Relation -> RelationBits

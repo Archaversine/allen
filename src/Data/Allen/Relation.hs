@@ -22,6 +22,8 @@
 
 module Data.Allen.Relation ( converse
                            , testRelation
+                           , testRelationSet 
+                           , testRelationBits
                            , composeSingle
                            , compose
                            , bitsFromString
@@ -50,6 +52,22 @@ testRelation :: Relation -> IntervalID -> IntervalID -> Allen Bool
 testRelation r id1 id2 = do 
     relations <- Map.findWithDefault 0 id2 . intervalRelations <$> fromID id1 
     return $ toBits r .&. relations /= 0
+
+-- | Return if all relations in a set exist between two intervals. 
+--
+-- IF the set of relations between interval @a@ and interval @b@ is @full@, 
+-- then the function will always return @True@.
+testRelationSet :: [Relation] -> IntervalID -> IntervalID -> Allen Bool 
+testRelationSet r = testRelationBits (relationUnion $ map toBits r)
+
+-- | Return if all relations in a set exist between two intervals.
+--  
+-- If the set of relations between interval @a@ and interval @b@ is @full@, 
+-- then the function will always return @True@.
+testRelationBits :: RelationBits -> IntervalID -> IntervalID -> Allen Bool
+testRelationBits r id1 id2 = do 
+    relations <- Map.findWithDefault 0 id2 . intervalRelations <$> fromID id1 
+    return $ r .&. relations >= r
 
 -- | Valid Chars: pmoFDseSdfoMP.
 relationFromChar :: Char -> Relation

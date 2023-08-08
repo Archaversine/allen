@@ -116,43 +116,43 @@
 </span><span id="line-116"></span><span class="annot"><a href="Data.Allen.Interval.html#interval"><span class="hs-identifier hs-type">interval</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="Data.Allen.Types.html#Allen"><span class="hs-identifier hs-type">Allen</span></a></span><span> </span><span class="annot"><a href="Data.Allen.Types.html#IntervalID"><span class="hs-identifier hs-type">IntervalID</span></a></span><span> </span><span>
 </span><span id="line-117"></span><span id="interval"><span class="annot"><span class="annottext">interval :: Allen IntervalID
 </span><a href="Data.Allen.Interval.html#interval"><span class="hs-identifier hs-var hs-var">interval</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-keyword">do</span><span>
-</span><span id="line-118"></span><span>    </span><span id="local-6989586621679051667"><span class="annot"><span class="annottext">IntervalGraph
-</span><a href="#local-6989586621679051667"><span class="hs-identifier hs-var">intervals</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">StateT IntervalGraph Identity IntervalGraph
+</span><span id="line-118"></span><span>    </span><span id="local-6989586621679051751"><span class="annot"><span class="annottext">IntervalGraph
+</span><a href="#local-6989586621679051751"><span class="hs-identifier hs-var">intervals</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">StateT IntervalGraph Identity IntervalGraph
 forall s (m :: * -&gt; *). MonadState s m =&gt; m s
 </span><span class="hs-identifier hs-var">get</span></span><span>
 </span><span id="line-119"></span><span>
-</span><span id="line-120"></span><span>    </span><span class="hs-keyword">let</span><span> </span><span id="local-6989586621679051669"><span class="annot"><span class="annottext">iD :: IntervalID
-</span><a href="#local-6989586621679051669"><span class="hs-identifier hs-var hs-var">iD</span></a></span></span><span>         </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">IntervalGraph -&gt; IntervalID
+</span><span id="line-120"></span><span>    </span><span class="hs-keyword">let</span><span> </span><span id="local-6989586621679051753"><span class="annot"><span class="annottext">iD :: IntervalID
+</span><a href="#local-6989586621679051753"><span class="hs-identifier hs-var hs-var">iD</span></a></span></span><span>         </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">IntervalGraph -&gt; IntervalID
 forall k a. Map k a -&gt; IntervalID
 </span><span class="hs-identifier hs-var">Map.size</span></span><span> </span><span class="annot"><span class="annottext">IntervalGraph
-</span><a href="#local-6989586621679051667"><span class="hs-identifier hs-var">intervals</span></a></span><span>
-</span><span id="line-121"></span><span>        </span><span id="local-6989586621679051678"><span class="annot"><span class="annottext">iRelations :: Map IntervalID RelationBits
-</span><a href="#local-6989586621679051678"><span class="hs-identifier hs-var hs-var">iRelations</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">[(IntervalID, RelationBits)] -&gt; Map IntervalID RelationBits
+</span><a href="#local-6989586621679051751"><span class="hs-identifier hs-var">intervals</span></a></span><span>
+</span><span id="line-121"></span><span>        </span><span id="local-6989586621679051762"><span class="annot"><span class="annottext">iRelations :: Map IntervalID RelationBits
+</span><a href="#local-6989586621679051762"><span class="hs-identifier hs-var hs-var">iRelations</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">[(IntervalID, RelationBits)] -&gt; Map IntervalID RelationBits
 forall k a. Ord k =&gt; [(k, a)] -&gt; Map k a
 </span><span class="hs-identifier hs-var">Map.fromList</span></span><span> </span><span class="hs-special">[</span><span class="hs-special">(</span><span class="annot"><span class="annottext">IntervalID
-</span><a href="#local-6989586621679051680"><span class="hs-identifier hs-var">x</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">RelationBits
-</span><a href="Data.Allen.Types.html#allRelationBits"><span class="hs-identifier hs-var">allRelationBits</span></a></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">|</span><span> </span><span id="local-6989586621679051680"><span class="annot"><span class="annottext">IntervalID
-</span><a href="#local-6989586621679051680"><span class="hs-identifier hs-var">x</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="hs-special">[</span><span class="annot"><span class="annottext">IntervalID
+</span><a href="#local-6989586621679051764"><span class="hs-identifier hs-var">x</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">RelationBits
+</span><a href="Data.Allen.Types.html#allRelationBits"><span class="hs-identifier hs-var">allRelationBits</span></a></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">|</span><span> </span><span id="local-6989586621679051764"><span class="annot"><span class="annottext">IntervalID
+</span><a href="#local-6989586621679051764"><span class="hs-identifier hs-var">x</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="hs-special">[</span><span class="annot"><span class="annottext">IntervalID
 </span><span class="hs-number">0</span></span><span> </span><span class="hs-glyph">..</span><span> </span><span class="annot"><span class="annottext">IntervalID
-</span><a href="#local-6989586621679051669"><span class="hs-identifier hs-var">iD</span></a></span><span> </span><span class="annot"><span class="annottext">IntervalID -&gt; IntervalID -&gt; IntervalID
+</span><a href="#local-6989586621679051753"><span class="hs-identifier hs-var">iD</span></a></span><span> </span><span class="annot"><span class="annottext">IntervalID -&gt; IntervalID -&gt; IntervalID
 forall a. Num a =&gt; a -&gt; a -&gt; a
 </span><span class="hs-glyph hs-var">-</span></span><span> </span><span class="annot"><span class="annottext">IntervalID
 </span><span class="hs-number">1</span></span><span class="hs-special">]</span><span class="hs-special">]</span><span>
-</span><span id="line-122"></span><span>        </span><span id="local-6989586621679051682"><span class="annot"><span class="annottext">intervals' :: IntervalGraph
-</span><a href="#local-6989586621679051682"><span class="hs-identifier hs-var hs-var">intervals'</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">(Interval -&gt; Interval) -&gt; IntervalGraph -&gt; IntervalGraph
+</span><span id="line-122"></span><span>        </span><span id="local-6989586621679051766"><span class="annot"><span class="annottext">intervals' :: IntervalGraph
+</span><a href="#local-6989586621679051766"><span class="hs-identifier hs-var hs-var">intervals'</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">(Interval -&gt; Interval) -&gt; IntervalGraph -&gt; IntervalGraph
 forall a b k. (a -&gt; b) -&gt; Map k a -&gt; Map k b
-</span><span class="hs-identifier hs-var">Map.map</span></span><span> </span><span class="hs-special">(</span><span class="hs-glyph">\</span><span id="local-6989586621679051684"><span class="annot"><span class="annottext">Interval
-</span><a href="#local-6989586621679051684"><span class="hs-identifier hs-var">x</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Interval -&gt; RelationBits -&gt; IntervalID -&gt; Interval
+</span><span class="hs-identifier hs-var">Map.map</span></span><span> </span><span class="hs-special">(</span><span class="hs-glyph">\</span><span id="local-6989586621679051768"><span class="annot"><span class="annottext">Interval
+</span><a href="#local-6989586621679051768"><span class="hs-identifier hs-var">x</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Interval -&gt; RelationBits -&gt; IntervalID -&gt; Interval
 </span><a href="Data.Allen.Interval.html#setRelation"><span class="hs-identifier hs-var">setRelation</span></a></span><span> </span><span class="annot"><span class="annottext">Interval
-</span><a href="#local-6989586621679051684"><span class="hs-identifier hs-var">x</span></a></span><span> </span><span class="annot"><span class="annottext">RelationBits
+</span><a href="#local-6989586621679051768"><span class="hs-identifier hs-var">x</span></a></span><span> </span><span class="annot"><span class="annottext">RelationBits
 </span><a href="Data.Allen.Types.html#allRelationBits"><span class="hs-identifier hs-var">allRelationBits</span></a></span><span> </span><span class="annot"><span class="annottext">IntervalID
-</span><a href="#local-6989586621679051669"><span class="hs-identifier hs-var">iD</span></a></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">IntervalGraph
-</span><a href="#local-6989586621679051667"><span class="hs-identifier hs-var">intervals</span></a></span><span>
-</span><span id="line-123"></span><span>        </span><span id="local-6989586621679051685"><span class="annot"><span class="annottext">i :: Interval
-</span><a href="#local-6989586621679051685"><span class="hs-identifier hs-var hs-var">i</span></a></span></span><span>          </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">IntervalID -&gt; Map IntervalID RelationBits -&gt; Interval
+</span><a href="#local-6989586621679051753"><span class="hs-identifier hs-var">iD</span></a></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">IntervalGraph
+</span><a href="#local-6989586621679051751"><span class="hs-identifier hs-var">intervals</span></a></span><span>
+</span><span id="line-123"></span><span>        </span><span id="local-6989586621679051769"><span class="annot"><span class="annottext">i :: Interval
+</span><a href="#local-6989586621679051769"><span class="hs-identifier hs-var hs-var">i</span></a></span></span><span>          </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">IntervalID -&gt; Map IntervalID RelationBits -&gt; Interval
 </span><a href="Data.Allen.Types.html#Interval"><span class="hs-identifier hs-var">Interval</span></a></span><span> </span><span class="annot"><span class="annottext">IntervalID
-</span><a href="#local-6989586621679051669"><span class="hs-identifier hs-var">iD</span></a></span><span> </span><span class="annot"><span class="annottext">Map IntervalID RelationBits
-</span><a href="#local-6989586621679051678"><span class="hs-identifier hs-var">iRelations</span></a></span><span>
+</span><a href="#local-6989586621679051753"><span class="hs-identifier hs-var">iD</span></a></span><span> </span><span class="annot"><span class="annottext">Map IntervalID RelationBits
+</span><a href="#local-6989586621679051762"><span class="hs-identifier hs-var">iRelations</span></a></span><span>
 </span><span id="line-124"></span><span>
 </span><span id="line-125"></span><span>    </span><span class="annot"><span class="annottext">IntervalGraph -&gt; StateT IntervalGraph Identity ()
 forall s (m :: * -&gt; *). MonadState s m =&gt; s -&gt; m ()
@@ -162,14 +162,14 @@ forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">IntervalID -&gt; Interval -&gt; IntervalGraph -&gt; IntervalGraph
 forall k a. Ord k =&gt; k -&gt; a -&gt; Map k a -&gt; Map k a
 </span><span class="hs-identifier hs-var">Map.insert</span></span><span> </span><span class="annot"><span class="annottext">IntervalID
-</span><a href="#local-6989586621679051669"><span class="hs-identifier hs-var">iD</span></a></span><span> </span><span class="annot"><span class="annottext">Interval
-</span><a href="#local-6989586621679051685"><span class="hs-identifier hs-var">i</span></a></span><span> </span><span class="annot"><span class="annottext">IntervalGraph
-</span><a href="#local-6989586621679051682"><span class="hs-identifier hs-var">intervals'</span></a></span><span>
+</span><a href="#local-6989586621679051753"><span class="hs-identifier hs-var">iD</span></a></span><span> </span><span class="annot"><span class="annottext">Interval
+</span><a href="#local-6989586621679051769"><span class="hs-identifier hs-var">i</span></a></span><span> </span><span class="annot"><span class="annottext">IntervalGraph
+</span><a href="#local-6989586621679051766"><span class="hs-identifier hs-var">intervals'</span></a></span><span>
 </span><span id="line-126"></span><span>    </span><span class="annot"><span class="annottext">IntervalID -&gt; Allen IntervalID
 forall a. a -&gt; StateT IntervalGraph Identity a
 forall (m :: * -&gt; *) a. Monad m =&gt; a -&gt; m a
 </span><span class="hs-identifier hs-var">return</span></span><span> </span><span class="annot"><span class="annottext">IntervalID
-</span><a href="#local-6989586621679051669"><span class="hs-identifier hs-var">iD</span></a></span><span> </span><span>
+</span><a href="#local-6989586621679051753"><span class="hs-identifier hs-var">iD</span></a></span><span> </span><span>
 </span><span id="line-127"></span><span>
 </span><span id="line-128"></span><span class="annot"><span class="hs-comment">-- | Return the number of intervals that are currently in the graph.</span></span><span>
 </span><span id="line-129"></span><span class="annot"><a href="Data.Allen.Interval.html#intervalCount"><span class="hs-identifier hs-type">intervalCount</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="Data.Allen.Types.html#Allen"><span class="hs-identifier hs-type">Allen</span></a></span><span> </span><span class="annot"><span class="hs-identifier hs-type">Int</span></span><span> </span><span>
@@ -183,50 +183,50 @@ forall k a. Map k a -&gt; IntervalID
 </span><span id="line-132"></span><span class="annot"><span class="hs-comment">-- | Set the relations between two intervals.</span></span><span>
 </span><span id="line-133"></span><span class="annot"><a href="Data.Allen.Interval.html#setRelation"><span class="hs-identifier hs-type">setRelation</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="Data.Allen.Types.html#Interval"><span class="hs-identifier hs-type">Interval</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="Data.Allen.Types.html#RelationBits"><span class="hs-identifier hs-type">RelationBits</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="Data.Allen.Types.html#IntervalID"><span class="hs-identifier hs-type">IntervalID</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="Data.Allen.Types.html#Interval"><span class="hs-identifier hs-type">Interval</span></a></span><span> </span><span>
 </span><span id="line-134"></span><span id="setRelation"><span class="annot"><span class="annottext">setRelation :: Interval -&gt; RelationBits -&gt; IntervalID -&gt; Interval
-</span><a href="Data.Allen.Interval.html#setRelation"><span class="hs-identifier hs-var hs-var">setRelation</span></a></span></span><span> </span><span id="local-6989586621679051690"><span class="annot"><span class="annottext">Interval
-</span><a href="#local-6989586621679051690"><span class="hs-identifier hs-var">i1</span></a></span></span><span> </span><span id="local-6989586621679051691"><span class="annot"><span class="annottext">RelationBits
-</span><a href="#local-6989586621679051691"><span class="hs-identifier hs-var">r</span></a></span></span><span> </span><span id="local-6989586621679051692"><span class="annot"><span class="annottext">IntervalID
-</span><a href="#local-6989586621679051692"><span class="hs-identifier hs-var">i2</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Interval
-</span><a href="#local-6989586621679051690"><span class="hs-identifier hs-var">i1</span></a></span><span> </span><span class="hs-special">{</span><span> </span><span class="annot"><span class="annottext">intervalRelations :: Map IntervalID RelationBits
+</span><a href="Data.Allen.Interval.html#setRelation"><span class="hs-identifier hs-var hs-var">setRelation</span></a></span></span><span> </span><span id="local-6989586621679051774"><span class="annot"><span class="annottext">Interval
+</span><a href="#local-6989586621679051774"><span class="hs-identifier hs-var">i1</span></a></span></span><span> </span><span id="local-6989586621679051775"><span class="annot"><span class="annottext">RelationBits
+</span><a href="#local-6989586621679051775"><span class="hs-identifier hs-var">r</span></a></span></span><span> </span><span id="local-6989586621679051776"><span class="annot"><span class="annottext">IntervalID
+</span><a href="#local-6989586621679051776"><span class="hs-identifier hs-var">i2</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Interval
+</span><a href="#local-6989586621679051774"><span class="hs-identifier hs-var">i1</span></a></span><span> </span><span class="hs-special">{</span><span> </span><span class="annot"><span class="annottext">intervalRelations :: Map IntervalID RelationBits
 </span><a href="Data.Allen.Types.html#intervalRelations"><span class="hs-identifier hs-var">intervalRelations</span></a></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Map IntervalID RelationBits
-</span><a href="#local-6989586621679051694"><span class="hs-identifier hs-var">relations</span></a></span><span> </span><span class="hs-special">}</span><span>
-</span><span id="line-135"></span><span>    </span><span class="hs-keyword">where</span><span> </span><span id="local-6989586621679051694"><span class="annot"><span class="annottext">relations :: Map IntervalID RelationBits
-</span><a href="#local-6989586621679051694"><span class="hs-identifier hs-var hs-var">relations</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">IntervalID
+</span><a href="#local-6989586621679051778"><span class="hs-identifier hs-var">relations</span></a></span><span> </span><span class="hs-special">}</span><span>
+</span><span id="line-135"></span><span>    </span><span class="hs-keyword">where</span><span> </span><span id="local-6989586621679051778"><span class="annot"><span class="annottext">relations :: Map IntervalID RelationBits
+</span><a href="#local-6989586621679051778"><span class="hs-identifier hs-var hs-var">relations</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">IntervalID
 -&gt; RelationBits
 -&gt; Map IntervalID RelationBits
 -&gt; Map IntervalID RelationBits
 forall k a. Ord k =&gt; k -&gt; a -&gt; Map k a -&gt; Map k a
 </span><span class="hs-identifier hs-var">Map.insert</span></span><span> </span><span class="annot"><span class="annottext">IntervalID
-</span><a href="#local-6989586621679051692"><span class="hs-identifier hs-var">i2</span></a></span><span> </span><span class="annot"><span class="annottext">RelationBits
-</span><a href="#local-6989586621679051691"><span class="hs-identifier hs-var">r</span></a></span><span> </span><span class="annot"><span class="annottext">(Map IntervalID RelationBits -&gt; Map IntervalID RelationBits)
+</span><a href="#local-6989586621679051776"><span class="hs-identifier hs-var">i2</span></a></span><span> </span><span class="annot"><span class="annottext">RelationBits
+</span><a href="#local-6989586621679051775"><span class="hs-identifier hs-var">r</span></a></span><span> </span><span class="annot"><span class="annottext">(Map IntervalID RelationBits -&gt; Map IntervalID RelationBits)
 -&gt; Map IntervalID RelationBits -&gt; Map IntervalID RelationBits
 forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">Interval -&gt; Map IntervalID RelationBits
 </span><a href="Data.Allen.Types.html#intervalRelations"><span class="hs-identifier hs-var">intervalRelations</span></a></span><span> </span><span class="annot"><span class="annottext">Interval
-</span><a href="#local-6989586621679051690"><span class="hs-identifier hs-var">i1</span></a></span><span>
+</span><a href="#local-6989586621679051774"><span class="hs-identifier hs-var">i1</span></a></span><span>
 </span><span id="line-136"></span><span>
 </span><span id="line-137"></span><span class="annot"><span class="hs-comment">-- | Define a relation between two intervals. </span></span><span>
 </span><span id="line-138"></span><span class="annot"><a href="Data.Allen.Interval.html#assume"><span class="hs-identifier hs-type">assume</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="Data.Allen.Types.html#IntervalID"><span class="hs-identifier hs-type">IntervalID</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="Data.Allen.Types.html#Relation"><span class="hs-identifier hs-type">Relation</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="Data.Allen.Types.html#IntervalID"><span class="hs-identifier hs-type">IntervalID</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="Data.Allen.Types.html#Allen"><span class="hs-identifier hs-type">Allen</span></a></span><span> </span><span class="hs-special">(</span><span class="hs-special">)</span><span>
 </span><span id="line-139"></span><span id="assume"><span class="annot"><span class="annottext">assume :: IntervalID
 -&gt; Relation -&gt; IntervalID -&gt; StateT IntervalGraph Identity ()
-</span><a href="Data.Allen.Interval.html#assume"><span class="hs-identifier hs-var hs-var">assume</span></a></span></span><span> </span><span id="local-6989586621679051696"><span class="annot"><span class="annottext">IntervalID
-</span><a href="#local-6989586621679051696"><span class="hs-identifier hs-var">id1</span></a></span></span><span> </span><span id="local-6989586621679051697"><span class="annot"><span class="annottext">Relation
-</span><a href="#local-6989586621679051697"><span class="hs-identifier hs-var">r</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">IntervalID
+</span><a href="Data.Allen.Interval.html#assume"><span class="hs-identifier hs-var hs-var">assume</span></a></span></span><span> </span><span id="local-6989586621679051780"><span class="annot"><span class="annottext">IntervalID
+</span><a href="#local-6989586621679051780"><span class="hs-identifier hs-var">id1</span></a></span></span><span> </span><span id="local-6989586621679051781"><span class="annot"><span class="annottext">Relation
+</span><a href="#local-6989586621679051781"><span class="hs-identifier hs-var">r</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">IntervalID
 -&gt; RelationBits -&gt; IntervalID -&gt; StateT IntervalGraph Identity ()
 </span><a href="Data.Allen.Interval.html#assumeBits"><span class="hs-identifier hs-var">assumeBits</span></a></span><span> </span><span class="annot"><span class="annottext">IntervalID
-</span><a href="#local-6989586621679051696"><span class="hs-identifier hs-var">id1</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Relation -&gt; RelationBits
+</span><a href="#local-6989586621679051780"><span class="hs-identifier hs-var">id1</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Relation -&gt; RelationBits
 </span><a href="Data.Allen.Types.html#toBits"><span class="hs-identifier hs-var">toBits</span></a></span><span> </span><span class="annot"><span class="annottext">Relation
-</span><a href="#local-6989586621679051697"><span class="hs-identifier hs-var">r</span></a></span><span class="hs-special">)</span><span>
+</span><a href="#local-6989586621679051781"><span class="hs-identifier hs-var">r</span></a></span><span class="hs-special">)</span><span>
 </span><span id="line-140"></span><span>
 </span><span id="line-141"></span><span class="annot"><span class="hs-comment">-- | Define a set of relations between two intervals.</span></span><span>
 </span><span id="line-142"></span><span class="annot"><a href="Data.Allen.Interval.html#assumeSet"><span class="hs-identifier hs-type">assumeSet</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="Data.Allen.Types.html#IntervalID"><span class="hs-identifier hs-type">IntervalID</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="hs-special">[</span><span class="annot"><a href="Data.Allen.Types.html#Relation"><span class="hs-identifier hs-type">Relation</span></a></span><span class="hs-special">]</span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="Data.Allen.Types.html#IntervalID"><span class="hs-identifier hs-type">IntervalID</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="Data.Allen.Types.html#Allen"><span class="hs-identifier hs-type">Allen</span></a></span><span> </span><span class="hs-special">(</span><span class="hs-special">)</span><span>
 </span><span id="line-143"></span><span id="assumeSet"><span class="annot"><span class="annottext">assumeSet :: IntervalID
 -&gt; [Relation] -&gt; IntervalID -&gt; StateT IntervalGraph Identity ()
-</span><a href="Data.Allen.Interval.html#assumeSet"><span class="hs-identifier hs-var hs-var">assumeSet</span></a></span></span><span> </span><span id="local-6989586621679051698"><span class="annot"><span class="annottext">IntervalID
-</span><a href="#local-6989586621679051698"><span class="hs-identifier hs-var">id1</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">IntervalID
+</span><a href="Data.Allen.Interval.html#assumeSet"><span class="hs-identifier hs-var hs-var">assumeSet</span></a></span></span><span> </span><span id="local-6989586621679051782"><span class="annot"><span class="annottext">IntervalID
+</span><a href="#local-6989586621679051782"><span class="hs-identifier hs-var">id1</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">IntervalID
 -&gt; RelationBits -&gt; IntervalID -&gt; StateT IntervalGraph Identity ()
 </span><a href="Data.Allen.Interval.html#assumeBits"><span class="hs-identifier hs-var">assumeBits</span></a></span><span> </span><span class="annot"><span class="annottext">IntervalID
-</span><a href="#local-6989586621679051698"><span class="hs-identifier hs-var">id1</span></a></span><span> </span><span class="annot"><span class="annottext">(RelationBits -&gt; IntervalID -&gt; StateT IntervalGraph Identity ())
+</span><a href="#local-6989586621679051782"><span class="hs-identifier hs-var">id1</span></a></span><span> </span><span class="annot"><span class="annottext">(RelationBits -&gt; IntervalID -&gt; StateT IntervalGraph Identity ())
 -&gt; ([Relation] -&gt; RelationBits)
 -&gt; [Relation]
 -&gt; IntervalID
@@ -245,32 +245,32 @@ forall a b. (a -&gt; b) -&gt; [a] -&gt; [b]
 </span><span id="line-146"></span><span class="annot"><a href="Data.Allen.Interval.html#assumeBits"><span class="hs-identifier hs-type">assumeBits</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="Data.Allen.Types.html#IntervalID"><span class="hs-identifier hs-type">IntervalID</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="Data.Allen.Types.html#RelationBits"><span class="hs-identifier hs-type">RelationBits</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="Data.Allen.Types.html#IntervalID"><span class="hs-identifier hs-type">IntervalID</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="Data.Allen.Types.html#Allen"><span class="hs-identifier hs-type">Allen</span></a></span><span> </span><span class="hs-special">(</span><span class="hs-special">)</span><span>
 </span><span id="line-147"></span><span id="assumeBits"><span class="annot"><span class="annottext">assumeBits :: IntervalID
 -&gt; RelationBits -&gt; IntervalID -&gt; StateT IntervalGraph Identity ()
-</span><a href="Data.Allen.Interval.html#assumeBits"><span class="hs-identifier hs-var hs-var">assumeBits</span></a></span></span><span> </span><span id="local-6989586621679051700"><span class="annot"><span class="annottext">IntervalID
-</span><a href="#local-6989586621679051700"><span class="hs-identifier hs-var">id1</span></a></span></span><span> </span><span id="local-6989586621679051701"><span class="annot"><span class="annottext">RelationBits
-</span><a href="#local-6989586621679051701"><span class="hs-identifier hs-var">r</span></a></span></span><span> </span><span id="local-6989586621679051702"><span class="annot"><span class="annottext">IntervalID
-</span><a href="#local-6989586621679051702"><span class="hs-identifier hs-var">id2</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-keyword">do</span><span> </span><span>
-</span><span id="line-148"></span><span>    </span><span id="local-6989586621679051703"><span class="annot"><span class="annottext">Interval
-</span><a href="#local-6989586621679051703"><span class="hs-identifier hs-var">i1</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">IntervalID -&gt; Allen Interval
+</span><a href="Data.Allen.Interval.html#assumeBits"><span class="hs-identifier hs-var hs-var">assumeBits</span></a></span></span><span> </span><span id="local-6989586621679051784"><span class="annot"><span class="annottext">IntervalID
+</span><a href="#local-6989586621679051784"><span class="hs-identifier hs-var">id1</span></a></span></span><span> </span><span id="local-6989586621679051785"><span class="annot"><span class="annottext">RelationBits
+</span><a href="#local-6989586621679051785"><span class="hs-identifier hs-var">r</span></a></span></span><span> </span><span id="local-6989586621679051786"><span class="annot"><span class="annottext">IntervalID
+</span><a href="#local-6989586621679051786"><span class="hs-identifier hs-var">id2</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-keyword">do</span><span> </span><span>
+</span><span id="line-148"></span><span>    </span><span id="local-6989586621679051787"><span class="annot"><span class="annottext">Interval
+</span><a href="#local-6989586621679051787"><span class="hs-identifier hs-var">i1</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">IntervalID -&gt; Allen Interval
 </span><a href="Data.Allen.Types.html#fromID"><span class="hs-identifier hs-var">fromID</span></a></span><span> </span><span class="annot"><span class="annottext">IntervalID
-</span><a href="#local-6989586621679051700"><span class="hs-identifier hs-var">id1</span></a></span><span> </span><span>
-</span><span id="line-149"></span><span>    </span><span id="local-6989586621679051704"><span class="annot"><span class="annottext">Interval
-</span><a href="#local-6989586621679051704"><span class="hs-identifier hs-var">i2</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">IntervalID -&gt; Allen Interval
+</span><a href="#local-6989586621679051784"><span class="hs-identifier hs-var">id1</span></a></span><span> </span><span>
+</span><span id="line-149"></span><span>    </span><span id="local-6989586621679051788"><span class="annot"><span class="annottext">Interval
+</span><a href="#local-6989586621679051788"><span class="hs-identifier hs-var">i2</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">IntervalID -&gt; Allen Interval
 </span><a href="Data.Allen.Types.html#fromID"><span class="hs-identifier hs-var">fromID</span></a></span><span> </span><span class="annot"><span class="annottext">IntervalID
-</span><a href="#local-6989586621679051702"><span class="hs-identifier hs-var">id2</span></a></span><span> </span><span>
+</span><a href="#local-6989586621679051786"><span class="hs-identifier hs-var">id2</span></a></span><span> </span><span>
 </span><span id="line-150"></span><span>
-</span><span id="line-151"></span><span>    </span><span class="hs-keyword">let</span><span> </span><span id="local-6989586621679051705"><span class="annot"><span class="annottext">i1' :: Interval
-</span><a href="#local-6989586621679051705"><span class="hs-identifier hs-var hs-var">i1'</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Interval -&gt; RelationBits -&gt; IntervalID -&gt; Interval
+</span><span id="line-151"></span><span>    </span><span class="hs-keyword">let</span><span> </span><span id="local-6989586621679051789"><span class="annot"><span class="annottext">i1' :: Interval
+</span><a href="#local-6989586621679051789"><span class="hs-identifier hs-var hs-var">i1'</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Interval -&gt; RelationBits -&gt; IntervalID -&gt; Interval
 </span><a href="Data.Allen.Interval.html#setRelation"><span class="hs-identifier hs-var">setRelation</span></a></span><span> </span><span class="annot"><span class="annottext">Interval
-</span><a href="#local-6989586621679051703"><span class="hs-identifier hs-var">i1</span></a></span><span> </span><span class="annot"><span class="annottext">RelationBits
-</span><a href="#local-6989586621679051701"><span class="hs-identifier hs-var">r</span></a></span><span> </span><span class="annot"><span class="annottext">IntervalID
-</span><a href="#local-6989586621679051702"><span class="hs-identifier hs-var">id2</span></a></span><span> </span><span>
-</span><span id="line-152"></span><span>        </span><span id="local-6989586621679051706"><span class="annot"><span class="annottext">i2' :: Interval
-</span><a href="#local-6989586621679051706"><span class="hs-identifier hs-var hs-var">i2'</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Interval -&gt; RelationBits -&gt; IntervalID -&gt; Interval
+</span><a href="#local-6989586621679051787"><span class="hs-identifier hs-var">i1</span></a></span><span> </span><span class="annot"><span class="annottext">RelationBits
+</span><a href="#local-6989586621679051785"><span class="hs-identifier hs-var">r</span></a></span><span> </span><span class="annot"><span class="annottext">IntervalID
+</span><a href="#local-6989586621679051786"><span class="hs-identifier hs-var">id2</span></a></span><span> </span><span>
+</span><span id="line-152"></span><span>        </span><span id="local-6989586621679051790"><span class="annot"><span class="annottext">i2' :: Interval
+</span><a href="#local-6989586621679051790"><span class="hs-identifier hs-var hs-var">i2'</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Interval -&gt; RelationBits -&gt; IntervalID -&gt; Interval
 </span><a href="Data.Allen.Interval.html#setRelation"><span class="hs-identifier hs-var">setRelation</span></a></span><span> </span><span class="annot"><span class="annottext">Interval
-</span><a href="#local-6989586621679051704"><span class="hs-identifier hs-var">i2</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">RelationBits -&gt; RelationBits
+</span><a href="#local-6989586621679051788"><span class="hs-identifier hs-var">i2</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">RelationBits -&gt; RelationBits
 </span><a href="Data.Allen.Relation.html#converse"><span class="hs-identifier hs-var">converse</span></a></span><span> </span><span class="annot"><span class="annottext">RelationBits
-</span><a href="#local-6989586621679051701"><span class="hs-identifier hs-var">r</span></a></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">IntervalID
-</span><a href="#local-6989586621679051700"><span class="hs-identifier hs-var">id1</span></a></span><span>
+</span><a href="#local-6989586621679051785"><span class="hs-identifier hs-var">r</span></a></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">IntervalID
+</span><a href="#local-6989586621679051784"><span class="hs-identifier hs-var">id1</span></a></span><span>
 </span><span id="line-153"></span><span>
 </span><span id="line-154"></span><span>    </span><span class="annot"><span class="annottext">(IntervalGraph -&gt; IntervalGraph)
 -&gt; StateT IntervalGraph Identity ()
@@ -283,8 +283,8 @@ forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">IntervalID -&gt; Interval -&gt; IntervalGraph -&gt; IntervalGraph
 forall k a. Ord k =&gt; k -&gt; a -&gt; Map k a -&gt; Map k a
 </span><span class="hs-identifier hs-var">Map.insert</span></span><span> </span><span class="annot"><span class="annottext">IntervalID
-</span><a href="#local-6989586621679051700"><span class="hs-identifier hs-var">id1</span></a></span><span> </span><span class="annot"><span class="annottext">Interval
-</span><a href="#local-6989586621679051705"><span class="hs-identifier hs-var">i1'</span></a></span><span> </span><span class="annot"><span class="annottext">(IntervalGraph -&gt; IntervalGraph)
+</span><a href="#local-6989586621679051784"><span class="hs-identifier hs-var">id1</span></a></span><span> </span><span class="annot"><span class="annottext">Interval
+</span><a href="#local-6989586621679051789"><span class="hs-identifier hs-var">i1'</span></a></span><span> </span><span class="annot"><span class="annottext">(IntervalGraph -&gt; IntervalGraph)
 -&gt; (IntervalGraph -&gt; IntervalGraph)
 -&gt; IntervalGraph
 -&gt; IntervalGraph
@@ -292,40 +292,40 @@ forall b c a. (b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; c
 </span><span class="hs-operator hs-var">.</span></span><span> </span><span class="annot"><span class="annottext">IntervalID -&gt; Interval -&gt; IntervalGraph -&gt; IntervalGraph
 forall k a. Ord k =&gt; k -&gt; a -&gt; Map k a -&gt; Map k a
 </span><span class="hs-identifier hs-var">Map.insert</span></span><span> </span><span class="annot"><span class="annottext">IntervalID
-</span><a href="#local-6989586621679051702"><span class="hs-identifier hs-var">id2</span></a></span><span> </span><span class="annot"><span class="annottext">Interval
-</span><a href="#local-6989586621679051706"><span class="hs-identifier hs-var">i2'</span></a></span><span>
+</span><a href="#local-6989586621679051786"><span class="hs-identifier hs-var">id2</span></a></span><span> </span><span class="annot"><span class="annottext">Interval
+</span><a href="#local-6989586621679051790"><span class="hs-identifier hs-var">i2'</span></a></span><span>
 </span><span id="line-155"></span><span>    </span><span class="annot"><span class="annottext">(IntervalID, IntervalID) -&gt; StateT IntervalGraph Identity ()
 </span><a href="Data.Allen.Interval.html#propogate"><span class="hs-identifier hs-var">propogate</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">IntervalID
-</span><a href="#local-6989586621679051700"><span class="hs-identifier hs-var">id1</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">IntervalID
-</span><a href="#local-6989586621679051702"><span class="hs-identifier hs-var">id2</span></a></span><span class="hs-special">)</span><span>
+</span><a href="#local-6989586621679051784"><span class="hs-identifier hs-var">id1</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">IntervalID
+</span><a href="#local-6989586621679051786"><span class="hs-identifier hs-var">id2</span></a></span><span class="hs-special">)</span><span>
 </span><span id="line-156"></span><span>
 </span><span id="line-157"></span><span class="hs-comment">-- | Propogate the relations between two intervals to all other intervals </span><span>
 </span><span id="line-158"></span><span class="hs-comment">-- that are related to either of the two intervals.</span><span>
 </span><span id="line-159"></span><span class="annot"><a href="Data.Allen.Interval.html#propogate"><span class="hs-identifier hs-type">propogate</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="hs-special">(</span><span class="annot"><a href="Data.Allen.Types.html#IntervalID"><span class="hs-identifier hs-type">IntervalID</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><a href="Data.Allen.Types.html#IntervalID"><span class="hs-identifier hs-type">IntervalID</span></a></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="Data.Allen.Types.html#Allen"><span class="hs-identifier hs-type">Allen</span></a></span><span> </span><span class="hs-special">(</span><span class="hs-special">)</span><span>
 </span><span id="line-160"></span><span id="propogate"><span class="annot"><span class="annottext">propogate :: (IntervalID, IntervalID) -&gt; StateT IntervalGraph Identity ()
-</span><a href="Data.Allen.Interval.html#propogate"><span class="hs-identifier hs-var hs-var">propogate</span></a></span></span><span> </span><span id="local-6989586621679051710"><span class="annot"><span class="annottext">(IntervalID, IntervalID)
-</span><a href="#local-6989586621679051710"><span class="hs-identifier hs-var">r</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">StateT
+</span><a href="Data.Allen.Interval.html#propogate"><span class="hs-identifier hs-var hs-var">propogate</span></a></span></span><span> </span><span id="local-6989586621679051794"><span class="annot"><span class="annottext">(IntervalID, IntervalID)
+</span><a href="#local-6989586621679051794"><span class="hs-identifier hs-var">r</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">StateT
   [(IntervalID, IntervalID)] (StateT IntervalGraph Identity) ()
 -&gt; [(IntervalID, IntervalID)] -&gt; StateT IntervalGraph Identity ()
 forall (m :: * -&gt; *) s a. Monad m =&gt; StateT s m a -&gt; s -&gt; m a
 </span><span class="hs-identifier hs-var">evalStateT</span></span><span> </span><span class="annot"><span class="annottext">StateT
   [(IntervalID, IntervalID)] (StateT IntervalGraph Identity) ()
 </span><a href="Data.Allen.Interval.html#propogate%27"><span class="hs-identifier hs-var">propogate'</span></a></span><span> </span><span class="hs-special">[</span><span class="annot"><span class="annottext">(IntervalID, IntervalID)
-</span><a href="#local-6989586621679051710"><span class="hs-identifier hs-var">r</span></a></span><span class="hs-special">]</span><span>
+</span><a href="#local-6989586621679051794"><span class="hs-identifier hs-var">r</span></a></span><span class="hs-special">]</span><span>
 </span><span id="line-161"></span><span>
 </span><span id="line-162"></span><span class="annot"><a href="Data.Allen.Interval.html#propogate%27"><span class="hs-identifier hs-type">propogate'</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">StateT</span></span><span> </span><span class="hs-special">[</span><span class="hs-special">(</span><span class="annot"><a href="Data.Allen.Types.html#IntervalID"><span class="hs-identifier hs-type">IntervalID</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><a href="Data.Allen.Types.html#IntervalID"><span class="hs-identifier hs-type">IntervalID</span></a></span><span class="hs-special">)</span><span class="hs-special">]</span><span> </span><span class="annot"><a href="Data.Allen.Types.html#Allen"><span class="hs-identifier hs-type">Allen</span></a></span><span> </span><span class="hs-special">(</span><span class="hs-special">)</span><span>
 </span><span id="line-163"></span><span id="propogate%27"><span class="annot"><span class="annottext">propogate' :: StateT
   [(IntervalID, IntervalID)] (StateT IntervalGraph Identity) ()
 </span><a href="Data.Allen.Interval.html#propogate%27"><span class="hs-identifier hs-var hs-var">propogate'</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-keyword">do</span><span> </span><span>
-</span><span id="line-164"></span><span>    </span><span id="local-6989586621679051713"><span class="annot"><span class="annottext">[(IntervalID, IntervalID)]
-</span><a href="#local-6989586621679051713"><span class="hs-identifier hs-var">toDo</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">StateT
+</span><span id="line-164"></span><span>    </span><span id="local-6989586621679051797"><span class="annot"><span class="annottext">[(IntervalID, IntervalID)]
+</span><a href="#local-6989586621679051797"><span class="hs-identifier hs-var">toDo</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">StateT
   [(IntervalID, IntervalID)]
   (StateT IntervalGraph Identity)
   [(IntervalID, IntervalID)]
 forall s (m :: * -&gt; *). MonadState s m =&gt; m s
 </span><span class="hs-identifier hs-var">get</span></span><span>
 </span><span id="line-165"></span><span>    </span><span class="hs-keyword">case</span><span> </span><span class="annot"><span class="annottext">[(IntervalID, IntervalID)]
-</span><a href="#local-6989586621679051713"><span class="hs-identifier hs-var">toDo</span></a></span><span> </span><span class="hs-keyword">of</span><span> </span><span>
+</span><a href="#local-6989586621679051797"><span class="hs-identifier hs-var">toDo</span></a></span><span> </span><span class="hs-keyword">of</span><span> </span><span>
 </span><span id="line-166"></span><span>        </span><span class="hs-special">[</span><span class="hs-special">]</span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">()
 -&gt; StateT
      [(IntervalID, IntervalID)] (StateT IntervalGraph Identity) ()
@@ -335,9 +335,9 @@ a
      [(IntervalID, IntervalID)] (StateT IntervalGraph Identity) a
 forall (m :: * -&gt; *) a. Monad m =&gt; a -&gt; m a
 </span><span class="hs-identifier hs-var">return</span></span><span> </span><span class="hs-special">(</span><span class="hs-special">)</span><span>
-</span><span id="line-167"></span><span>        </span><span class="hs-special">(</span><span class="hs-special">(</span><span id="local-6989586621679051714"><span class="annot"><span class="annottext">IntervalID
-</span><a href="#local-6989586621679051714"><span class="hs-identifier hs-var">i</span></a></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679051715"><span class="annot"><span class="annottext">IntervalID
-</span><a href="#local-6989586621679051715"><span class="hs-identifier hs-var">j</span></a></span></span><span class="hs-special">)</span><span class="annot"><span class="hs-glyph hs-type">:</span></span><span class="annot"><span class="annottext">[(IntervalID, IntervalID)]
+</span><span id="line-167"></span><span>        </span><span class="hs-special">(</span><span class="hs-special">(</span><span id="local-6989586621679051798"><span class="annot"><span class="annottext">IntervalID
+</span><a href="#local-6989586621679051798"><span class="hs-identifier hs-var">i</span></a></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679051799"><span class="annot"><span class="annottext">IntervalID
+</span><a href="#local-6989586621679051799"><span class="hs-identifier hs-var">j</span></a></span></span><span class="hs-special">)</span><span class="annot"><span class="hs-glyph hs-type">:</span></span><span class="annot"><span class="annottext">[(IntervalID, IntervalID)]
 </span><span class="hs-identifier">_</span></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="hs-keyword">do</span><span> </span><span>
 </span><span id="line-168"></span><span>            </span><span class="annot"><span class="annottext">([(IntervalID, IntervalID)] -&gt; [(IntervalID, IntervalID)])
 -&gt; StateT
@@ -350,14 +350,14 @@ forall a. HasCallStack =&gt; [a] -&gt; [a]
 -&gt; StateT
      [(IntervalID, IntervalID)] (StateT IntervalGraph Identity) ()
 </span><a href="Data.Allen.Interval.html#propogate%27%27"><span class="hs-identifier hs-var">propogate''</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">IntervalID
-</span><a href="#local-6989586621679051714"><span class="hs-identifier hs-var">i</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">IntervalID
-</span><a href="#local-6989586621679051715"><span class="hs-identifier hs-var">j</span></a></span><span class="hs-special">)</span><span>
+</span><a href="#local-6989586621679051798"><span class="hs-identifier hs-var">i</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">IntervalID
+</span><a href="#local-6989586621679051799"><span class="hs-identifier hs-var">j</span></a></span><span class="hs-special">)</span><span>
 </span><span id="line-170"></span><span>            </span><span class="annot"><span class="annottext">(IntervalID, IntervalID)
 -&gt; StateT
      [(IntervalID, IntervalID)] (StateT IntervalGraph Identity) ()
 </span><a href="Data.Allen.Interval.html#propogate%27%27"><span class="hs-identifier hs-var">propogate''</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">IntervalID
-</span><a href="#local-6989586621679051715"><span class="hs-identifier hs-var">j</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">IntervalID
-</span><a href="#local-6989586621679051714"><span class="hs-identifier hs-var">i</span></a></span><span class="hs-special">)</span><span>
+</span><a href="#local-6989586621679051799"><span class="hs-identifier hs-var">j</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">IntervalID
+</span><a href="#local-6989586621679051798"><span class="hs-identifier hs-var">i</span></a></span><span class="hs-special">)</span><span>
 </span><span id="line-171"></span><span>            </span><span class="annot"><span class="annottext">StateT
   [(IntervalID, IntervalID)] (StateT IntervalGraph Identity) ()
 </span><a href="Data.Allen.Interval.html#propogate%27"><span class="hs-identifier hs-var">propogate'</span></a></span><span>
@@ -366,11 +366,11 @@ forall a. HasCallStack =&gt; [a] -&gt; [a]
 </span><span id="line-174"></span><span id="propogate%27%27"><span class="annot"><span class="annottext">propogate'' :: (IntervalID, IntervalID)
 -&gt; StateT
      [(IntervalID, IntervalID)] (StateT IntervalGraph Identity) ()
-</span><a href="Data.Allen.Interval.html#propogate%27%27"><span class="hs-identifier hs-var hs-var">propogate''</span></a></span></span><span> </span><span class="hs-special">(</span><span id="local-6989586621679051718"><span class="annot"><span class="annottext">IntervalID
-</span><a href="#local-6989586621679051718"><span class="hs-identifier hs-var">i</span></a></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679051719"><span class="annot"><span class="annottext">IntervalID
-</span><a href="#local-6989586621679051719"><span class="hs-identifier hs-var">j</span></a></span></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-keyword">do</span><span> </span><span>
-</span><span id="line-175"></span><span>    </span><span id="local-6989586621679051720"><span class="annot"><span class="annottext">IntervalID
-</span><a href="#local-6989586621679051720"><span class="hs-identifier hs-var">count</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">Allen IntervalID
+</span><a href="Data.Allen.Interval.html#propogate%27%27"><span class="hs-identifier hs-var hs-var">propogate''</span></a></span></span><span> </span><span class="hs-special">(</span><span id="local-6989586621679051802"><span class="annot"><span class="annottext">IntervalID
+</span><a href="#local-6989586621679051802"><span class="hs-identifier hs-var">i</span></a></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679051803"><span class="annot"><span class="annottext">IntervalID
+</span><a href="#local-6989586621679051803"><span class="hs-identifier hs-var">j</span></a></span></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-keyword">do</span><span> </span><span>
+</span><span id="line-175"></span><span>    </span><span id="local-6989586621679051804"><span class="annot"><span class="annottext">IntervalID
+</span><a href="#local-6989586621679051804"><span class="hs-identifier hs-var">count</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">Allen IntervalID
 -&gt; StateT
      [(IntervalID, IntervalID)]
      (StateT IntervalGraph Identity)
@@ -384,23 +384,23 @@ m a -&gt; t m a
 </span><span class="hs-identifier hs-var">lift</span></span><span> </span><span class="annot"><span class="annottext">Allen IntervalID
 </span><a href="Data.Allen.Interval.html#intervalCount"><span class="hs-identifier hs-var">intervalCount</span></a></span><span>
 </span><span id="line-176"></span><span>
-</span><span id="line-177"></span><span>    </span><span class="hs-keyword">let</span><span> </span><span id="local-6989586621679051729"><span class="annot"><span class="annottext">range :: [IntervalID]
-</span><a href="#local-6989586621679051729"><span class="hs-identifier hs-var hs-var">range</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-special">[</span><span class="annot"><span class="annottext">IntervalID
-</span><a href="#local-6989586621679051730"><span class="hs-identifier hs-var">k</span></a></span><span> </span><span class="hs-glyph">|</span><span> </span><span id="local-6989586621679051730"><span class="annot"><span class="annottext">IntervalID
-</span><a href="#local-6989586621679051730"><span class="hs-identifier hs-var">k</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="hs-special">[</span><span class="annot"><span class="annottext">IntervalID
+</span><span id="line-177"></span><span>    </span><span class="hs-keyword">let</span><span> </span><span id="local-6989586621679051813"><span class="annot"><span class="annottext">range :: [IntervalID]
+</span><a href="#local-6989586621679051813"><span class="hs-identifier hs-var hs-var">range</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-special">[</span><span class="annot"><span class="annottext">IntervalID
+</span><a href="#local-6989586621679051814"><span class="hs-identifier hs-var">k</span></a></span><span> </span><span class="hs-glyph">|</span><span> </span><span id="local-6989586621679051814"><span class="annot"><span class="annottext">IntervalID
+</span><a href="#local-6989586621679051814"><span class="hs-identifier hs-var">k</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="hs-special">[</span><span class="annot"><span class="annottext">IntervalID
 </span><span class="hs-number">0</span></span><span> </span><span class="hs-glyph">..</span><span> </span><span class="annot"><span class="annottext">IntervalID
-</span><a href="#local-6989586621679051720"><span class="hs-identifier hs-var">count</span></a></span><span> </span><span class="annot"><span class="annottext">IntervalID -&gt; IntervalID -&gt; IntervalID
+</span><a href="#local-6989586621679051804"><span class="hs-identifier hs-var">count</span></a></span><span> </span><span class="annot"><span class="annottext">IntervalID -&gt; IntervalID -&gt; IntervalID
 forall a. Num a =&gt; a -&gt; a -&gt; a
 </span><span class="hs-glyph hs-var">-</span></span><span> </span><span class="annot"><span class="annottext">IntervalID
 </span><span class="hs-number">1</span></span><span class="hs-special">]</span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">IntervalID
-</span><a href="#local-6989586621679051730"><span class="hs-identifier hs-var">k</span></a></span><span> </span><span class="annot"><span class="annottext">IntervalID -&gt; IntervalID -&gt; Bool
+</span><a href="#local-6989586621679051814"><span class="hs-identifier hs-var">k</span></a></span><span> </span><span class="annot"><span class="annottext">IntervalID -&gt; IntervalID -&gt; Bool
 forall a. Eq a =&gt; a -&gt; a -&gt; Bool
 </span><span class="hs-operator hs-var">/=</span></span><span> </span><span class="annot"><span class="annottext">IntervalID
-</span><a href="#local-6989586621679051718"><span class="hs-identifier hs-var">i</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">IntervalID
-</span><a href="#local-6989586621679051730"><span class="hs-identifier hs-var">k</span></a></span><span> </span><span class="annot"><span class="annottext">IntervalID -&gt; IntervalID -&gt; Bool
+</span><a href="#local-6989586621679051802"><span class="hs-identifier hs-var">i</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">IntervalID
+</span><a href="#local-6989586621679051814"><span class="hs-identifier hs-var">k</span></a></span><span> </span><span class="annot"><span class="annottext">IntervalID -&gt; IntervalID -&gt; Bool
 forall a. Eq a =&gt; a -&gt; a -&gt; Bool
 </span><span class="hs-operator hs-var">/=</span></span><span> </span><span class="annot"><span class="annottext">IntervalID
-</span><a href="#local-6989586621679051719"><span class="hs-identifier hs-var">j</span></a></span><span class="hs-special">]</span><span>
+</span><a href="#local-6989586621679051803"><span class="hs-identifier hs-var">j</span></a></span><span class="hs-special">]</span><span>
 </span><span id="line-178"></span><span>
 </span><span id="line-179"></span><span>    </span><span class="annot"><span class="annottext">[IntervalID]
 -&gt; (IntervalID
@@ -412,7 +412,7 @@ forall (t :: * -&gt; *) (m :: * -&gt; *) a b.
 (Foldable t, Monad m) =&gt;
 t a -&gt; (a -&gt; m b) -&gt; m ()
 </span><span class="hs-identifier hs-var">forM_</span></span><span> </span><span class="annot"><span class="annottext">[IntervalID]
-</span><a href="#local-6989586621679051729"><span class="hs-identifier hs-var">range</span></a></span><span> </span><span class="annot"><span class="annottext">((IntervalID
+</span><a href="#local-6989586621679051813"><span class="hs-identifier hs-var">range</span></a></span><span> </span><span class="annot"><span class="annottext">((IntervalID
   -&gt; StateT
        [(IntervalID, IntervalID)] (StateT IntervalGraph Identity) ())
  -&gt; StateT
@@ -423,10 +423,10 @@ t a -&gt; (a -&gt; m b) -&gt; m ()
 -&gt; StateT
      [(IntervalID, IntervalID)] (StateT IntervalGraph Identity) ()
 forall a b. (a -&gt; b) -&gt; a -&gt; b
-</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="hs-glyph">\</span><span id="local-6989586621679051733"><span class="annot"><span class="annottext">IntervalID
-</span><a href="#local-6989586621679051733"><span class="hs-identifier hs-var">k</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="hs-keyword">do</span><span> </span><span>
-</span><span id="line-180"></span><span>        </span><span id="local-6989586621679051734"><span class="annot"><span class="annottext">RelationBits
-</span><a href="#local-6989586621679051734"><span class="hs-identifier hs-var">constraints</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">Allen RelationBits
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="hs-glyph">\</span><span id="local-6989586621679051817"><span class="annot"><span class="annottext">IntervalID
+</span><a href="#local-6989586621679051817"><span class="hs-identifier hs-var">k</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="hs-keyword">do</span><span> </span><span>
+</span><span id="line-180"></span><span>        </span><span id="local-6989586621679051818"><span class="annot"><span class="annottext">RelationBits
+</span><a href="#local-6989586621679051818"><span class="hs-identifier hs-var">constraints</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">Allen RelationBits
 -&gt; StateT
      [(IntervalID, IntervalID)]
      (StateT IntervalGraph Identity)
@@ -455,8 +455,8 @@ forall a b. (a -&gt; b) -&gt; a -&gt; b
 forall (f :: * -&gt; *) a b. Functor f =&gt; (a -&gt; b) -&gt; f a -&gt; f b
 </span><span class="hs-operator hs-var">&lt;$&gt;</span></span><span> </span><span class="annot"><span class="annottext">IntervalID -&gt; IntervalID -&gt; Allen RelationBits
 </span><a href="Data.Allen.Interval.html#getConstraints"><span class="hs-identifier hs-var">getConstraints</span></a></span><span> </span><span class="annot"><span class="annottext">IntervalID
-</span><a href="#local-6989586621679051733"><span class="hs-identifier hs-var">k</span></a></span><span> </span><span class="annot"><span class="annottext">IntervalID
-</span><a href="#local-6989586621679051718"><span class="hs-identifier hs-var">i</span></a></span><span> </span><span class="annot"><span class="annottext">StateT IntervalGraph Identity (RelationBits -&gt; RelationBits)
+</span><a href="#local-6989586621679051817"><span class="hs-identifier hs-var">k</span></a></span><span> </span><span class="annot"><span class="annottext">IntervalID
+</span><a href="#local-6989586621679051802"><span class="hs-identifier hs-var">i</span></a></span><span> </span><span class="annot"><span class="annottext">StateT IntervalGraph Identity (RelationBits -&gt; RelationBits)
 -&gt; Allen RelationBits -&gt; Allen RelationBits
 forall a b.
 StateT IntervalGraph Identity (a -&gt; b)
@@ -465,10 +465,10 @@ StateT IntervalGraph Identity (a -&gt; b)
 forall (f :: * -&gt; *) a b. Applicative f =&gt; f (a -&gt; b) -&gt; f a -&gt; f b
 </span><span class="hs-operator hs-var">&lt;*&gt;</span></span><span> </span><span class="annot"><span class="annottext">IntervalID -&gt; IntervalID -&gt; Allen RelationBits
 </span><a href="Data.Allen.Interval.html#getConstraints"><span class="hs-identifier hs-var">getConstraints</span></a></span><span> </span><span class="annot"><span class="annottext">IntervalID
-</span><a href="#local-6989586621679051718"><span class="hs-identifier hs-var">i</span></a></span><span> </span><span class="annot"><span class="annottext">IntervalID
-</span><a href="#local-6989586621679051719"><span class="hs-identifier hs-var">j</span></a></span><span>
-</span><span id="line-181"></span><span>        </span><span id="local-6989586621679051737"><span class="annot"><span class="annottext">RelationBits
-</span><a href="#local-6989586621679051737"><span class="hs-identifier hs-var">nkj</span></a></span></span><span>         </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">Allen RelationBits
+</span><a href="#local-6989586621679051802"><span class="hs-identifier hs-var">i</span></a></span><span> </span><span class="annot"><span class="annottext">IntervalID
+</span><a href="#local-6989586621679051803"><span class="hs-identifier hs-var">j</span></a></span><span>
+</span><span id="line-181"></span><span>        </span><span id="local-6989586621679051821"><span class="annot"><span class="annottext">RelationBits
+</span><a href="#local-6989586621679051821"><span class="hs-identifier hs-var">nkj</span></a></span></span><span>         </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">Allen RelationBits
 -&gt; StateT
      [(IntervalID, IntervalID)]
      (StateT IntervalGraph Identity)
@@ -492,15 +492,15 @@ m a -&gt; t m a
 forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">IntervalID -&gt; IntervalID -&gt; Allen RelationBits
 </span><a href="Data.Allen.Interval.html#getConstraints"><span class="hs-identifier hs-var">getConstraints</span></a></span><span> </span><span class="annot"><span class="annottext">IntervalID
-</span><a href="#local-6989586621679051733"><span class="hs-identifier hs-var">k</span></a></span><span> </span><span class="annot"><span class="annottext">IntervalID
-</span><a href="#local-6989586621679051719"><span class="hs-identifier hs-var">j</span></a></span><span>
+</span><a href="#local-6989586621679051817"><span class="hs-identifier hs-var">k</span></a></span><span> </span><span class="annot"><span class="annottext">IntervalID
+</span><a href="#local-6989586621679051803"><span class="hs-identifier hs-var">j</span></a></span><span>
 </span><span id="line-182"></span><span>
-</span><span id="line-183"></span><span>        </span><span class="hs-keyword">let</span><span> </span><span id="local-6989586621679051739"><span class="annot"><span class="annottext">rkj :: RelationBits
-</span><a href="#local-6989586621679051739"><span class="hs-identifier hs-var hs-var">rkj</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">RelationBits
-</span><a href="#local-6989586621679051737"><span class="hs-identifier hs-var">nkj</span></a></span><span> </span><span class="annot"><span class="annottext">RelationBits -&gt; RelationBits -&gt; RelationBits
+</span><span id="line-183"></span><span>        </span><span class="hs-keyword">let</span><span> </span><span id="local-6989586621679051823"><span class="annot"><span class="annottext">rkj :: RelationBits
+</span><a href="#local-6989586621679051823"><span class="hs-identifier hs-var hs-var">rkj</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">RelationBits
+</span><a href="#local-6989586621679051821"><span class="hs-identifier hs-var">nkj</span></a></span><span> </span><span class="annot"><span class="annottext">RelationBits -&gt; RelationBits -&gt; RelationBits
 forall a. Bits a =&gt; a -&gt; a -&gt; a
 </span><span class="hs-operator hs-var">.&amp;.</span></span><span> </span><span class="annot"><span class="annottext">RelationBits
-</span><a href="#local-6989586621679051734"><span class="hs-identifier hs-var">constraints</span></a></span><span> </span><span>
+</span><a href="#local-6989586621679051818"><span class="hs-identifier hs-var">constraints</span></a></span><span> </span><span>
 </span><span id="line-184"></span><span>
 </span><span id="line-185"></span><span>        </span><span class="hs-comment">-- If rkj is a proper subset of nkj, then add (k, j) to the queue</span><span>
 </span><span id="line-186"></span><span>        </span><span class="annot"><span class="annottext">Bool
@@ -510,18 +510,18 @@ forall a. Bits a =&gt; a -&gt; a -&gt; a
      [(IntervalID, IntervalID)] (StateT IntervalGraph Identity) ()
 forall (f :: * -&gt; *). Applicative f =&gt; Bool -&gt; f () -&gt; f ()
 </span><span class="hs-identifier hs-var">when</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">RelationBits
-</span><a href="#local-6989586621679051739"><span class="hs-identifier hs-var">rkj</span></a></span><span> </span><span class="annot"><span class="annottext">RelationBits -&gt; RelationBits -&gt; RelationBits
+</span><a href="#local-6989586621679051823"><span class="hs-identifier hs-var">rkj</span></a></span><span> </span><span class="annot"><span class="annottext">RelationBits -&gt; RelationBits -&gt; RelationBits
 forall a. Bits a =&gt; a -&gt; a -&gt; a
 </span><span class="hs-operator hs-var">.|.</span></span><span> </span><span class="annot"><span class="annottext">RelationBits
-</span><a href="#local-6989586621679051737"><span class="hs-identifier hs-var">nkj</span></a></span><span> </span><span class="annot"><span class="annottext">RelationBits -&gt; RelationBits -&gt; Bool
+</span><a href="#local-6989586621679051821"><span class="hs-identifier hs-var">nkj</span></a></span><span> </span><span class="annot"><span class="annottext">RelationBits -&gt; RelationBits -&gt; Bool
 forall a. Eq a =&gt; a -&gt; a -&gt; Bool
 </span><span class="hs-operator hs-var">==</span></span><span> </span><span class="annot"><span class="annottext">RelationBits
-</span><a href="#local-6989586621679051737"><span class="hs-identifier hs-var">nkj</span></a></span><span> </span><span class="annot"><span class="annottext">Bool -&gt; Bool -&gt; Bool
+</span><a href="#local-6989586621679051821"><span class="hs-identifier hs-var">nkj</span></a></span><span> </span><span class="annot"><span class="annottext">Bool -&gt; Bool -&gt; Bool
 </span><span class="hs-operator hs-var">&amp;&amp;</span></span><span> </span><span class="annot"><span class="annottext">RelationBits
-</span><a href="#local-6989586621679051739"><span class="hs-identifier hs-var">rkj</span></a></span><span> </span><span class="annot"><span class="annottext">RelationBits -&gt; RelationBits -&gt; Bool
+</span><a href="#local-6989586621679051823"><span class="hs-identifier hs-var">rkj</span></a></span><span> </span><span class="annot"><span class="annottext">RelationBits -&gt; RelationBits -&gt; Bool
 forall a. Ord a =&gt; a -&gt; a -&gt; Bool
 </span><span class="hs-operator hs-var">&lt;</span></span><span> </span><span class="annot"><span class="annottext">RelationBits
-</span><a href="#local-6989586621679051737"><span class="hs-identifier hs-var">nkj</span></a></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">(StateT
+</span><a href="#local-6989586621679051821"><span class="hs-identifier hs-var">nkj</span></a></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">(StateT
    [(IntervalID, IntervalID)] (StateT IntervalGraph Identity) ()
  -&gt; StateT
       [(IntervalID, IntervalID)] (StateT IntervalGraph Identity) ())
@@ -536,14 +536,14 @@ forall a b. (a -&gt; b) -&gt; a -&gt; b
      [(IntervalID, IntervalID)] (StateT IntervalGraph Identity) ()
 forall s (m :: * -&gt; *). MonadState s m =&gt; (s -&gt; s) -&gt; m ()
 </span><span class="hs-identifier hs-var">modify</span></span><span> </span><span class="hs-special">(</span><span class="hs-special">(</span><span class="annot"><span class="annottext">IntervalID
-</span><a href="#local-6989586621679051733"><span class="hs-identifier hs-var">k</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">IntervalID
-</span><a href="#local-6989586621679051719"><span class="hs-identifier hs-var">j</span></a></span><span class="hs-special">)</span><span class="annot"><span class="annottext">(IntervalID, IntervalID)
+</span><a href="#local-6989586621679051817"><span class="hs-identifier hs-var">k</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">IntervalID
+</span><a href="#local-6989586621679051803"><span class="hs-identifier hs-var">j</span></a></span><span class="hs-special">)</span><span class="annot"><span class="annottext">(IntervalID, IntervalID)
 -&gt; [(IntervalID, IntervalID)] -&gt; [(IntervalID, IntervalID)]
 forall a. a -&gt; [a] -&gt; [a]
 </span><span class="hs-glyph hs-var">:</span></span><span class="hs-special">)</span><span>
 </span><span id="line-188"></span><span>
-</span><span id="line-189"></span><span>        </span><span id="local-6989586621679051745"><span class="annot"><span class="annottext">Interval
-</span><a href="#local-6989586621679051745"><span class="hs-identifier hs-var">intervalK</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">Allen Interval
+</span><span id="line-189"></span><span>        </span><span id="local-6989586621679051829"><span class="annot"><span class="annottext">Interval
+</span><a href="#local-6989586621679051829"><span class="hs-identifier hs-var">intervalK</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">Allen Interval
 -&gt; StateT
      [(IntervalID, IntervalID)] (StateT IntervalGraph Identity) Interval
 forall (m :: * -&gt; *) a.
@@ -563,7 +563,7 @@ m a -&gt; t m a
 forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">IntervalID -&gt; Allen Interval
 </span><a href="Data.Allen.Types.html#fromID"><span class="hs-identifier hs-var">fromID</span></a></span><span> </span><span class="annot"><span class="annottext">IntervalID
-</span><a href="#local-6989586621679051733"><span class="hs-identifier hs-var">k</span></a></span><span>
+</span><a href="#local-6989586621679051817"><span class="hs-identifier hs-var">k</span></a></span><span>
 </span><span id="line-190"></span><span>        </span><span class="annot"><span class="annottext">StateT IntervalGraph Identity ()
 -&gt; StateT
      [(IntervalID, IntervalID)] (StateT IntervalGraph Identity) ()
@@ -591,11 +591,11 @@ forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">IntervalID -&gt; Interval -&gt; IntervalGraph -&gt; IntervalGraph
 forall k a. Ord k =&gt; k -&gt; a -&gt; Map k a -&gt; Map k a
 </span><span class="hs-identifier hs-var">Map.insert</span></span><span> </span><span class="annot"><span class="annottext">IntervalID
-</span><a href="#local-6989586621679051733"><span class="hs-identifier hs-var">k</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Interval -&gt; RelationBits -&gt; IntervalID -&gt; Interval
+</span><a href="#local-6989586621679051817"><span class="hs-identifier hs-var">k</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Interval -&gt; RelationBits -&gt; IntervalID -&gt; Interval
 </span><a href="Data.Allen.Interval.html#setRelation"><span class="hs-identifier hs-var">setRelation</span></a></span><span> </span><span class="annot"><span class="annottext">Interval
-</span><a href="#local-6989586621679051745"><span class="hs-identifier hs-var">intervalK</span></a></span><span> </span><span class="annot"><span class="annottext">RelationBits
-</span><a href="#local-6989586621679051739"><span class="hs-identifier hs-var">rkj</span></a></span><span> </span><span class="annot"><span class="annottext">IntervalID
-</span><a href="#local-6989586621679051719"><span class="hs-identifier hs-var">j</span></a></span><span class="hs-special">)</span><span>
+</span><a href="#local-6989586621679051829"><span class="hs-identifier hs-var">intervalK</span></a></span><span> </span><span class="annot"><span class="annottext">RelationBits
+</span><a href="#local-6989586621679051823"><span class="hs-identifier hs-var">rkj</span></a></span><span> </span><span class="annot"><span class="annottext">IntervalID
+</span><a href="#local-6989586621679051803"><span class="hs-identifier hs-var">j</span></a></span><span class="hs-special">)</span><span>
 </span><span id="line-191"></span><span>
 </span><span id="line-192"></span><span>    </span><span class="annot"><span class="annottext">[IntervalID]
 -&gt; (IntervalID
@@ -607,7 +607,7 @@ forall (t :: * -&gt; *) (m :: * -&gt; *) a b.
 (Foldable t, Monad m) =&gt;
 t a -&gt; (a -&gt; m b) -&gt; m ()
 </span><span class="hs-identifier hs-var">forM_</span></span><span> </span><span class="annot"><span class="annottext">[IntervalID]
-</span><a href="#local-6989586621679051729"><span class="hs-identifier hs-var">range</span></a></span><span> </span><span class="annot"><span class="annottext">((IntervalID
+</span><a href="#local-6989586621679051813"><span class="hs-identifier hs-var">range</span></a></span><span> </span><span class="annot"><span class="annottext">((IntervalID
   -&gt; StateT
        [(IntervalID, IntervalID)] (StateT IntervalGraph Identity) ())
  -&gt; StateT
@@ -618,10 +618,10 @@ t a -&gt; (a -&gt; m b) -&gt; m ()
 -&gt; StateT
      [(IntervalID, IntervalID)] (StateT IntervalGraph Identity) ()
 forall a b. (a -&gt; b) -&gt; a -&gt; b
-</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="hs-glyph">\</span><span id="local-6989586621679051746"><span class="annot"><span class="annottext">IntervalID
-</span><a href="#local-6989586621679051746"><span class="hs-identifier hs-var">k</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="hs-keyword">do</span><span> </span><span>
-</span><span id="line-193"></span><span>        </span><span id="local-6989586621679051747"><span class="annot"><span class="annottext">RelationBits
-</span><a href="#local-6989586621679051747"><span class="hs-identifier hs-var">constraints</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">Allen RelationBits
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="hs-glyph">\</span><span id="local-6989586621679051830"><span class="annot"><span class="annottext">IntervalID
+</span><a href="#local-6989586621679051830"><span class="hs-identifier hs-var">k</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="hs-keyword">do</span><span> </span><span>
+</span><span id="line-193"></span><span>        </span><span id="local-6989586621679051831"><span class="annot"><span class="annottext">RelationBits
+</span><a href="#local-6989586621679051831"><span class="hs-identifier hs-var">constraints</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">Allen RelationBits
 -&gt; StateT
      [(IntervalID, IntervalID)]
      (StateT IntervalGraph Identity)
@@ -650,8 +650,8 @@ forall a b. (a -&gt; b) -&gt; a -&gt; b
 forall (f :: * -&gt; *) a b. Functor f =&gt; (a -&gt; b) -&gt; f a -&gt; f b
 </span><span class="hs-operator hs-var">&lt;$&gt;</span></span><span> </span><span class="annot"><span class="annottext">IntervalID -&gt; IntervalID -&gt; Allen RelationBits
 </span><a href="Data.Allen.Interval.html#getConstraints"><span class="hs-identifier hs-var">getConstraints</span></a></span><span> </span><span class="annot"><span class="annottext">IntervalID
-</span><a href="#local-6989586621679051718"><span class="hs-identifier hs-var">i</span></a></span><span> </span><span class="annot"><span class="annottext">IntervalID
-</span><a href="#local-6989586621679051719"><span class="hs-identifier hs-var">j</span></a></span><span> </span><span class="annot"><span class="annottext">StateT IntervalGraph Identity (RelationBits -&gt; RelationBits)
+</span><a href="#local-6989586621679051802"><span class="hs-identifier hs-var">i</span></a></span><span> </span><span class="annot"><span class="annottext">IntervalID
+</span><a href="#local-6989586621679051803"><span class="hs-identifier hs-var">j</span></a></span><span> </span><span class="annot"><span class="annottext">StateT IntervalGraph Identity (RelationBits -&gt; RelationBits)
 -&gt; Allen RelationBits -&gt; Allen RelationBits
 forall a b.
 StateT IntervalGraph Identity (a -&gt; b)
@@ -660,10 +660,10 @@ StateT IntervalGraph Identity (a -&gt; b)
 forall (f :: * -&gt; *) a b. Applicative f =&gt; f (a -&gt; b) -&gt; f a -&gt; f b
 </span><span class="hs-operator hs-var">&lt;*&gt;</span></span><span> </span><span class="annot"><span class="annottext">IntervalID -&gt; IntervalID -&gt; Allen RelationBits
 </span><a href="Data.Allen.Interval.html#getConstraints"><span class="hs-identifier hs-var">getConstraints</span></a></span><span> </span><span class="annot"><span class="annottext">IntervalID
-</span><a href="#local-6989586621679051719"><span class="hs-identifier hs-var">j</span></a></span><span> </span><span class="annot"><span class="annottext">IntervalID
-</span><a href="#local-6989586621679051746"><span class="hs-identifier hs-var">k</span></a></span><span>
-</span><span id="line-194"></span><span>        </span><span id="local-6989586621679051748"><span class="annot"><span class="annottext">RelationBits
-</span><a href="#local-6989586621679051748"><span class="hs-identifier hs-var">nik</span></a></span></span><span>         </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">Allen RelationBits
+</span><a href="#local-6989586621679051803"><span class="hs-identifier hs-var">j</span></a></span><span> </span><span class="annot"><span class="annottext">IntervalID
+</span><a href="#local-6989586621679051830"><span class="hs-identifier hs-var">k</span></a></span><span>
+</span><span id="line-194"></span><span>        </span><span id="local-6989586621679051832"><span class="annot"><span class="annottext">RelationBits
+</span><a href="#local-6989586621679051832"><span class="hs-identifier hs-var">nik</span></a></span></span><span>         </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">Allen RelationBits
 -&gt; StateT
      [(IntervalID, IntervalID)]
      (StateT IntervalGraph Identity)
@@ -687,15 +687,15 @@ m a -&gt; t m a
 forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">IntervalID -&gt; IntervalID -&gt; Allen RelationBits
 </span><a href="Data.Allen.Interval.html#getConstraints"><span class="hs-identifier hs-var">getConstraints</span></a></span><span> </span><span class="annot"><span class="annottext">IntervalID
-</span><a href="#local-6989586621679051718"><span class="hs-identifier hs-var">i</span></a></span><span> </span><span class="annot"><span class="annottext">IntervalID
-</span><a href="#local-6989586621679051746"><span class="hs-identifier hs-var">k</span></a></span><span> </span><span>
+</span><a href="#local-6989586621679051802"><span class="hs-identifier hs-var">i</span></a></span><span> </span><span class="annot"><span class="annottext">IntervalID
+</span><a href="#local-6989586621679051830"><span class="hs-identifier hs-var">k</span></a></span><span> </span><span>
 </span><span id="line-195"></span><span>
-</span><span id="line-196"></span><span>        </span><span class="hs-keyword">let</span><span> </span><span id="local-6989586621679051750"><span class="annot"><span class="annottext">rik :: RelationBits
-</span><a href="#local-6989586621679051750"><span class="hs-identifier hs-var hs-var">rik</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">RelationBits
-</span><a href="#local-6989586621679051748"><span class="hs-identifier hs-var">nik</span></a></span><span> </span><span class="annot"><span class="annottext">RelationBits -&gt; RelationBits -&gt; RelationBits
+</span><span id="line-196"></span><span>        </span><span class="hs-keyword">let</span><span> </span><span id="local-6989586621679051834"><span class="annot"><span class="annottext">rik :: RelationBits
+</span><a href="#local-6989586621679051834"><span class="hs-identifier hs-var hs-var">rik</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">RelationBits
+</span><a href="#local-6989586621679051832"><span class="hs-identifier hs-var">nik</span></a></span><span> </span><span class="annot"><span class="annottext">RelationBits -&gt; RelationBits -&gt; RelationBits
 forall a. Bits a =&gt; a -&gt; a -&gt; a
 </span><span class="hs-operator hs-var">.&amp;.</span></span><span> </span><span class="annot"><span class="annottext">RelationBits
-</span><a href="#local-6989586621679051747"><span class="hs-identifier hs-var">constraints</span></a></span><span>
+</span><a href="#local-6989586621679051831"><span class="hs-identifier hs-var">constraints</span></a></span><span>
 </span><span id="line-197"></span><span>
 </span><span id="line-198"></span><span>        </span><span class="hs-comment">-- If rik is a proper subset of nik, then add (i, k) to the queue</span><span>
 </span><span id="line-199"></span><span>        </span><span class="annot"><span class="annottext">Bool
@@ -705,18 +705,18 @@ forall a. Bits a =&gt; a -&gt; a -&gt; a
      [(IntervalID, IntervalID)] (StateT IntervalGraph Identity) ()
 forall (f :: * -&gt; *). Applicative f =&gt; Bool -&gt; f () -&gt; f ()
 </span><span class="hs-identifier hs-var">when</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">RelationBits
-</span><a href="#local-6989586621679051750"><span class="hs-identifier hs-var">rik</span></a></span><span> </span><span class="annot"><span class="annottext">RelationBits -&gt; RelationBits -&gt; RelationBits
+</span><a href="#local-6989586621679051834"><span class="hs-identifier hs-var">rik</span></a></span><span> </span><span class="annot"><span class="annottext">RelationBits -&gt; RelationBits -&gt; RelationBits
 forall a. Bits a =&gt; a -&gt; a -&gt; a
 </span><span class="hs-operator hs-var">.|.</span></span><span> </span><span class="annot"><span class="annottext">RelationBits
-</span><a href="#local-6989586621679051748"><span class="hs-identifier hs-var">nik</span></a></span><span> </span><span class="annot"><span class="annottext">RelationBits -&gt; RelationBits -&gt; Bool
+</span><a href="#local-6989586621679051832"><span class="hs-identifier hs-var">nik</span></a></span><span> </span><span class="annot"><span class="annottext">RelationBits -&gt; RelationBits -&gt; Bool
 forall a. Eq a =&gt; a -&gt; a -&gt; Bool
 </span><span class="hs-operator hs-var">==</span></span><span> </span><span class="annot"><span class="annottext">RelationBits
-</span><a href="#local-6989586621679051748"><span class="hs-identifier hs-var">nik</span></a></span><span> </span><span class="annot"><span class="annottext">Bool -&gt; Bool -&gt; Bool
+</span><a href="#local-6989586621679051832"><span class="hs-identifier hs-var">nik</span></a></span><span> </span><span class="annot"><span class="annottext">Bool -&gt; Bool -&gt; Bool
 </span><span class="hs-operator hs-var">&amp;&amp;</span></span><span> </span><span class="annot"><span class="annottext">RelationBits
-</span><a href="#local-6989586621679051750"><span class="hs-identifier hs-var">rik</span></a></span><span> </span><span class="annot"><span class="annottext">RelationBits -&gt; RelationBits -&gt; Bool
+</span><a href="#local-6989586621679051834"><span class="hs-identifier hs-var">rik</span></a></span><span> </span><span class="annot"><span class="annottext">RelationBits -&gt; RelationBits -&gt; Bool
 forall a. Ord a =&gt; a -&gt; a -&gt; Bool
 </span><span class="hs-operator hs-var">&lt;</span></span><span> </span><span class="annot"><span class="annottext">RelationBits
-</span><a href="#local-6989586621679051748"><span class="hs-identifier hs-var">nik</span></a></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">(StateT
+</span><a href="#local-6989586621679051832"><span class="hs-identifier hs-var">nik</span></a></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">(StateT
    [(IntervalID, IntervalID)] (StateT IntervalGraph Identity) ()
  -&gt; StateT
       [(IntervalID, IntervalID)] (StateT IntervalGraph Identity) ())
@@ -731,14 +731,14 @@ forall a b. (a -&gt; b) -&gt; a -&gt; b
      [(IntervalID, IntervalID)] (StateT IntervalGraph Identity) ()
 forall s (m :: * -&gt; *). MonadState s m =&gt; (s -&gt; s) -&gt; m ()
 </span><span class="hs-identifier hs-var">modify</span></span><span> </span><span class="hs-special">(</span><span class="hs-special">(</span><span class="annot"><span class="annottext">IntervalID
-</span><a href="#local-6989586621679051718"><span class="hs-identifier hs-var">i</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">IntervalID
-</span><a href="#local-6989586621679051746"><span class="hs-identifier hs-var">k</span></a></span><span class="hs-special">)</span><span class="annot"><span class="annottext">(IntervalID, IntervalID)
+</span><a href="#local-6989586621679051802"><span class="hs-identifier hs-var">i</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">IntervalID
+</span><a href="#local-6989586621679051830"><span class="hs-identifier hs-var">k</span></a></span><span class="hs-special">)</span><span class="annot"><span class="annottext">(IntervalID, IntervalID)
 -&gt; [(IntervalID, IntervalID)] -&gt; [(IntervalID, IntervalID)]
 forall a. a -&gt; [a] -&gt; [a]
 </span><span class="hs-glyph hs-var">:</span></span><span class="hs-special">)</span><span>
 </span><span id="line-201"></span><span>
-</span><span id="line-202"></span><span>        </span><span id="local-6989586621679051751"><span class="annot"><span class="annottext">Interval
-</span><a href="#local-6989586621679051751"><span class="hs-identifier hs-var">intervalI</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">Allen Interval
+</span><span id="line-202"></span><span>        </span><span id="local-6989586621679051835"><span class="annot"><span class="annottext">Interval
+</span><a href="#local-6989586621679051835"><span class="hs-identifier hs-var">intervalI</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">Allen Interval
 -&gt; StateT
      [(IntervalID, IntervalID)] (StateT IntervalGraph Identity) Interval
 forall (m :: * -&gt; *) a.
@@ -758,7 +758,7 @@ m a -&gt; t m a
 forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">IntervalID -&gt; Allen Interval
 </span><a href="Data.Allen.Types.html#fromID"><span class="hs-identifier hs-var">fromID</span></a></span><span> </span><span class="annot"><span class="annottext">IntervalID
-</span><a href="#local-6989586621679051718"><span class="hs-identifier hs-var">i</span></a></span><span>
+</span><a href="#local-6989586621679051802"><span class="hs-identifier hs-var">i</span></a></span><span>
 </span><span id="line-203"></span><span>        </span><span class="annot"><span class="annottext">StateT IntervalGraph Identity ()
 -&gt; StateT
      [(IntervalID, IntervalID)] (StateT IntervalGraph Identity) ()
@@ -786,23 +786,23 @@ forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">IntervalID -&gt; Interval -&gt; IntervalGraph -&gt; IntervalGraph
 forall k a. Ord k =&gt; k -&gt; a -&gt; Map k a -&gt; Map k a
 </span><span class="hs-identifier hs-var">Map.insert</span></span><span> </span><span class="annot"><span class="annottext">IntervalID
-</span><a href="#local-6989586621679051718"><span class="hs-identifier hs-var">i</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Interval -&gt; RelationBits -&gt; IntervalID -&gt; Interval
+</span><a href="#local-6989586621679051802"><span class="hs-identifier hs-var">i</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Interval -&gt; RelationBits -&gt; IntervalID -&gt; Interval
 </span><a href="Data.Allen.Interval.html#setRelation"><span class="hs-identifier hs-var">setRelation</span></a></span><span> </span><span class="annot"><span class="annottext">Interval
-</span><a href="#local-6989586621679051751"><span class="hs-identifier hs-var">intervalI</span></a></span><span> </span><span class="annot"><span class="annottext">RelationBits
-</span><a href="#local-6989586621679051750"><span class="hs-identifier hs-var">rik</span></a></span><span> </span><span class="annot"><span class="annottext">IntervalID
-</span><a href="#local-6989586621679051746"><span class="hs-identifier hs-var">k</span></a></span><span class="hs-special">)</span><span>
+</span><a href="#local-6989586621679051835"><span class="hs-identifier hs-var">intervalI</span></a></span><span> </span><span class="annot"><span class="annottext">RelationBits
+</span><a href="#local-6989586621679051834"><span class="hs-identifier hs-var">rik</span></a></span><span> </span><span class="annot"><span class="annottext">IntervalID
+</span><a href="#local-6989586621679051830"><span class="hs-identifier hs-var">k</span></a></span><span class="hs-special">)</span><span>
 </span><span id="line-204"></span><span>   </span><span>
 </span><span id="line-205"></span><span class="annot"><span class="hs-comment">-- | Return the set of possible constraints/relations between two intervals.</span></span><span>
 </span><span id="line-206"></span><span class="annot"><a href="Data.Allen.Interval.html#getConstraints"><span class="hs-identifier hs-type">getConstraints</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="Data.Allen.Types.html#IntervalID"><span class="hs-identifier hs-type">IntervalID</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="Data.Allen.Types.html#IntervalID"><span class="hs-identifier hs-type">IntervalID</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="Data.Allen.Types.html#Allen"><span class="hs-identifier hs-type">Allen</span></a></span><span> </span><span class="annot"><a href="Data.Allen.Types.html#RelationBits"><span class="hs-identifier hs-type">RelationBits</span></a></span><span>
 </span><span id="line-207"></span><span id="getConstraints"><span class="annot"><span class="annottext">getConstraints :: IntervalID -&gt; IntervalID -&gt; Allen RelationBits
-</span><a href="Data.Allen.Interval.html#getConstraints"><span class="hs-identifier hs-var hs-var">getConstraints</span></a></span></span><span> </span><span id="local-6989586621679051752"><span class="annot"><span class="annottext">IntervalID
-</span><a href="#local-6989586621679051752"><span class="hs-identifier hs-var">id1</span></a></span></span><span> </span><span id="local-6989586621679051753"><span class="annot"><span class="annottext">IntervalID
-</span><a href="#local-6989586621679051753"><span class="hs-identifier hs-var">id2</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">RelationBits
+</span><a href="Data.Allen.Interval.html#getConstraints"><span class="hs-identifier hs-var hs-var">getConstraints</span></a></span></span><span> </span><span id="local-6989586621679051836"><span class="annot"><span class="annottext">IntervalID
+</span><a href="#local-6989586621679051836"><span class="hs-identifier hs-var">id1</span></a></span></span><span> </span><span id="local-6989586621679051837"><span class="annot"><span class="annottext">IntervalID
+</span><a href="#local-6989586621679051837"><span class="hs-identifier hs-var">id2</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">RelationBits
 -&gt; IntervalID -&gt; Map IntervalID RelationBits -&gt; RelationBits
 forall k a. Ord k =&gt; a -&gt; k -&gt; Map k a -&gt; a
 </span><span class="hs-identifier hs-var">Map.findWithDefault</span></span><span> </span><span class="annot"><span class="annottext">RelationBits
 </span><span class="hs-number">0</span></span><span> </span><span class="annot"><span class="annottext">IntervalID
-</span><a href="#local-6989586621679051753"><span class="hs-identifier hs-var">id2</span></a></span><span> </span><span class="annot"><span class="annottext">(Map IntervalID RelationBits -&gt; RelationBits)
+</span><a href="#local-6989586621679051837"><span class="hs-identifier hs-var">id2</span></a></span><span> </span><span class="annot"><span class="annottext">(Map IntervalID RelationBits -&gt; RelationBits)
 -&gt; (Interval -&gt; Map IntervalID RelationBits)
 -&gt; Interval
 -&gt; RelationBits
@@ -812,6 +812,6 @@ forall b c a. (b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; c
 forall (f :: * -&gt; *) a b. Functor f =&gt; (a -&gt; b) -&gt; f a -&gt; f b
 </span><span class="hs-operator hs-var">&lt;$&gt;</span></span><span> </span><span class="annot"><span class="annottext">IntervalID -&gt; Allen Interval
 </span><a href="Data.Allen.Types.html#fromID"><span class="hs-identifier hs-var">fromID</span></a></span><span> </span><span class="annot"><span class="annottext">IntervalID
-</span><a href="#local-6989586621679051752"><span class="hs-identifier hs-var">id1</span></a></span><span>
+</span><a href="#local-6989586621679051836"><span class="hs-identifier hs-var">id1</span></a></span><span>
 </span><span id="line-208"></span><span>
 </span><span id="line-209"></span></pre></body></html>

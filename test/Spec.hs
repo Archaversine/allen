@@ -39,6 +39,7 @@ main = do
     test prop_relationInverse
     test prop_relationBitAmount
     test prop_relationSet
+    test prop_relationTestSet
 
     putStrLn "\nTesting Intervals...\n"
 
@@ -91,6 +92,16 @@ prop_relationSet (toInterval -> i) (toRelation -> toBits -> r1) (toRelation -> t
     where i'  = setRelation i r1 iD
           i'' = setRelation i' r2 iD 
           r   = intervalRelations i'' Map.! iD
+
+prop_relationTestSet :: [ValidRelation] -> Bool 
+prop_relationTestSet (map toRelation -> r) = evalAllen calc 
+    where calc :: Allen Bool 
+          calc = do 
+            a <- interval 
+            b <- interval 
+
+            assumeBits a allRelationBits b
+            testRelationSet r a b
 
 prop_intervalAssume :: ValidRelation -> Bool 
 prop_intervalAssume (toRelation -> r) = evalAllen calc 
