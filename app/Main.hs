@@ -4,6 +4,8 @@ import Control.Monad
 import Control.Monad.State
 
 import Data.Allen
+import Data.List (sortBy)
+import Data.Ord (comparing)
 
 import Data.Map.Strict (Map)
 import qualified Data.Map.Strict as Map
@@ -52,8 +54,14 @@ showConstraints a b = do
 
 showGraph :: REPL ()
 showGraph = do 
-    calc <- gets graph
+    REPLState calc names <- get
+
+    let sorted = sortBy (comparing fst) $ Map.toList names
+
+    liftIO $ mapM_ printPair sorted
+    liftIO $ putStrLn "---------------------------------------------"
     liftIO $ mapM_ (print . snd) $ Map.toList $ execAllen calc
+        where printPair (name, iD) = putStrLn $ show iD <> ": " <> name
 
 resetGraph :: REPL ()
 resetGraph = put newREPLState
