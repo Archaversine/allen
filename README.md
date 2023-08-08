@@ -63,9 +63,9 @@ for this library [here](https://archaversine.github.io/allen/Data-Allen.html).
 ## Interactive REPL
 
 You can use an interactive REPL to perform calculations from the command line.
-Currently, only Linux has been compiled. Windows is planned to be compiled soon.
+Executables are available for both Linux and Windows.
 
 You can download the interactive version here: 
 
 - [Linux](https://github.com/Archaversine/allen/releases/tag/v1.0.1-linux)
-- Windows (Coming Soon!)
+- [Windows](https://github.com/Archaversine/allen/releases/tag/v1.0.1-windows)
