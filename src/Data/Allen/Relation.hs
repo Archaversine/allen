@@ -1,8 +1,24 @@
-{-|
- - Module      : Data.Allen.Relation
- - Description : Functions for working with Allen's interval algebra relations.
- - Maintainer  : Archaversine 
- -}
+-- |
+-- Module      : Data.Allen.Relation
+-- Description : Functions for working with Allen's interval algebra relations.
+-- Maintainer  : Archaversine 
+--
+-- This module provides functions for working with relations. Note that almost 
+-- all exposed functions only work with relation bitsets. This is done mainly 
+-- to optimize the speed in calculations involving relations. 
+--
+-- The 'RelationBits' type is a synonym for a 16 bit unsigned integer. Note that 
+-- since Allen's interval algebra only defines 13 relations, the remaining 3 bits 
+-- are unused. So the bit representation of every possible relation looks like 
+-- this: 
+--
+-- @ 
+-- 0b0001111111111111
+-- @ 
+--
+-- Modifying the extra 3 bits will not affect the result of any calculations.
+-- To view in exact detail how a `Relation` converted to a bit representation, 
+-- see the `toBits` function.
 
 module Data.Allen.Relation ( converse
                            , hasRelation
