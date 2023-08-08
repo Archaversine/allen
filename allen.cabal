@@ -41,7 +41,7 @@ library
     , vector
   default-language: Haskell2010
 
-executable allen-exe
+executable allen-calculator
   main-is: Main.hs
   other-modules:
       Paths_allen
