@@ -67,5 +67,5 @@ Currently, only Linux has been compiled. Windows is planned to be compiled soon.
 
 You can download the interactive version here: 
 
-- [Linux](https://github.com/Archaversine/allen/releases/tag/v1.0.0-linux)
+- [Linux](https://github.com/Archaversine/allen/releases/tag/v1.0.1-linux)
 - Windows (Coming Soon!)
