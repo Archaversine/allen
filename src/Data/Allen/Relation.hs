@@ -35,16 +35,16 @@ import Data.Bits
 import qualified Data.Map.Strict as Map
 import qualified Data.Vector.Unboxed as U
 
--- | Lookup table for inverse function.
-inverseLookup :: [(RelationBits, RelationBits)]
-inverseLookup = zip bits (reverse bits)
+-- | Lookup table for converse function.
+converseLookup :: [(RelationBits, RelationBits)]
+converseLookup = zip bits (reverse bits)
     where bits = map toBits allRelations
 
 -- | Return the converse of a Relation bitset.
 converse :: RelationBits -> RelationBits 
 converse 0 = 0
 converse x = relationUnion $ map func [0 .. fromEnum (maxBound :: Relation)]
-    where func i | testBit x i = snd $ head $ filter ((== bit i) . fst) inverseLookup
+    where func i | testBit x i = snd $ head $ filter ((== bit i) . fst) converseLookup
                  | otherwise = 0
 
 -- | Return if a relation exists between two intervals.
