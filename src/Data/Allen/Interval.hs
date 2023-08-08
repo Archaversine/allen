@@ -1,8 +1,95 @@
-{-|
- - Module      : Data.Allen.Interval
- - Description : Functions for working with intervals.
- - Maintainer  : Archaversine 
- -}
+-- |
+-- Module      : Data.Allen.Interval
+-- Description : Functions for working with intervals.
+-- Maintainer  : Archaversine 
+--
+-- This module provides functions for working with intervals. Note that almost 
+-- all exposed functions only work with interval IDs. This is because the 
+-- internal representation of intervals is subject to change, but the IDs will 
+-- remain the same no matter what.
+-- 
+-- = Creating intervals
+-- Intervals are created with the 'interval' function, which creates an interval 
+-- adds it to the internal network representation, then returns its corresponding 
+-- ID. Note that upon creating a new interval, it will have all relations to all 
+-- other intervals. This is because the creation of an interval does not provide 
+-- any meaningful information about its relations to other intervals.
+--
+-- Creating two intervals sleeps and snores:
+--
+-- @ 
+-- sleeps <- 'interval' 
+-- snores <- 'interval'
+-- @
+--
+-- = Defining Relations Between Intervals
+-- There are three main ways to define relations betweek intervals:
+--
+-- (1) Define a single relation using the 'Relation' type.
+-- (2) Define a set of relations using a list of 'Relation' types.
+-- (3) Define a set of relations using a 'RelationBits' type.
+--
+-- == Defining a single relation
+-- This is the easiest to do, and is done with the 'assume' function. This 
+-- function takes three arguments: the ID of the first interval, the relation 
+-- between the two intervals, and the ID of the second interval. 
+--
+-- Example:
+--
+-- @ 
+-- sleeps <- 'interval' 
+-- snores <- 'interval' 
+--
+-- 'assume' snores 'During' sleeps
+-- @
+--
+-- == Defining a Set of Relations 
+-- This is done with the 'assumeSet' function. This function takes three 
+-- arguments: the ID of the first interval, a list of relations between the 
+-- two intervals, and the ID of the second interval. 
+--
+-- Example: 
+--
+-- @ 
+-- sleeps <- 'interval' 
+-- snores <- 'interval' 
+--
+-- 'assumeSet' snores ['StartedBy', 'During', 'FinishedBy'] sleeps
+-- @
+--
+-- == Defining a Set of Relations Using Bit Representation
+-- This is done with the 'assumeBits' function. This function takes three 
+-- arguments: the ID of the first interval, a 'RelationBits' type representing 
+-- the relations between the two intervals, and the ID of the second interval. 
+-- Generally, this function should not be used directly, but it can be used 
+-- to speed up calculations if you already know the bit representation.
+--
+-- Example: 
+--
+-- @ 
+-- sleeps <- 'interval' 
+-- snores <- 'interval' 
+--
+-- let relations = foldl (.|.) 0 ['StartedBy', 'During', 'FinishedBy'] sleeps
+--
+-- 'assumeBits' snores relations sleeps
+-- @
+--
+-- = Getting Constraints
+-- The 'getConstraints' function returns a 'RelationBits' type representing the 
+-- set of all possible relations between two intervals. This is useful for 
+-- determining specific information between two intervals.
+--
+-- Example: 
+--
+-- @
+-- sleeps <- 'interval' 
+-- snores <- 'interval' 
+--
+-- 'assume' snores 'During' sleeps
+--
+-- 'fromBits' \<$\> 'getConstraints' snores sleeps
+-- @
 
 module Data.Allen.Interval ( interval
                            , intervalCount

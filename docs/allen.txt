@@ -93,11 +93,106 @@ compose :: RelationBits -> RelationBits -> RelationBits
 bitsFromString :: String -> RelationBits
 
 
--- | <ul>
---   <li>Module : Data.Allen.Interval</li>
---   <li>Description : Functions for working with intervals.</li>
---   <li>Maintainer : Archaversine</li>
---   </ul>
+-- | This module provides functions for working with intervals. Note that
+--   almost all exposed functions only work with interval IDs. This is
+--   because the internal representation of intervals is subject to change,
+--   but the IDs will remain the same no matter what.
+--   
+--   <h1>Creating intervals</h1>
+--   
+--   Intervals are created with the <a>interval</a> function, which creates
+--   an interval adds it to the internal network representation, then
+--   returns its corresponding ID. Note that upon creating a new interval,
+--   it will have all relations to all other intervals. This is because the
+--   creation of an interval does not provide any meaningful information
+--   about its relations to other intervals.
+--   
+--   Creating two intervals sleeps and snores:
+--   
+--   <pre>
+--   sleeps &lt;- <a>interval</a> 
+--   snores &lt;- <a>interval</a>
+--   </pre>
+--   
+--   <h1>Defining Relations Between Intervals</h1>
+--   
+--   There are three main ways to define relations betweek intervals:
+--   
+--   <ol>
+--   <li>Define a single relation using the <a>Relation</a> type.</li>
+--   <li>Define a set of relations using a list of <a>Relation</a>
+--   types.</li>
+--   <li>Define a set of relations using a <a>RelationBits</a> type.</li>
+--   </ol>
+--   
+--   <h2>Defining a single relation</h2>
+--   
+--   This is the easiest to do, and is done with the <a>assume</a>
+--   function. This function takes three arguments: the ID of the first
+--   interval, the relation between the two intervals, and the ID of the
+--   second interval.
+--   
+--   Example:
+--   
+--   <pre>
+--   sleeps &lt;- <a>interval</a> 
+--   snores &lt;- <a>interval</a> 
+--   
+--   <a>assume</a> snores <a>During</a> sleeps
+--   </pre>
+--   
+--   <h2>Defining a Set of Relations </h2>
+--   
+--   This is done with the <a>assumeSet</a> function. This function takes
+--   three arguments: the ID of the first interval, a list of relations
+--   between the two intervals, and the ID of the second interval.
+--   
+--   Example:
+--   
+--   <pre>
+--   sleeps &lt;- <a>interval</a> 
+--   snores &lt;- <a>interval</a> 
+--   
+--   <a>assumeSet</a> snores [<a>StartedBy</a>, <a>During</a>, <a>FinishedBy</a>] sleeps
+--   </pre>
+--   
+--   <h2>Defining a Set of Relations Using Bit Representation</h2>
+--   
+--   This is done with the <a>assumeBits</a> function. This function takes
+--   three arguments: the ID of the first interval, a <a>RelationBits</a>
+--   type representing the relations between the two intervals, and the ID
+--   of the second interval. Generally, this function should not be used
+--   directly, but it can be used to speed up calculations if you already
+--   know the bit representation.
+--   
+--   Example:
+--   
+--   <pre>
+--   sleeps &lt;- <a>interval</a> 
+--   snores &lt;- <a>interval</a> 
+--   
+--   let relations = foldl (.|.) 0 [<a>StartedBy</a>, <a>During</a>, <a>FinishedBy</a>] sleeps
+--   
+--   <a>assumeBits</a> snores relations sleeps
+--   </pre>
+--   
+--   <h1>Getting Constraints</h1>
+--   
+--   The <a>getConstraints</a> function returns a <a>RelationBits</a> type
+--   representing the set of all possible relations between two intervals.
+--   This is useful for determining specific information between two
+--   intervals.
+--   
+--   Example:
+--   
+--   <pre>
+--   sleeps &lt;- <a>interval</a> 
+--   snores &lt;- <a>interval</a> 
+--   
+--   <a>assume</a> snores <a>During</a> sleeps
+--   
+--   <a>fromBits</a> &lt;$&gt; <a>getConstraints</a> snores sleeps
+--   </pre>
 module Data.Allen.Interval
 
 -- | Create a new interval. Returns the interval ID.
