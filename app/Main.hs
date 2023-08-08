@@ -63,6 +63,7 @@ data Command = CreateInterval String
              | GetConstraints String String
              | ShowGraph
              | ResetGraph
+             | Help
              | Quit
              | InvalidCommand
 
@@ -73,6 +74,7 @@ parseCommand str = case words str of
     [ "constraints", a, b ] -> GetConstraints a b 
     [ "graph"             ] -> ShowGraph 
     [ "clear"             ] -> ResetGraph 
+    [ "help"              ] -> Help
     [ "exit"              ] -> Quit
     _                       -> InvalidCommand
 
@@ -87,16 +89,29 @@ readCommand = do
             readCommand
         _ -> return command
 
+printHelp :: IO ()
+printHelp = do 
+    putStrLn "Commands:"
+    putStrLn "  create <name>           Create a new interval with the given name"
+    putStrLn "  assume <a> <rel> <b>    Assume that a and b have the given relation"
+    putStrLn "                          (Use: pmoFDseSdfoMP to represent relations)"
+    putStrLn "  constraints <a> <b>     Show the constraints between a and b"
+    putStrLn "  graph                   Show the current graph"
+    putStrLn "  clear                   Clear the current graph"
+    putStrLn "  help                    Show this help message"
+    putStrLn "  exit                    Exit the program"
+
 repl :: REPL () 
 repl = do 
     command <- liftIO readCommand
 
     case command of 
-        CreateInterval name  -> createInterval name >> repl
+        CreateInterval name  -> createInterval name  >> repl
         AssumeRelation a r b -> assumeRelation a r b >> repl
-        GetConstraints a b   -> showConstraints a b >> repl
-        ShowGraph            -> showGraph >> repl
-        ResetGraph           -> resetGraph >> repl
+        GetConstraints a b   -> showConstraints a b  >> repl
+        ShowGraph            -> showGraph            >> repl
+        ResetGraph           -> resetGraph           >> repl
+        Help                 -> liftIO printHelp     >> repl
         Quit                 -> return ()
         InvalidCommand       -> do 
             liftIO $ putStrLn "Error: Invalid Command"
@@ -106,5 +121,9 @@ main :: IO ()
 main = do 
     -- Fix buffering so that we can see the prompt
     hSetBuffering stdout NoBuffering
+    putStrLn "Interactive Allen's Interval Algebra Solver"
+    putStrLn "Author: Archaversine"
+    putStrLn "Type 'help' for a list of commands"
+    putStrLn "------------------------------------------"
     evalStateT repl newREPLState
 
