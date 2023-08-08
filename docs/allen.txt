@@ -231,11 +231,11 @@ getConstraints :: IntervalID -> IntervalID -> Allen RelationBits
 --   Intervals can be created using the <a>interval</a> function:
 --   
 --   <pre>
---   calc :: Allen ()
+--   calc :: <a>Allen</a> ()
 --   calc = do 
---     sleeps &lt;- interval
---     snores &lt;- interval
---     wakeup &lt;- interval
+--     sleeps &lt;- <a>interval</a>
+--     snores &lt;- <a>interval</a>
+--     wakeup &lt;- <a>interval</a>
 --     ...
 --   </pre>
 --   
@@ -249,8 +249,8 @@ getConstraints :: IntervalID -> IntervalID -> Allen RelationBits
 --   <pre>
 --   calc :: Allen () 
 --   calc = do 
---     sleeps         &lt;- interval 
---     sleepsInterval &lt;- fromID sleeps
+--     sleeps         &lt;- <a>interval</a> 
+--     sleepsInterval &lt;- <a>fromID</a> sleeps
 --     ...
 --   </pre>
 --   
@@ -264,29 +264,29 @@ getConstraints :: IntervalID -> IntervalID -> Allen RelationBits
 --   the intervals <tt>a</tt> and <tt>b</tt>:
 --   
 --   <pre>
---   network :: Allen (IntervalID, IntervalID)
+--   network :: <a>Allen</a> (<a>IntervalID</a>, <a>IntervalID</a>)
 --   network = do 
---     a &lt;- interval 
---     b &lt;- interval 
+--     a &lt;- <a>interval</a> 
+--     b &lt;- <a>interval</a> 
 --   
---     assume a During b 
+--     <a>assume</a> a <a>During</a> b 
 --   
 --     return (a, b)
 --   
---   calc1 :: Allen () 
+--   calc1 :: <a>Allen</a> () 
 --   calc1 = do 
 --     (a, b) &lt;- network 
---     c      &lt;- interval
+--     c      &lt;- <a>interval</a>
 --   
---     assume a Precedes c
+--     <a>assume</a> a <a>Precedes</a> c
 --     ...
 --   
---   calc2 :: Allen ()
+--   calc2 :: <a>Allen</a> ()
 --   calc2 = do 
 --     (a, b) &lt;- network 
---     c      &lt;- interval 
+--     c      &lt;- <a>interval</a>
 --   
---     assume a Contains c
+--     <a>assume</a> a <a>Contains</a> c
 --     ...
 --   </pre>
 --   
@@ -299,48 +299,31 @@ getConstraints :: IntervalID -> IntervalID -> Allen RelationBits
 --   <pre>
 --   calc :: Allen () 
 --   calc = do 
---      sleeps &lt;- interval
---      snores &lt;- interval
---      wakeup &lt;- interval
+--      sleeps &lt;- <a>interval</a>
+--      snores &lt;- <a>interval</a>
+--      wakeup &lt;- <a>interval</a>
 --   
---      assume snores During sleeps
---      assume wakeup PrecededBy sleeps
+--      <a>assume</a> snores <a>During</a> sleeps
+--      <a>assume</a> wakeup <a>PrecededBy</a> sleeps
 --   </pre>
 --   
 --   Sometimes, intervals have more than one possible relation with one
---   another. For example, snores is During sleeps, but it could also by
---   StartedBy sleeps, or it could be Equals sleeps. In such cases, the
---   <tt>assumeSet</tt> function can be used:
+--   another. For example, snores is <a>During</a> sleeps, but it could
+--   also be <a>StartedBy</a> sleeps, or it could <a>Equals</a> sleeps. In
+--   such cases, the <a>assumeSet</a> function can be used:
 --   
 --   <pre>
---   calc :: Allen () 
+--   calc :: <a>Allen</a> () 
 --   calc = do 
---      sleeps &lt;- interval
---      snores &lt;- interval
---      wakeup &lt;- interval
+--      sleeps &lt;- <a>interval</a>
+--      snores &lt;- <a>interval</a>
+--      wakeup &lt;- <a>interval</a>
 --   
---      assumeSet snores [During, StartedBy, Equals] sleeps
+--      <a>assumeSet</a> snores [<a>During</a>, <a>StartedBy</a>, <a>Equals</a>] sleeps
 --   </pre>
 --   
 --   There are thirteen different relations intervals can have with each
---   other. They are identified with the <tt>Relation</tt> type:
---   
---   <pre>
---   data Relation = Precedes 
---                 | Meets 
---                 | Overlaps 
---                 | FinishedBy
---                 | Contains 
---                 | Starts 
---                 | Equals 
---                 | StartedBy 
---                 | During 
---                 | Finishes 
---                 | OverlappedBy 
---                 | MetBy
---                 | PrecededBy
---                 deriving (Eq, Show, Enum, Bounded)
---   </pre>
+--   other. They are identified with the <a>Relation</a> type.
 module Data.Allen
 
 -- | Return the resulting interval graph of an allen computation

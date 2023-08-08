@@ -12,11 +12,11 @@
 -- Intervals can be created using the 'interval' function:
 --
 -- @ 
--- calc :: Allen ()
+-- calc :: 'Allen' ()
 -- calc = do 
---   sleeps <- interval
---   snores <- interval
---   wakeup <- interval
+--   sleeps <- 'interval'
+--   snores <- 'interval'
+--   wakeup <- 'interval'
 --   ...
 -- @ 
 --
@@ -28,8 +28,8 @@
 -- @ 
 -- calc :: Allen () 
 -- calc = do 
---   sleeps         <- interval 
---   sleepsInterval <- fromID sleeps
+--   sleeps         <- 'interval' 
+--   sleepsInterval <- 'fromID' sleeps
 --   ...
 -- @
 --
@@ -42,29 +42,29 @@
 -- @a@ and @b@:
 --
 -- @ 
--- network :: Allen (IntervalID, IntervalID)
+-- network :: 'Allen' ('IntervalID', 'IntervalID')
 -- network = do 
---   a <- interval 
---   b <- interval 
+--   a <- 'interval' 
+--   b <- 'interval' 
 --
---   assume a During b 
+--   'assume' a 'During' b 
 --
 --   return (a, b)
 --
--- calc1 :: Allen () 
+-- calc1 :: 'Allen' () 
 -- calc1 = do 
 --   (a, b) <- network 
---   c      <- interval
+--   c      <- 'interval'
 --
---   assume a Precedes c
+--   'assume' a 'Precedes' c
 --   ...
 --
--- calc2 :: Allen ()
+-- calc2 :: 'Allen' ()
 -- calc2 = do 
 --   (a, b) <- network 
---   c      <- interval 
+--   c      <- 'interval'
 --
---   assume a Contains c
+--   'assume' a 'Contains' c
 --   ...
 -- @
 --
@@ -76,48 +76,31 @@
 -- @ 
 -- calc :: Allen () 
 -- calc = do 
---    sleeps <- interval
---    snores <- interval
---    wakeup <- interval
+--    sleeps <- 'interval'
+--    snores <- 'interval'
+--    wakeup <- 'interval'
 --
---    assume snores During sleeps
---    assume wakeup PrecededBy sleeps
+--    'assume' snores 'During' sleeps
+--    'assume' wakeup 'PrecededBy' sleeps
 -- @
 --
 -- Sometimes, intervals have more than one possible relation with one another.
--- For example, snores is During sleeps, but it could also by StartedBy sleeps, 
--- or it could be Equals sleeps. In such cases, the @assumeSet@ function can be 
+-- For example, snores is 'During' sleeps, but it could also be 'StartedBy' sleeps, 
+-- or it could 'Equals' sleeps. In such cases, the 'assumeSet' function can be 
 -- used: 
 --
 -- @  
--- calc :: Allen () 
+-- calc :: 'Allen' () 
 -- calc = do 
---    sleeps <- interval
---    snores <- interval
---    wakeup <- interval
+--    sleeps <- 'interval'
+--    snores <- 'interval'
+--    wakeup <- 'interval'
 --
---    assumeSet snores [During, StartedBy, Equals] sleeps
+--    'assumeSet' snores ['During', 'StartedBy', 'Equals'] sleeps
 -- @
 --
 -- There are thirteen different relations intervals can have with each other. 
--- They are identified with the @Relation@ type:
---
--- @ 
--- data Relation = Precedes 
---               | Meets 
---               | Overlaps 
---               | FinishedBy
---               | Contains 
---               | Starts 
---               | Equals 
---               | StartedBy 
---               | During 
---               | Finishes 
---               | OverlappedBy 
---               | MetBy
---               | PrecededBy
---               deriving (Eq, Show, Enum, Bounded)
--- @
+-- They are identified with the 'Relation' type.
 
 module Data.Allen ( module Data.Allen.Types 
                   , module Data.Allen.Interval

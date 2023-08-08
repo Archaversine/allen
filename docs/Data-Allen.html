@@ -1,79 +1,65 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1" /><title>Data.Allen</title><link href="linuwial.css" rel="stylesheet" type="text/css" title="Linuwial" /><link rel="stylesheet" type="text/css" href="quick-jump.css" /><link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=PT+Sans:400,400i,700" /><script src="haddock-bundle.min.js" async="async" type="text/javascript"></script><script type="text/x-mathjax-config">MathJax.Hub.Config({ tex2jax: { processClass: "mathjax", ignoreClass: ".*" } });</script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script></head><body><div id="package-header"><span class="caption">allen-0.1.0.0</span><ul class="links" id="page-menu"><li><a href="src/Data.Allen.html">Source</a></li><li><a href="index.html">Contents</a></li><li><a href="doc-index.html">Index</a></li></ul></div><div id="content"><div id="module-header"><table class="info"><tr><th>Maintainer</th><td>Archaversine</td></tr><tr><th>Safe Haskell</th><td>Safe-Inferred</td></tr><tr><th>Language</th><td>Haskell2010</td></tr></table><p class="caption">Data.Allen</p></div><div id="description"><p class="caption">Description</p><div class="doc"><p>This module provides a monad for computing with Allen's interval algebra. 
  The monad keeps track of the interval graph that is being built up during 
  the computation. The interval graph is represented as a map from interval 
- identifiers to intervals. </p><h1>Intervals</h1><p>Intervals can be created using the <code><a href="Data-Allen-Interval.html#v:interval" title="Data.Allen.Interval">interval</a></code> function:</p><pre>calc :: Allen ()
+ identifiers to intervals. </p><h1>Intervals</h1><p>Intervals can be created using the <code><a href="Data-Allen-Interval.html#v:interval" title="Data.Allen.Interval">interval</a></code> function:</p><pre>calc :: <code><a href="Data-Allen-Types.html#t:Allen" title="Data.Allen.Types">Allen</a></code> ()
 calc = do 
-  sleeps &lt;- interval
-  snores &lt;- interval
-  wakeup &lt;- interval
+  sleeps &lt;- <code><a href="Data-Allen-Interval.html#v:interval" title="Data.Allen.Interval">interval</a></code>
+  snores &lt;- <code><a href="Data-Allen-Interval.html#v:interval" title="Data.Allen.Interval">interval</a></code>
+  wakeup &lt;- <code><a href="Data-Allen-Interval.html#v:interval" title="Data.Allen.Interval">interval</a></code>
   ...
 </pre><h2>Retrieving interval data</h2><p>Most functions perform operations on intervals solely with the use of their 
  IDs. However, sometimes it is useful to retrieve the actual interval data. 
  To get the actual interval data, use the <code><a href="Data-Allen-Types.html#v:fromID" title="Data.Allen.Types">fromID</a></code> function:</p><pre>calc :: Allen () 
 calc = do 
-  sleeps         &lt;- interval 
-  sleepsInterval &lt;- fromID sleeps
+  sleeps         &lt;- <code><a href="Data-Allen-Interval.html#v:interval" title="Data.Allen.Interval">interval</a></code> 
+  sleepsInterval &lt;- <code><a href="Data-Allen-Types.html#v:fromID" title="Data.Allen.Types">fromID</a></code> sleeps
   ...
 </pre><p>Note that in the above example, updating the interval <code>sleeps</code> will not 
  update the interval <code>sleepsInterval</code>.</p><h2>Combining calculations</h2><p>Sometimes, it is useful to define a set of intervals in one place and use 
  then repeatedly in other places. Here is an example that reuses the intervals 
- <code>a</code> and <code>b</code>:</p><pre>network :: Allen (IntervalID, IntervalID)
+ <code>a</code> and <code>b</code>:</p><pre>network :: <code><a href="Data-Allen-Types.html#t:Allen" title="Data.Allen.Types">Allen</a></code> (<code><a href="Data-Allen-Types.html#t:IntervalID" title="Data.Allen.Types">IntervalID</a></code>, <code><a href="Data-Allen-Types.html#t:IntervalID" title="Data.Allen.Types">IntervalID</a></code>)
 network = do 
-  a &lt;- interval 
-  b &lt;- interval 
+  a &lt;- <code><a href="Data-Allen-Interval.html#v:interval" title="Data.Allen.Interval">interval</a></code> 
+  b &lt;- <code><a href="Data-Allen-Interval.html#v:interval" title="Data.Allen.Interval">interval</a></code> 
 
-  assume a During b 
+  <code><a href="Data-Allen-Interval.html#v:assume" title="Data.Allen.Interval">assume</a></code> a <code><a href="Data-Allen-Types.html#v:During" title="Data.Allen.Types">During</a></code> b 
 
   return (a, b)
 
-calc1 :: Allen () 
+calc1 :: <code><a href="Data-Allen-Types.html#t:Allen" title="Data.Allen.Types">Allen</a></code> () 
 calc1 = do 
   (a, b) &lt;- network 
-  c      &lt;- interval
+  c      &lt;- <code><a href="Data-Allen-Interval.html#v:interval" title="Data.Allen.Interval">interval</a></code>
 
-  assume a Precedes c
+  <code><a href="Data-Allen-Interval.html#v:assume" title="Data.Allen.Interval">assume</a></code> a <code><a href="Data-Allen-Types.html#v:Precedes" title="Data.Allen.Types">Precedes</a></code> c
   ...
 
-calc2 :: Allen ()
+calc2 :: <code><a href="Data-Allen-Types.html#t:Allen" title="Data.Allen.Types">Allen</a></code> ()
 calc2 = do 
   (a, b) &lt;- network 
-  c      &lt;- interval 
+  c      &lt;- <code><a href="Data-Allen-Interval.html#v:interval" title="Data.Allen.Interval">interval</a></code>
 
-  assume a Contains c
+  <code><a href="Data-Allen-Interval.html#v:assume" title="Data.Allen.Interval">assume</a></code> a <code><a href="Data-Allen-Types.html#v:Contains" title="Data.Allen.Types">Contains</a></code> c
   ...
 </pre><h1>Relations </h1><p>Intervals can have relations with one another. For example, in the above 
  example a valid relation would be that one sleeps during snores. Adding  
  relations is done using one of the assume functions:</p><pre>calc :: Allen () 
 calc = do 
-   sleeps &lt;- interval
-   snores &lt;- interval
-   wakeup &lt;- interval
+   sleeps &lt;- <code><a href="Data-Allen-Interval.html#v:interval" title="Data.Allen.Interval">interval</a></code>
+   snores &lt;- <code><a href="Data-Allen-Interval.html#v:interval" title="Data.Allen.Interval">interval</a></code>
+   wakeup &lt;- <code><a href="Data-Allen-Interval.html#v:interval" title="Data.Allen.Interval">interval</a></code>
 
-   assume snores During sleeps
-   assume wakeup PrecededBy sleeps
+   <code><a href="Data-Allen-Interval.html#v:assume" title="Data.Allen.Interval">assume</a></code> snores <code><a href="Data-Allen-Types.html#v:During" title="Data.Allen.Types">During</a></code> sleeps
+   <code><a href="Data-Allen-Interval.html#v:assume" title="Data.Allen.Interval">assume</a></code> wakeup <code><a href="Data-Allen-Types.html#v:PrecededBy" title="Data.Allen.Types">PrecededBy</a></code> sleeps
 </pre><p>Sometimes, intervals have more than one possible relation with one another.
- For example, snores is During sleeps, but it could also by StartedBy sleeps, 
- or it could be Equals sleeps. In such cases, the <code>assumeSet</code> function can be 
- used: </p><pre>calc :: Allen () 
+ For example, snores is <code><a href="Data-Allen-Types.html#v:During" title="Data.Allen.Types">During</a></code> sleeps, but it could also be <code><a href="Data-Allen-Types.html#v:StartedBy" title="Data.Allen.Types">StartedBy</a></code> sleeps, 
+ or it could <code><a href="Data-Allen-Types.html#v:Equals" title="Data.Allen.Types">Equals</a></code> sleeps. In such cases, the <code><a href="Data-Allen-Interval.html#v:assumeSet" title="Data.Allen.Interval">assumeSet</a></code> function can be 
+ used: </p><pre>calc :: <code><a href="Data-Allen-Types.html#t:Allen" title="Data.Allen.Types">Allen</a></code> () 
 calc = do 
-   sleeps &lt;- interval
-   snores &lt;- interval
-   wakeup &lt;- interval
+   sleeps &lt;- <code><a href="Data-Allen-Interval.html#v:interval" title="Data.Allen.Interval">interval</a></code>
+   snores &lt;- <code><a href="Data-Allen-Interval.html#v:interval" title="Data.Allen.Interval">interval</a></code>
+   wakeup &lt;- <code><a href="Data-Allen-Interval.html#v:interval" title="Data.Allen.Interval">interval</a></code>
 
-   assumeSet snores [During, StartedBy, Equals] sleeps
+   <code><a href="Data-Allen-Interval.html#v:assumeSet" title="Data.Allen.Interval">assumeSet</a></code> snores [<code><a href="Data-Allen-Types.html#v:During" title="Data.Allen.Types">During</a></code>, <code><a href="Data-Allen-Types.html#v:StartedBy" title="Data.Allen.Types">StartedBy</a></code>, <code><a href="Data-Allen-Types.html#v:Equals" title="Data.Allen.Types">Equals</a></code>] sleeps
 </pre><p>There are thirteen different relations intervals can have with each other. 
- They are identified with the <code>Relation</code> type:</p><pre>data Relation = Precedes 
-              | Meets 
-              | Overlaps 
-              | FinishedBy
-              | Contains 
-              | Starts 
-              | Equals 
-              | StartedBy 
-              | During 
-              | Finishes 
-              | OverlappedBy 
-              | MetBy
-              | PrecededBy
-              deriving (Eq, Show, Enum, Bounded)
-</pre></div></div><div id="synopsis"><details id="syn"><summary>Synopsis</summary><ul class="details-toggle" data-details-id="syn"><li class="src short">module <a href="Data-Allen-Types.html">Data.Allen.Types</a></li><li class="src short">module <a href="Data-Allen-Interval.html">Data.Allen.Interval</a></li><li class="src short">module <a href="Data-Allen-Relation.html">Data.Allen.Relation</a></li><li class="src short"><a href="#v:execAllen">execAllen</a> :: <a href="Data-Allen-Types.html#t:Allen" title="Data.Allen.Types">Allen</a> a -&gt; <a href="Data-Allen-Types.html#t:IntervalGraph" title="Data.Allen.Types">IntervalGraph</a></li><li class="src short"><a href="#v:evalAllen">evalAllen</a> :: <a href="Data-Allen-Types.html#t:Allen" title="Data.Allen.Types">Allen</a> a -&gt; a</li><li class="src short"><a href="#v:runAllen">runAllen</a> :: <a href="Data-Allen-Types.html#t:Allen" title="Data.Allen.Types">Allen</a> a -&gt; (a, <a href="Data-Allen-Types.html#t:IntervalGraph" title="Data.Allen.Types">IntervalGraph</a>)</li></ul></details></div><div id="interface"><h1>Documentation</h1><div class="top"><p class="src">module <a href="Data-Allen-Types.html">Data.Allen.Types</a></p></div><div class="top"><p class="src">module <a href="Data-Allen-Interval.html">Data.Allen.Interval</a></p></div><div class="top"><p class="src">module <a href="Data-Allen-Relation.html">Data.Allen.Relation</a></p></div><div class="top"><p class="src"><a id="v:execAllen" class="def">execAllen</a> :: <a href="Data-Allen-Types.html#t:Allen" title="Data.Allen.Types">Allen</a> a -&gt; <a href="Data-Allen-Types.html#t:IntervalGraph" title="Data.Allen.Types">IntervalGraph</a> <a href="src/Data.Allen.html#execAllen" class="link">Source</a> <a href="#v:execAllen" class="selflink">#</a></p><div class="doc"><p>Return the resulting interval graph of an allen computation</p></div></div><div class="top"><p class="src"><a id="v:evalAllen" class="def">evalAllen</a> :: <a href="Data-Allen-Types.html#t:Allen" title="Data.Allen.Types">Allen</a> a -&gt; a <a href="src/Data.Allen.html#evalAllen" class="link">Source</a> <a href="#v:evalAllen" class="selflink">#</a></p><div class="doc"><p>Return the result of an allen computation</p></div></div><div class="top"><p class="src"><a id="v:runAllen" class="def">runAllen</a> :: <a href="Data-Allen-Types.html#t:Allen" title="Data.Allen.Types">Allen</a> a -&gt; (a, <a href="Data-Allen-Types.html#t:IntervalGraph" title="Data.Allen.Types">IntervalGraph</a>) <a href="src/Data.Allen.html#runAllen" class="link">Source</a> <a href="#v:runAllen" class="selflink">#</a></p><div class="doc"><p>Return the result of an allen computation and the resulting interval graph</p></div></div></div></div><div id="footer"><p>Produced by <a href="http://www.haskell.org/haddock/">Haddock</a> version 2.27.0</p></div></body></html>
+ They are identified with the <code><a href="Data-Allen-Types.html#t:Relation" title="Data.Allen.Types">Relation</a></code> type.</p></div></div><div id="synopsis"><details id="syn"><summary>Synopsis</summary><ul class="details-toggle" data-details-id="syn"><li class="src short">module <a href="Data-Allen-Types.html">Data.Allen.Types</a></li><li class="src short">module <a href="Data-Allen-Interval.html">Data.Allen.Interval</a></li><li class="src short">module <a href="Data-Allen-Relation.html">Data.Allen.Relation</a></li><li class="src short"><a href="#v:execAllen">execAllen</a> :: <a href="Data-Allen-Types.html#t:Allen" title="Data.Allen.Types">Allen</a> a -&gt; <a href="Data-Allen-Types.html#t:IntervalGraph" title="Data.Allen.Types">IntervalGraph</a></li><li class="src short"><a href="#v:evalAllen">evalAllen</a> :: <a href="Data-Allen-Types.html#t:Allen" title="Data.Allen.Types">Allen</a> a -&gt; a</li><li class="src short"><a href="#v:runAllen">runAllen</a> :: <a href="Data-Allen-Types.html#t:Allen" title="Data.Allen.Types">Allen</a> a -&gt; (a, <a href="Data-Allen-Types.html#t:IntervalGraph" title="Data.Allen.Types">IntervalGraph</a>)</li></ul></details></div><div id="interface"><h1>Documentation</h1><div class="top"><p class="src">module <a href="Data-Allen-Types.html">Data.Allen.Types</a></p></div><div class="top"><p class="src">module <a href="Data-Allen-Interval.html">Data.Allen.Interval</a></p></div><div class="top"><p class="src">module <a href="Data-Allen-Relation.html">Data.Allen.Relation</a></p></div><div class="top"><p class="src"><a id="v:execAllen" class="def">execAllen</a> :: <a href="Data-Allen-Types.html#t:Allen" title="Data.Allen.Types">Allen</a> a -&gt; <a href="Data-Allen-Types.html#t:IntervalGraph" title="Data.Allen.Types">IntervalGraph</a> <a href="src/Data.Allen.html#execAllen" class="link">Source</a> <a href="#v:execAllen" class="selflink">#</a></p><div class="doc"><p>Return the resulting interval graph of an allen computation</p></div></div><div class="top"><p class="src"><a id="v:evalAllen" class="def">evalAllen</a> :: <a href="Data-Allen-Types.html#t:Allen" title="Data.Allen.Types">Allen</a> a -&gt; a <a href="src/Data.Allen.html#evalAllen" class="link">Source</a> <a href="#v:evalAllen" class="selflink">#</a></p><div class="doc"><p>Return the result of an allen computation</p></div></div><div class="top"><p class="src"><a id="v:runAllen" class="def">runAllen</a> :: <a href="Data-Allen-Types.html#t:Allen" title="Data.Allen.Types">Allen</a> a -&gt; (a, <a href="Data-Allen-Types.html#t:IntervalGraph" title="Data.Allen.Types">IntervalGraph</a>) <a href="src/Data.Allen.html#runAllen" class="link">Source</a> <a href="#v:runAllen" class="selflink">#</a></p><div class="doc"><p>Return the result of an allen computation and the resulting interval graph</p></div></div></div></div><div id="footer"><p>Produced by <a href="http://www.haskell.org/haddock/">Haddock</a> version 2.27.0</p></div></body></html>
