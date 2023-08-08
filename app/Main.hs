@@ -2,6 +2,8 @@ module Main (main) where
 
 import Data.Allen
 
+import System.IO
+
 data Command = CreateInterval String 
              | AssumeRelation String String RelationBits
              | GetConstraints String String
@@ -32,18 +34,8 @@ readCommand = do
             readCommand
         _ -> return command
 
-calc :: Allen ([Relation], [Relation]) 
-calc = do 
-    a <- interval 
-    b <- interval 
-
-    assume a Precedes b 
-
-    r1 <- fromBits <$> getConstraints a b 
-    r2 <- fromBits <$> getConstraints b a 
-
-    return (r1, r2)
-
 main :: IO ()
-main = print $ evalAllen calc
+main = do 
+    -- Fix buffering so that we can see the prompt
+    hSetBuffering stdout NoBuffering
 
