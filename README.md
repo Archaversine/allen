@@ -2,168 +2,60 @@
 
 An Implementation of Allen's Interval Algebra in Haskell.
 
-## Allen Monad 
+This library provides a monadic way to perform computations related to Allen's 
+interval algebra. The interval network strucutre is implicitly updated upon 
+the creation of a new interval and when a set of relations is applied to two 
+intervals. 
 
-Temporal reasoning calculations may be performed inside the Allen Monad, which 
-is a State Monad accompanied with helper functions.
+## Sources
+
+This library is based off of the interval algebra described in
+[Maintaining Knowledge about Temporal Intervals](https://cse.unl.edu/~choueiry/Documents/Allen-CACM1983.pdf), 
+and [Allen's Interval Algebra](https://www.ics.uci.edu/~alspaugh/cls/shr/allen.html).
+
+## Examples
+
+Assume a situation with three intervals:
+
+1. I am walking.
+2. I am talking.
+3. My friend calls me.
+
+and assume that we know the following:
+
+- When I am walking, I am not talking.
+- When my friend called me, I started talking.
+
+we can easily compute the relations between when I was walking and when my friend called me:
 
 ```haskell 
-type Allen = State IntervalGraph
-```
-
-To get the resulting IntervalGraph, you may use the `execAllen` function, which 
-is similar to the `execState` function but instead begins with an empty 
-intervalGraph and discards the resulting value. If you want the resuling value 
-still, there is a `evalAllen` which does just that. There also exists a 
-`runAllen` similar to `runState` as well.
-
-## Intervals 
-
-### Trivial Example
-
-Intervals can be created inside the Allen Monad using the `interval` 
-function:
-
-```haskell 
-calc :: Allen ()
+calc :: Allen [Relation]
 calc = do 
-    sleeps <- interval 
-    snores <- interval 
+    walking <- interval 
+    talking <- interval 
+    friend  <- interval
 
-    return ()
-```
+    assumeSet walking [Precedes, Meets, MetBy, PrecededBy] talking
+    assume friend Starts talking
 
-Both `sleeps` and `snores` will have unique IDs to distinguish themselves 
-from each other.
+    relations <- getConstraints walking friend
 
-### Using Pre-existing Networks in a Computation
-
-To use a pre-existing network in your computation, you may simply treat it as a
-monadic action. For example, assume we have the network:
-
-```haskell 
-network :: Allen (IntervalID, IntervalID)
-network = do 
-    a <- interval 
-    b <- interval 
-
-    assume a During b
-    return (a, b)
-```
-
-and we want to use `network` in our own calculation, we can simply do:
-
-```haskell 
-calc :: Allen ()
-calc = do 
-    (a, b) <- network 
-
-    c <- interval
-
-    assume a Precedes c
-```
-
-### Accessing Specific Intervals
-
-The `interval` function returns an interval's ID instead of the interval itself.
-This is done to avoid possible immutability bugs such as using an oudated 
-version of an interval and instead treat the ID has an unchanging value 
-(which is crucial to the graph implementation). To get the actual `Interval`
-type from an ID, you may use the `fromID` function:
-
-```haskell 
-calc :: Allen ()
-calc = do
-    a <- interval 
-    i <- fromID a
-
-    return ()
-```
-
-Note that in the above example, if any changes are made to the graph, they will 
-not be reflected in the value `i`. For example, if you created another interval 
-`b` after the `fromID` function call and set a specific constraint between the 
-two, `i` will not have this information. Thus, it is better to use fromID at 
-the end of a calculation to return an `Interval` type.
-
-## Relations
-
-Intervals can have relations with one another. For example, in the above
-example a valid relation would be: `snores during sleeps`.
-
-To view a complete list of all possible relations: 
-
-```haskell 
-data Relation = Precedes 
-              | Meets 
-              | Overlaps 
-              | FinishedBy
-              | Contains 
-              | Starts 
-              | Equals 
-              | StartedBy 
-              | During 
-              | Finishes 
-              | OverlappedBy 
-              | MetBy
-              | PrecededBy
-              deriving (Eq, Show, Enum, Bounded)
-```
-
-To compute the converse of a relation, you may use the `converse` function:
-
-```haskell 
-main :: IO ()
-main = do 
-    let r  = toBits During 
-        r' = converse r
-
-    print $ fromBits r  -- Prints "During"
-    print $ fromBits r' -- Prints "Contains"
-```
-
-To compose two relations together, you may use the `compose` function. Note  
-that the compose function returns the `RelationBits` type, not the `Relation`
-type.
-
-```haskell 
-main :: IO ()
-main = do 
-    let a  = Contains 
-        b  = Overlaps 
-        c  = a `compose` b
-        c' = fromBits c
-
-    print c  -- Prints "28" (bit representation)
-    print c' -- Prints "[Overlaps,FinishedBy,Contains]"
-```
-
-## Constraints
-
-To specify relations to two intervals, or a constraint, you may use the 
-`assume` function:
-
-```haskell 
-calc :: Allen ()
-calc = do 
-    sleeps <- interval 
-    snores <- interval 
-
-    assume snores During sleeps
+    return (fromBits relations)
 
 main :: IO ()
-main = do 
-    let graph = execAllen calc 
-
-    mapM_ print graph
+main = print $ evalAllen calc
 ```
 
-This prints the following:
+And this gives the result:
 
 ```
-Interval 0 (Contains 1)
-Interval 1 (During 0)
+[Precedes,Meets,PrecededBy]
 ```
 
-Note that the act of adding a constraint automatically modifies the values 
-of the interval graph.
+Which means that we can deduce that walking either happens before, directly 
+before, or after my friend calls.
+
+## Documentation
+
+To view more information for library functions, you can view the documentation 
+for this library [here](https://archaversine.github.io/allen/Data-Allen.html).
