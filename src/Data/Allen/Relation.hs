@@ -21,7 +21,7 @@
 -- see the `toBits` function.
 
 module Data.Allen.Relation ( converse
-                           , hasRelation
+                           , testRelation
                            , composeSingle
                            , compose
                            , bitsFromString
