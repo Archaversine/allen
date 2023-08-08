@@ -124,7 +124,6 @@ composeSingle :: Relation -> Relation -> RelationBits
 composeSingle r1 r2 = composeLookup U.! index
     where index = 13 * fromEnum r1 + fromEnum r2
 
--- TODO: Verify correctness of this function
 -- | Compose two sets of relations.
 compose :: RelationBits -> RelationBits -> RelationBits
 compose r1 r2 = relationUnion [composeSingle a b | a <- fromBits r1, b <- fromBits r2]
