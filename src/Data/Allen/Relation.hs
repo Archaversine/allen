@@ -93,6 +93,14 @@ relationFromChar x = case x of
 --
 -- You may also use @full@ to represent all relations, or @concur@ to represent
 -- all relations excluding Precedes and PrecededBy.
+--
+-- Example:
+-- 
+-- @
+-- let x = 'bitsFromString' "pms"    -- [Precedes, Meets, StartedBy]
+--     y = 'bitsFromString' "full"   -- [Precedes .. PrecededBy]
+--     z = 'bitsFromString' "concur" -- [Overlaps .. OverlappedBy]
+-- @
 bitsFromString :: String -> RelationBits
 bitsFromString x | x == "full"   = rBits allRelations 
                  | x == "concur" = rBits [Overlaps .. OverlappedBy]
@@ -120,10 +128,14 @@ composeLookup = U.fromList $ map bitsFromString table
                   ]
 
 -- | Compose two relations.
+--
+-- Composition table available at <https://www.ics.uci.edu/~alspaugh/cls/shr/allen.html>.
 composeSingle :: Relation -> Relation -> RelationBits 
 composeSingle r1 r2 = composeLookup U.! index
     where index = 13 * fromEnum r1 + fromEnum r2
 
 -- | Compose two sets of relations.
+--
+-- Composition table available at <https://www.ics.uci.edu/~alspaugh/cls/shr/allen.html>.
 compose :: RelationBits -> RelationBits -> RelationBits
 compose r1 r2 = relationUnion [composeSingle a b | a <- fromBits r1, b <- fromBits r2]

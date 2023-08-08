@@ -187,9 +187,15 @@ testRelationSet :: [Relation] -> IntervalID -> IntervalID -> Allen Bool
 testRelationBits :: RelationBits -> IntervalID -> IntervalID -> Allen Bool
 
 -- | Compose two relations.
+--   
+--   Composition table available at
+--   <a>https://www.ics.uci.edu/~alspaugh/cls/shr/allen.html</a>.
 composeSingle :: Relation -> Relation -> RelationBits
 
 -- | Compose two sets of relations.
+--   
+--   Composition table available at
+--   <a>https://www.ics.uci.edu/~alspaugh/cls/shr/allen.html</a>.
 compose :: RelationBits -> RelationBits -> RelationBits
 
 -- | Given a string, return the bit representation of the set of relations.
@@ -198,6 +204,14 @@ compose :: RelationBits -> RelationBits -> RelationBits
 --   You may also use <tt>full</tt> to represent all relations, or
 --   <tt>concur</tt> to represent all relations excluding Precedes and
 --   PrecededBy.
+--   
+--   Example:
+--   
+--   <pre>
+--   let x = <a>bitsFromString</a> "pms"    -- [Precedes, Meets, StartedBy]
+--       y = <a>bitsFromString</a> "full"   -- [Precedes .. PrecededBy]
+--       z = <a>bitsFromString</a> "concur" -- [Overlaps .. OverlappedBy]
+--   </pre>
 bitsFromString :: String -> RelationBits
 
 

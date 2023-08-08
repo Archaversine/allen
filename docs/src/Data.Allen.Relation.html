@@ -271,8 +271,16 @@ forall a. Semigroup a =&gt; a -&gt; a -&gt; a
 </span><span id="line-93"></span><span class="hs-comment">--</span><span>
 </span><span id="line-94"></span><span class="hs-comment">-- You may also use @full@ to represent all relations, or @concur@ to represent</span><span>
 </span><span id="line-95"></span><span class="hs-comment">-- all relations excluding Precedes and PrecededBy.</span><span>
-</span><span id="line-96"></span><span class="annot"><a href="Data.Allen.Relation.html#bitsFromString"><span class="hs-identifier hs-type">bitsFromString</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="Data.Allen.Types.html#RelationBits"><span class="hs-identifier hs-type">RelationBits</span></a></span><span>
-</span><span id="line-97"></span><span id="bitsFromString"><span class="annot"><span class="annottext">bitsFromString :: [Char] -&gt; RelationBits
+</span><span id="line-96"></span><span class="hs-comment">--</span><span>
+</span><span id="line-97"></span><span class="hs-comment">-- Example:</span><span>
+</span><span id="line-98"></span><span class="hs-comment">-- </span><span>
+</span><span id="line-99"></span><span class="hs-comment">-- @</span><span>
+</span><span id="line-100"></span><span class="hs-comment">-- let x = 'bitsFromString' &quot;pms&quot;    -- [Precedes, Meets, StartedBy]</span><span>
+</span><span id="line-101"></span><span class="hs-comment">--     y = 'bitsFromString' &quot;full&quot;   -- [Precedes .. PrecededBy]</span><span>
+</span><span id="line-102"></span><span class="hs-comment">--     z = 'bitsFromString' &quot;concur&quot; -- [Overlaps .. OverlappedBy]</span><span>
+</span><span id="line-103"></span><span class="hs-comment">-- @</span><span>
+</span><span id="line-104"></span><span class="annot"><a href="Data.Allen.Relation.html#bitsFromString"><span class="hs-identifier hs-type">bitsFromString</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="Data.Allen.Types.html#RelationBits"><span class="hs-identifier hs-type">RelationBits</span></a></span><span>
+</span><span id="line-105"></span><span id="bitsFromString"><span class="annot"><span class="annottext">bitsFromString :: [Char] -&gt; RelationBits
 </span><a href="Data.Allen.Relation.html#bitsFromString"><span class="hs-identifier hs-var hs-var">bitsFromString</span></a></span></span><span> </span><span id="local-6989586621679051551"><span class="annot"><span class="annottext">[Char]
 </span><a href="#local-6989586621679051551"><span class="hs-identifier hs-var">x</span></a></span></span><span> </span><span class="hs-glyph">|</span><span> </span><span class="annot"><span class="annottext">[Char]
 </span><a href="#local-6989586621679051551"><span class="hs-identifier hs-var">x</span></a></span><span> </span><span class="annot"><span class="annottext">[Char] -&gt; [Char] -&gt; Bool
@@ -281,7 +289,7 @@ forall a. Eq a =&gt; a -&gt; a -&gt; Bool
 </span><span class="hs-string">&quot;full&quot;</span></span><span>   </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">[Relation] -&gt; RelationBits
 </span><a href="#local-6989586621679051552"><span class="hs-identifier hs-var">rBits</span></a></span><span> </span><span class="annot"><span class="annottext">[Relation]
 </span><a href="Data.Allen.Types.html#allRelations"><span class="hs-identifier hs-var">allRelations</span></a></span><span> </span><span>
-</span><span id="line-98"></span><span>                 </span><span class="hs-glyph">|</span><span> </span><span class="annot"><span class="annottext">[Char]
+</span><span id="line-106"></span><span>                 </span><span class="hs-glyph">|</span><span> </span><span class="annot"><span class="annottext">[Char]
 </span><a href="#local-6989586621679051551"><span class="hs-identifier hs-var">x</span></a></span><span> </span><span class="annot"><span class="annottext">[Char] -&gt; [Char] -&gt; Bool
 forall a. Eq a =&gt; a -&gt; a -&gt; Bool
 </span><span class="hs-operator hs-var">==</span></span><span> </span><span class="annot"><span class="annottext">[Char]
@@ -289,7 +297,7 @@ forall a. Eq a =&gt; a -&gt; a -&gt; Bool
 </span><a href="#local-6989586621679051552"><span class="hs-identifier hs-var">rBits</span></a></span><span> </span><span class="hs-special">[</span><span class="annot"><span class="annottext">Relation
 </span><a href="Data.Allen.Types.html#Overlaps"><span class="hs-identifier hs-var">Overlaps</span></a></span><span> </span><span class="hs-glyph">..</span><span> </span><span class="annot"><span class="annottext">Relation
 </span><a href="Data.Allen.Types.html#OverlappedBy"><span class="hs-identifier hs-var">OverlappedBy</span></a></span><span class="hs-special">]</span><span>
-</span><span id="line-99"></span><span>                 </span><span class="hs-glyph">|</span><span> </span><span class="annot"><span class="annottext">Bool
+</span><span id="line-107"></span><span>                 </span><span class="hs-glyph">|</span><span> </span><span class="annot"><span class="annottext">Bool
 </span><span class="hs-identifier hs-var">otherwise</span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">[Relation] -&gt; RelationBits
 </span><a href="#local-6989586621679051552"><span class="hs-identifier hs-var">rBits</span></a></span><span> </span><span class="annot"><span class="annottext">([Relation] -&gt; RelationBits) -&gt; [Relation] -&gt; RelationBits
 forall a b. (a -&gt; b) -&gt; a -&gt; b
@@ -298,7 +306,7 @@ forall a b. (a -&gt; b) -&gt; [a] -&gt; [b]
 </span><span class="hs-identifier hs-var">map</span></span><span> </span><span class="annot"><span class="annottext">Char -&gt; Relation
 </span><a href="Data.Allen.Relation.html#relationFromChar"><span class="hs-identifier hs-var">relationFromChar</span></a></span><span> </span><span class="annot"><span class="annottext">[Char]
 </span><a href="#local-6989586621679051551"><span class="hs-identifier hs-var">x</span></a></span><span>
-</span><span id="line-100"></span><span>    </span><span class="hs-keyword">where</span><span> </span><span id="local-6989586621679051552"><span class="annot"><span class="annottext">rBits :: [Relation] -&gt; RelationBits
+</span><span id="line-108"></span><span>    </span><span class="hs-keyword">where</span><span> </span><span id="local-6989586621679051552"><span class="annot"><span class="annottext">rBits :: [Relation] -&gt; RelationBits
 </span><a href="#local-6989586621679051552"><span class="hs-identifier hs-var hs-var">rBits</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">[RelationBits] -&gt; RelationBits
 </span><a href="Data.Allen.Types.html#relationUnion"><span class="hs-identifier hs-var">relationUnion</span></a></span><span> </span><span class="annot"><span class="annottext">([RelationBits] -&gt; RelationBits)
 -&gt; ([Relation] -&gt; [RelationBits]) -&gt; [Relation] -&gt; RelationBits
@@ -307,10 +315,10 @@ forall b c a. (b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; c
 forall a b. (a -&gt; b) -&gt; [a] -&gt; [b]
 </span><span class="hs-identifier hs-var">map</span></span><span> </span><span class="annot"><span class="annottext">Relation -&gt; RelationBits
 </span><a href="Data.Allen.Types.html#toBits"><span class="hs-identifier hs-var">toBits</span></a></span><span>
-</span><span id="line-101"></span><span>
-</span><span id="line-102"></span><span class="hs-comment">-- Table referenced from here: https://www.ics.uci.edu/~alspaugh/cls/shr/allen.html</span><span>
-</span><span id="line-103"></span><span class="annot"><a href="Data.Allen.Relation.html#composeLookup"><span class="hs-identifier hs-type">composeLookup</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">U.Vector</span></span><span> </span><span class="annot"><a href="Data.Allen.Types.html#RelationBits"><span class="hs-identifier hs-type">RelationBits</span></a></span><span>
-</span><span id="line-104"></span><span id="composeLookup"><span class="annot"><span class="annottext">composeLookup :: Vector RelationBits
+</span><span id="line-109"></span><span>
+</span><span id="line-110"></span><span class="hs-comment">-- Table referenced from here: https://www.ics.uci.edu/~alspaugh/cls/shr/allen.html</span><span>
+</span><span id="line-111"></span><span class="annot"><a href="Data.Allen.Relation.html#composeLookup"><span class="hs-identifier hs-type">composeLookup</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">U.Vector</span></span><span> </span><span class="annot"><a href="Data.Allen.Types.html#RelationBits"><span class="hs-identifier hs-type">RelationBits</span></a></span><span>
+</span><span id="line-112"></span><span id="composeLookup"><span class="annot"><span class="annottext">composeLookup :: Vector RelationBits
 </span><a href="Data.Allen.Relation.html#composeLookup"><span class="hs-identifier hs-var hs-var">composeLookup</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">[RelationBits] -&gt; Vector RelationBits
 forall a. Unbox a =&gt; [a] -&gt; Vector a
 </span><span class="hs-identifier hs-var">U.fromList</span></span><span> </span><span class="annot"><span class="annottext">([RelationBits] -&gt; Vector RelationBits)
@@ -321,9 +329,9 @@ forall a b. (a -&gt; b) -&gt; [a] -&gt; [b]
 </span><span class="hs-identifier hs-var">map</span></span><span> </span><span class="annot"><span class="annottext">[Char] -&gt; RelationBits
 </span><a href="Data.Allen.Relation.html#bitsFromString"><span class="hs-identifier hs-var">bitsFromString</span></a></span><span> </span><span class="annot"><span class="annottext">[[Char]]
 </span><a href="#local-6989586621679051555"><span class="hs-identifier hs-var">table</span></a></span><span> </span><span>
-</span><span id="line-105"></span><span class="hs-comment">--                |    p   |    m   |   o     |  F     |  D     |  s     |  e |   S    |     d   |    f   |     O   |    M   |    P</span><span>
-</span><span id="line-106"></span><span class="hs-comment">-- ---------------+--------+--------+---------+--------+--------+--------+----+--------+---------+--------+---------+--------+-------------</span><span>
-</span><span id="line-107"></span><span>    </span><span class="hs-keyword">where</span><span> </span><span id="local-6989586621679051555"><span class="annot"><span class="annottext">table :: [[Char]]
+</span><span id="line-113"></span><span class="hs-comment">--                |    p   |    m   |   o     |  F     |  D     |  s     |  e |   S    |     d   |    f   |     O   |    M   |    P</span><span>
+</span><span id="line-114"></span><span class="hs-comment">-- ---------------+--------+--------+---------+--------+--------+--------+----+--------+---------+--------+---------+--------+-------------</span><span>
+</span><span id="line-115"></span><span>    </span><span class="hs-keyword">where</span><span> </span><span id="local-6989586621679051555"><span class="annot"><span class="annottext">table :: [[Char]]
 </span><a href="#local-6989586621679051555"><span class="hs-identifier hs-var hs-var">table</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-special">[</span><span>     </span><span class="annot"><span class="annottext">[Char]
 </span><span class="hs-string">&quot;p&quot;</span></span><span class="hs-special">,</span><span>     </span><span class="annot"><span class="annottext">[Char]
 </span><span class="hs-string">&quot;p&quot;</span></span><span class="hs-special">,</span><span>      </span><span class="annot"><span class="annottext">[Char]
@@ -338,7 +346,7 @@ forall a b. (a -&gt; b) -&gt; [a] -&gt; [b]
 </span><span class="hs-string">&quot;pmosd&quot;</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">[Char]
 </span><span class="hs-string">&quot;pmosd&quot;</span></span><span class="hs-special">,</span><span>  </span><span class="annot"><span class="annottext">[Char]
 </span><span class="hs-string">&quot;full&quot;</span></span><span> </span><span class="hs-comment">-- p</span><span>
-</span><span id="line-108"></span><span>                  </span><span class="hs-special">,</span><span>     </span><span class="annot"><span class="annottext">[Char]
+</span><span id="line-116"></span><span>                  </span><span class="hs-special">,</span><span>     </span><span class="annot"><span class="annottext">[Char]
 </span><span class="hs-string">&quot;p&quot;</span></span><span class="hs-special">,</span><span>     </span><span class="annot"><span class="annottext">[Char]
 </span><span class="hs-string">&quot;p&quot;</span></span><span class="hs-special">,</span><span>      </span><span class="annot"><span class="annottext">[Char]
 </span><span class="hs-string">&quot;p&quot;</span></span><span class="hs-special">,</span><span>     </span><span class="annot"><span class="annottext">[Char]
@@ -352,7 +360,7 @@ forall a b. (a -&gt; b) -&gt; [a] -&gt; [b]
 </span><span class="hs-string">&quot;osd&quot;</span></span><span class="hs-special">,</span><span>   </span><span class="annot"><span class="annottext">[Char]
 </span><span class="hs-string">&quot;Fef&quot;</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">[Char]
 </span><span class="hs-string">&quot;DSOMP&quot;</span></span><span> </span><span class="hs-comment">-- m</span><span>
-</span><span id="line-109"></span><span>                  </span><span class="hs-special">,</span><span>     </span><span class="annot"><span class="annottext">[Char]
+</span><span id="line-117"></span><span>                  </span><span class="hs-special">,</span><span>     </span><span class="annot"><span class="annottext">[Char]
 </span><span class="hs-string">&quot;p&quot;</span></span><span class="hs-special">,</span><span>     </span><span class="annot"><span class="annottext">[Char]
 </span><span class="hs-string">&quot;p&quot;</span></span><span class="hs-special">,</span><span>    </span><span class="annot"><span class="annottext">[Char]
 </span><span class="hs-string">&quot;pmo&quot;</span></span><span class="hs-special">,</span><span>   </span><span class="annot"><span class="annottext">[Char]
@@ -366,7 +374,7 @@ forall a b. (a -&gt; b) -&gt; [a] -&gt; [b]
 </span><span class="hs-string">&quot;concur&quot;</span></span><span class="hs-special">,</span><span>   </span><span class="annot"><span class="annottext">[Char]
 </span><span class="hs-string">&quot;DSO&quot;</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">[Char]
 </span><span class="hs-string">&quot;DSOMP&quot;</span></span><span> </span><span class="hs-comment">-- o</span><span>
-</span><span id="line-110"></span><span>                  </span><span class="hs-special">,</span><span>     </span><span class="annot"><span class="annottext">[Char]
+</span><span id="line-118"></span><span>                  </span><span class="hs-special">,</span><span>     </span><span class="annot"><span class="annottext">[Char]
 </span><span class="hs-string">&quot;p&quot;</span></span><span class="hs-special">,</span><span>     </span><span class="annot"><span class="annottext">[Char]
 </span><span class="hs-string">&quot;m&quot;</span></span><span class="hs-special">,</span><span>      </span><span class="annot"><span class="annottext">[Char]
 </span><span class="hs-string">&quot;o&quot;</span></span><span class="hs-special">,</span><span>     </span><span class="annot"><span class="annottext">[Char]
@@ -380,7 +388,7 @@ forall a b. (a -&gt; b) -&gt; [a] -&gt; [b]
 </span><span class="hs-string">&quot;DSO&quot;</span></span><span class="hs-special">,</span><span>   </span><span class="annot"><span class="annottext">[Char]
 </span><span class="hs-string">&quot;DSO&quot;</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">[Char]
 </span><span class="hs-string">&quot;DSOMP&quot;</span></span><span> </span><span class="hs-comment">-- F</span><span>
-</span><span id="line-111"></span><span>                  </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">[Char]
+</span><span id="line-119"></span><span>                  </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">[Char]
 </span><span class="hs-string">&quot;pmoFD&quot;</span></span><span class="hs-special">,</span><span>   </span><span class="annot"><span class="annottext">[Char]
 </span><span class="hs-string">&quot;oFD&quot;</span></span><span class="hs-special">,</span><span>    </span><span class="annot"><span class="annottext">[Char]
 </span><span class="hs-string">&quot;oFD&quot;</span></span><span class="hs-special">,</span><span>     </span><span class="annot"><span class="annottext">[Char]
@@ -394,7 +402,7 @@ forall a b. (a -&gt; b) -&gt; [a] -&gt; [b]
 </span><span class="hs-string">&quot;DSO&quot;</span></span><span class="hs-special">,</span><span>   </span><span class="annot"><span class="annottext">[Char]
 </span><span class="hs-string">&quot;DSO&quot;</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">[Char]
 </span><span class="hs-string">&quot;DSOMP&quot;</span></span><span> </span><span class="hs-comment">-- D</span><span>
-</span><span id="line-112"></span><span>                  </span><span class="hs-special">,</span><span>     </span><span class="annot"><span class="annottext">[Char]
+</span><span id="line-120"></span><span>                  </span><span class="hs-special">,</span><span>     </span><span class="annot"><span class="annottext">[Char]
 </span><span class="hs-string">&quot;p&quot;</span></span><span class="hs-special">,</span><span>     </span><span class="annot"><span class="annottext">[Char]
 </span><span class="hs-string">&quot;p&quot;</span></span><span class="hs-special">,</span><span>    </span><span class="annot"><span class="annottext">[Char]
 </span><span class="hs-string">&quot;pmo&quot;</span></span><span class="hs-special">,</span><span>   </span><span class="annot"><span class="annottext">[Char]
@@ -408,7 +416,7 @@ forall a b. (a -&gt; b) -&gt; [a] -&gt; [b]
 </span><span class="hs-string">&quot;dfO&quot;</span></span><span class="hs-special">,</span><span>     </span><span class="annot"><span class="annottext">[Char]
 </span><span class="hs-string">&quot;M&quot;</span></span><span class="hs-special">,</span><span>     </span><span class="annot"><span class="annottext">[Char]
 </span><span class="hs-string">&quot;P&quot;</span></span><span> </span><span class="hs-comment">-- s</span><span>
-</span><span id="line-113"></span><span>                  </span><span class="hs-special">,</span><span>     </span><span class="annot"><span class="annottext">[Char]
+</span><span id="line-121"></span><span>                  </span><span class="hs-special">,</span><span>     </span><span class="annot"><span class="annottext">[Char]
 </span><span class="hs-string">&quot;p&quot;</span></span><span class="hs-special">,</span><span>     </span><span class="annot"><span class="annottext">[Char]
 </span><span class="hs-string">&quot;m&quot;</span></span><span class="hs-special">,</span><span>      </span><span class="annot"><span class="annottext">[Char]
 </span><span class="hs-string">&quot;o&quot;</span></span><span class="hs-special">,</span><span>     </span><span class="annot"><span class="annottext">[Char]
@@ -422,7 +430,7 @@ forall a b. (a -&gt; b) -&gt; [a] -&gt; [b]
 </span><span class="hs-string">&quot;O&quot;</span></span><span class="hs-special">,</span><span>     </span><span class="annot"><span class="annottext">[Char]
 </span><span class="hs-string">&quot;M&quot;</span></span><span class="hs-special">,</span><span>     </span><span class="annot"><span class="annottext">[Char]
 </span><span class="hs-string">&quot;P&quot;</span></span><span> </span><span class="hs-comment">-- e</span><span>
-</span><span id="line-114"></span><span>                  </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">[Char]
+</span><span id="line-122"></span><span>                  </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">[Char]
 </span><span class="hs-string">&quot;pmoFD&quot;</span></span><span class="hs-special">,</span><span>   </span><span class="annot"><span class="annottext">[Char]
 </span><span class="hs-string">&quot;oFD&quot;</span></span><span class="hs-special">,</span><span>    </span><span class="annot"><span class="annottext">[Char]
 </span><span class="hs-string">&quot;oFD&quot;</span></span><span class="hs-special">,</span><span>     </span><span class="annot"><span class="annottext">[Char]
@@ -436,7 +444,7 @@ forall a b. (a -&gt; b) -&gt; [a] -&gt; [b]
 </span><span class="hs-string">&quot;O&quot;</span></span><span class="hs-special">,</span><span>     </span><span class="annot"><span class="annottext">[Char]
 </span><span class="hs-string">&quot;M&quot;</span></span><span class="hs-special">,</span><span>     </span><span class="annot"><span class="annottext">[Char]
 </span><span class="hs-string">&quot;P&quot;</span></span><span> </span><span class="hs-comment">-- S</span><span>
-</span><span id="line-115"></span><span>                  </span><span class="hs-special">,</span><span>     </span><span class="annot"><span class="annottext">[Char]
+</span><span id="line-123"></span><span>                  </span><span class="hs-special">,</span><span>     </span><span class="annot"><span class="annottext">[Char]
 </span><span class="hs-string">&quot;p&quot;</span></span><span class="hs-special">,</span><span>     </span><span class="annot"><span class="annottext">[Char]
 </span><span class="hs-string">&quot;p&quot;</span></span><span class="hs-special">,</span><span>  </span><span class="annot"><span class="annottext">[Char]
 </span><span class="hs-string">&quot;pmosd&quot;</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">[Char]
@@ -450,7 +458,7 @@ forall a b. (a -&gt; b) -&gt; [a] -&gt; [b]
 </span><span class="hs-string">&quot;dfOMP&quot;</span></span><span class="hs-special">,</span><span>     </span><span class="annot"><span class="annottext">[Char]
 </span><span class="hs-string">&quot;P&quot;</span></span><span class="hs-special">,</span><span>     </span><span class="annot"><span class="annottext">[Char]
 </span><span class="hs-string">&quot;P&quot;</span></span><span> </span><span class="hs-comment">-- d</span><span>
-</span><span id="line-116"></span><span>                  </span><span class="hs-special">,</span><span>     </span><span class="annot"><span class="annottext">[Char]
+</span><span id="line-124"></span><span>                  </span><span class="hs-special">,</span><span>     </span><span class="annot"><span class="annottext">[Char]
 </span><span class="hs-string">&quot;p&quot;</span></span><span class="hs-special">,</span><span>     </span><span class="annot"><span class="annottext">[Char]
 </span><span class="hs-string">&quot;m&quot;</span></span><span class="hs-special">,</span><span>    </span><span class="annot"><span class="annottext">[Char]
 </span><span class="hs-string">&quot;osd&quot;</span></span><span class="hs-special">,</span><span>   </span><span class="annot"><span class="annottext">[Char]
@@ -464,7 +472,7 @@ forall a b. (a -&gt; b) -&gt; [a] -&gt; [b]
 </span><span class="hs-string">&quot;OMP&quot;</span></span><span class="hs-special">,</span><span>     </span><span class="annot"><span class="annottext">[Char]
 </span><span class="hs-string">&quot;P&quot;</span></span><span class="hs-special">,</span><span>     </span><span class="annot"><span class="annottext">[Char]
 </span><span class="hs-string">&quot;P&quot;</span></span><span> </span><span class="hs-comment">-- f</span><span>
-</span><span id="line-117"></span><span>                  </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">[Char]
+</span><span id="line-125"></span><span>                  </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">[Char]
 </span><span class="hs-string">&quot;pmoFD&quot;</span></span><span class="hs-special">,</span><span>   </span><span class="annot"><span class="annottext">[Char]
 </span><span class="hs-string">&quot;oFD&quot;</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">[Char]
 </span><span class="hs-string">&quot;concur&quot;</span></span><span class="hs-special">,</span><span>   </span><span class="annot"><span class="annottext">[Char]
@@ -478,7 +486,7 @@ forall a b. (a -&gt; b) -&gt; [a] -&gt; [b]
 </span><span class="hs-string">&quot;OMP&quot;</span></span><span class="hs-special">,</span><span>     </span><span class="annot"><span class="annottext">[Char]
 </span><span class="hs-string">&quot;P&quot;</span></span><span class="hs-special">,</span><span>     </span><span class="annot"><span class="annottext">[Char]
 </span><span class="hs-string">&quot;P&quot;</span></span><span> </span><span class="hs-comment">-- O</span><span>
-</span><span id="line-118"></span><span>                  </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">[Char]
+</span><span id="line-126"></span><span>                  </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">[Char]
 </span><span class="hs-string">&quot;pmoFD&quot;</span></span><span class="hs-special">,</span><span>   </span><span class="annot"><span class="annottext">[Char]
 </span><span class="hs-string">&quot;seS&quot;</span></span><span class="hs-special">,</span><span>    </span><span class="annot"><span class="annottext">[Char]
 </span><span class="hs-string">&quot;dfO&quot;</span></span><span class="hs-special">,</span><span>     </span><span class="annot"><span class="annottext">[Char]
@@ -492,7 +500,7 @@ forall a b. (a -&gt; b) -&gt; [a] -&gt; [b]
 </span><span class="hs-string">&quot;P&quot;</span></span><span class="hs-special">,</span><span>     </span><span class="annot"><span class="annottext">[Char]
 </span><span class="hs-string">&quot;P&quot;</span></span><span class="hs-special">,</span><span>     </span><span class="annot"><span class="annottext">[Char]
 </span><span class="hs-string">&quot;P&quot;</span></span><span> </span><span class="hs-comment">-- M</span><span>
-</span><span id="line-119"></span><span>                  </span><span class="hs-special">,</span><span>  </span><span class="annot"><span class="annottext">[Char]
+</span><span id="line-127"></span><span>                  </span><span class="hs-special">,</span><span>  </span><span class="annot"><span class="annottext">[Char]
 </span><span class="hs-string">&quot;full&quot;</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">[Char]
 </span><span class="hs-string">&quot;dfOMP&quot;</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">[Char]
 </span><span class="hs-string">&quot;dfOMOP&quot;</span></span><span class="hs-special">,</span><span>     </span><span class="annot"><span class="annottext">[Char]
@@ -506,11 +514,13 @@ forall a b. (a -&gt; b) -&gt; [a] -&gt; [b]
 </span><span class="hs-string">&quot;P&quot;</span></span><span class="hs-special">,</span><span>     </span><span class="annot"><span class="annottext">[Char]
 </span><span class="hs-string">&quot;P&quot;</span></span><span class="hs-special">,</span><span>     </span><span class="annot"><span class="annottext">[Char]
 </span><span class="hs-string">&quot;P&quot;</span></span><span> </span><span class="hs-comment">-- P</span><span>
-</span><span id="line-120"></span><span>                  </span><span class="hs-special">]</span><span>
-</span><span id="line-121"></span><span>
-</span><span id="line-122"></span><span class="annot"><span class="hs-comment">-- | Compose two relations.</span></span><span>
-</span><span id="line-123"></span><span class="annot"><a href="Data.Allen.Relation.html#composeSingle"><span class="hs-identifier hs-type">composeSingle</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="Data.Allen.Types.html#Relation"><span class="hs-identifier hs-type">Relation</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="Data.Allen.Types.html#Relation"><span class="hs-identifier hs-type">Relation</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="Data.Allen.Types.html#RelationBits"><span class="hs-identifier hs-type">RelationBits</span></a></span><span> </span><span>
-</span><span id="line-124"></span><span id="composeSingle"><span class="annot"><span class="annottext">composeSingle :: Relation -&gt; Relation -&gt; RelationBits
+</span><span id="line-128"></span><span>                  </span><span class="hs-special">]</span><span>
+</span><span id="line-129"></span><span>
+</span><span id="line-130"></span><span class="hs-comment">-- | Compose two relations.</span><span>
+</span><span id="line-131"></span><span class="hs-comment">--</span><span>
+</span><span id="line-132"></span><span class="hs-comment">-- Composition table available at &lt;https://www.ics.uci.edu/~alspaugh/cls/shr/allen.html&gt;.</span><span>
+</span><span id="line-133"></span><span class="annot"><a href="Data.Allen.Relation.html#composeSingle"><span class="hs-identifier hs-type">composeSingle</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="Data.Allen.Types.html#Relation"><span class="hs-identifier hs-type">Relation</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="Data.Allen.Types.html#Relation"><span class="hs-identifier hs-type">Relation</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="Data.Allen.Types.html#RelationBits"><span class="hs-identifier hs-type">RelationBits</span></a></span><span> </span><span>
+</span><span id="line-134"></span><span id="composeSingle"><span class="annot"><span class="annottext">composeSingle :: Relation -&gt; Relation -&gt; RelationBits
 </span><a href="Data.Allen.Relation.html#composeSingle"><span class="hs-identifier hs-var hs-var">composeSingle</span></a></span></span><span> </span><span id="local-6989586621679051556"><span class="annot"><span class="annottext">Relation
 </span><a href="#local-6989586621679051556"><span class="hs-identifier hs-var">r1</span></a></span></span><span> </span><span id="local-6989586621679051557"><span class="annot"><span class="annottext">Relation
 </span><a href="#local-6989586621679051557"><span class="hs-identifier hs-var">r2</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Vector RelationBits
@@ -518,7 +528,7 @@ forall a b. (a -&gt; b) -&gt; [a] -&gt; [b]
 forall a. Unbox a =&gt; Vector a -&gt; IntervalID -&gt; a
 </span><span class="hs-operator hs-var">U.!</span></span><span> </span><span class="annot"><span class="annottext">IntervalID
 </span><a href="#local-6989586621679051559"><span class="hs-identifier hs-var">index</span></a></span><span>
-</span><span id="line-125"></span><span>    </span><span class="hs-keyword">where</span><span> </span><span id="local-6989586621679051559"><span class="annot"><span class="annottext">index :: IntervalID
+</span><span id="line-135"></span><span>    </span><span class="hs-keyword">where</span><span> </span><span id="local-6989586621679051559"><span class="annot"><span class="annottext">index :: IntervalID
 </span><a href="#local-6989586621679051559"><span class="hs-identifier hs-var hs-var">index</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">IntervalID
 </span><span class="hs-number">13</span></span><span> </span><span class="annot"><span class="annottext">IntervalID -&gt; IntervalID -&gt; IntervalID
 forall a. Num a =&gt; a -&gt; a -&gt; a
@@ -531,10 +541,12 @@ forall a. Num a =&gt; a -&gt; a -&gt; a
 forall a. Enum a =&gt; a -&gt; IntervalID
 </span><span class="hs-identifier hs-var">fromEnum</span></span><span> </span><span class="annot"><span class="annottext">Relation
 </span><a href="#local-6989586621679051557"><span class="hs-identifier hs-var">r2</span></a></span><span>
-</span><span id="line-126"></span><span>
-</span><span id="line-127"></span><span class="annot"><span class="hs-comment">-- | Compose two sets of relations.</span></span><span>
-</span><span id="line-128"></span><span class="annot"><a href="Data.Allen.Relation.html#compose"><span class="hs-identifier hs-type">compose</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="Data.Allen.Types.html#RelationBits"><span class="hs-identifier hs-type">RelationBits</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="Data.Allen.Types.html#RelationBits"><span class="hs-identifier hs-type">RelationBits</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="Data.Allen.Types.html#RelationBits"><span class="hs-identifier hs-type">RelationBits</span></a></span><span>
-</span><span id="line-129"></span><span id="compose"><span class="annot"><span class="annottext">compose :: RelationBits -&gt; RelationBits -&gt; RelationBits
+</span><span id="line-136"></span><span>
+</span><span id="line-137"></span><span class="hs-comment">-- | Compose two sets of relations.</span><span>
+</span><span id="line-138"></span><span class="hs-comment">--</span><span>
+</span><span id="line-139"></span><span class="hs-comment">-- Composition table available at &lt;https://www.ics.uci.edu/~alspaugh/cls/shr/allen.html&gt;.</span><span>
+</span><span id="line-140"></span><span class="annot"><a href="Data.Allen.Relation.html#compose"><span class="hs-identifier hs-type">compose</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="Data.Allen.Types.html#RelationBits"><span class="hs-identifier hs-type">RelationBits</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="Data.Allen.Types.html#RelationBits"><span class="hs-identifier hs-type">RelationBits</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="Data.Allen.Types.html#RelationBits"><span class="hs-identifier hs-type">RelationBits</span></a></span><span>
+</span><span id="line-141"></span><span id="compose"><span class="annot"><span class="annottext">compose :: RelationBits -&gt; RelationBits -&gt; RelationBits
 </span><a href="Data.Allen.Relation.html#compose"><span class="hs-identifier hs-var hs-var">compose</span></a></span></span><span> </span><span id="local-6989586621679051567"><span class="annot"><span class="annottext">RelationBits
 </span><a href="#local-6989586621679051567"><span class="hs-identifier hs-var">r1</span></a></span></span><span> </span><span id="local-6989586621679051568"><span class="annot"><span class="annottext">RelationBits
 </span><a href="#local-6989586621679051568"><span class="hs-identifier hs-var">r2</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">[RelationBits] -&gt; RelationBits
@@ -548,4 +560,4 @@ forall a. Enum a =&gt; a -&gt; IntervalID
 </span><a href="#local-6989586621679051570"><span class="hs-identifier hs-var">b</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">RelationBits -&gt; [Relation]
 </span><a href="Data.Allen.Types.html#fromBits"><span class="hs-identifier hs-var">fromBits</span></a></span><span> </span><span class="annot"><span class="annottext">RelationBits
 </span><a href="#local-6989586621679051568"><span class="hs-identifier hs-var">r2</span></a></span><span class="hs-special">]</span><span>
-</span><span id="line-130"></span></pre></body></html>
+</span><span id="line-142"></span></pre></body></html>
