@@ -16,6 +16,15 @@ type REPL = StateT REPLState IO
 newREPLState :: REPLState 
 newREPLState = REPLState (return ()) Map.empty
 
+withIntervals :: String -> String -> (IntervalID -> IntervalID -> REPL ()) -> REPL ()
+withIntervals a b func = do 
+    names <- gets intervalNames
+
+    case (Map.lookup a names, Map.lookup b names) of 
+        (Just aID, Just bID) -> func aID bID
+        (Nothing, _)         -> liftIO $ putStrLn $ "Interval " <> a <> " does not exist"
+        (_, Nothing)         -> liftIO $ putStrLn $ "Interval " <> b <> " does not exist"
+
 createInterval :: String -> REPL ()
 createInterval name = do 
     REPLState calc names <- get
@@ -30,21 +39,16 @@ assumeRelation :: String -> RelationBits -> String -> REPL ()
 assumeRelation a r b = do 
     REPLState calc names <- get
 
-    case (Map.lookup a names, Map.lookup b names) of 
-        (Just aID, Just bID) -> put $ REPLState (calc >> assumeBits aID r bID) names
-        (Nothing, _)         -> error $ "Interval " <> a <> " does not exist"
-        (_, Nothing)         -> error $ "Interval " <> b <> " does not exist"
+    withIntervals a b $ \aID bID -> do 
+        put $ REPLState (calc >> assumeBits aID r bID) names
 
 showConstraints :: String -> String -> REPL ()
 showConstraints a b = do 
-    REPLState calc names <- get 
+    calc <- gets graph 
 
-    case (Map.lookup a names, Map.lookup b names) of 
-        (Just aID, Just bID) -> do 
-            let constraints = fromBits $ evalAllen $ calc >> getConstraints aID bID
-            liftIO $ putStrLn $ a <> " --(" <> map relationToChar constraints <> ")--> " <> b
-        (Nothing, _) -> error $ "Interval " <> a <> " does not exist"
-        (_, Nothing) -> error $ "Interval " <> b <> " does not exist"
+    withIntervals a b $ \aID bID -> do 
+        let constraints = fromBits $ evalAllen $ calc >> getConstraints aID bID
+        liftIO $ putStrLn $ a <> " --(" <> map relationToChar constraints <> ")--> " <> b
 
 showGraph :: REPL ()
 showGraph = do 
