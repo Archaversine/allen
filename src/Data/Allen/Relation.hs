@@ -46,8 +46,8 @@ converse x = relationUnion $ map func [0 .. fromEnum (maxBound :: Relation)]
                  | otherwise = 0
 
 -- | Return if a relation exists between two intervals.
-hasRelation :: Relation -> IntervalID -> IntervalID -> Allen Bool
-hasRelation r id1 id2 = do 
+testRelation :: Relation -> IntervalID -> IntervalID -> Allen Bool
+testRelation r id1 id2 = do 
     relations <- Map.findWithDefault 0 id2 . intervalRelations <$> fromID id1 
     return $ toBits r .&. relations /= 0
 
