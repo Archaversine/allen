@@ -70,7 +70,7 @@
 -- sleeps <- 'interval' 
 -- snores <- 'interval' 
 --
--- let relations = foldl (.|.) 0 ['StartedBy', 'During', 'FinishedBy'] sleeps
+-- let relations = 'relationUnion' $ map 'toBits' ['StartedBy', 'During', 'FinishedBy']
 --
 -- 'assumeBits' snores relations sleeps
 -- @

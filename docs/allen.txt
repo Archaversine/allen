@@ -171,7 +171,7 @@ bitsFromString :: String -> RelationBits
 --   sleeps &lt;- <a>interval</a> 
 --   snores &lt;- <a>interval</a> 
 --   
---   let relations = foldl (.|.) 0 [<a>StartedBy</a>, <a>During</a>, <a>FinishedBy</a>] sleeps
+--   let relations = <a>relationUnion</a> $ map <a>toBits</a> [<a>StartedBy</a>, <a>During</a>, <a>FinishedBy</a>]
 --   
 --   <a>assumeBits</a> snores relations sleeps
 --   </pre>

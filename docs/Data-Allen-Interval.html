@@ -26,7 +26,7 @@ snores &lt;- <code><a href="Data-Allen-Interval.html#v:interval" title="Data.All
  to speed up calculations if you already know the bit representation.</p><p>Example: </p><pre>sleeps &lt;- <code><a href="Data-Allen-Interval.html#v:interval" title="Data.Allen.Interval">interval</a></code> 
 snores &lt;- <code><a href="Data-Allen-Interval.html#v:interval" title="Data.Allen.Interval">interval</a></code> 
 
-let relations = foldl (.|.) 0 [<code><a href="Data-Allen-Types.html#v:StartedBy" title="Data.Allen.Types">StartedBy</a></code>, <code><a href="Data-Allen-Types.html#v:During" title="Data.Allen.Types">During</a></code>, <code><a href="Data-Allen-Types.html#v:FinishedBy" title="Data.Allen.Types">FinishedBy</a></code>] sleeps
+let relations = <code><a href="Data-Allen-Types.html#v:relationUnion" title="Data.Allen.Types">relationUnion</a></code> $ map <code><a href="Data-Allen-Types.html#v:toBits" title="Data.Allen.Types">toBits</a></code> [<code><a href="Data-Allen-Types.html#v:StartedBy" title="Data.Allen.Types">StartedBy</a></code>, <code><a href="Data-Allen-Types.html#v:During" title="Data.Allen.Types">During</a></code>, <code><a href="Data-Allen-Types.html#v:FinishedBy" title="Data.Allen.Types">FinishedBy</a></code>]
 
 <code><a href="Data-Allen-Interval.html#v:assumeBits" title="Data.Allen.Interval">assumeBits</a></code> snores relations sleeps
 </pre><h1>Getting Constraints</h1><p>The <code><a href="Data-Allen-Interval.html#v:getConstraints" title="Data.Allen.Interval">getConstraints</a></code> function returns a <code><a href="Data-Allen-Types.html#t:RelationBits" title="Data.Allen.Types">RelationBits</a></code> type representing the 
