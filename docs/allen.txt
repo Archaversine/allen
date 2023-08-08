@@ -8,28 +8,114 @@
 @version 0.1.0.0
 
 
+-- | This module provides types that are used throughout the rest of the
+--   library. This includes types for intervals, relations, and the
+--   interval graph.
+--   
+--   <h1>Intervals</h1>
+--   
+--   An Interval is a data type that represents a single interval. It
+--   contains an ID of type <a>IntervalID</a> and a map of relations to
+--   other intervals of type Map <a>IntervalID</a> <a>RelationBits</a>.
+--   
+--   An <a>IntervalID</a> is essentially the same as an <tt>Int</tt>, but
+--   it is helpful to have a dedicated type synonym to distinguish
+--   functions that perform operations interval IDs.
+--   
+--   <h1>Relations</h1>
+--   
+--   A <a>Relation</a> is a data type that represents a relation between
+--   two intervals. It is defined in terms of thirteen constructors, where
+--   each constructor represents one of the thirteen possible relations in
+--   Allen's interval algebra.
+--   
+--   The <a>RelationBits</a> is used to represent a set of possible
+--   representation. It is synonymous with a <tt>Word16</tt>, and is used
+--   to represent a set of possible relations. Since there are only
+--   thirteen different relations, only 13 of the 16 bits in the
+--   <tt>Word16</tt> are used.
+--   
+--   <h1>Interval Graph</h1>
+--   
+--   An interval graph is a map of <a>IntervalID</a>s to <a>Interval</a>s.
+--   It is used to represent the network of intervals and their relations
+--   to each other.
+--   
+--   <h1>Allen Monad</h1>
+--   
+--   The Allen monad is a state monad that is used to keep track of the
+--   interval graph that is being built up during the computation. Since it
+--   is a synonym of the <tt>State</tt> monad, it is possible to use all of
+--   the functions in the <tt>Control.Monad.State</tt> module.
 module Data.Allen.Types
+
+-- | An interval is a data type that represents a single interval. It
+--   contains an ID of type <a>IntervalID</a> and a map of relations to
+--   other intervals of type Map <a>IntervalID</a> <a>RelationBits</a>. It
+--   should not be directly used in a computation unless the
+--   <a>IntervalGraph</a> is in its final state.
 data Interval
 Interval :: Int -> Map IntervalID RelationBits -> Interval
 [intervalID] :: Interval -> Int
 [intervalRelations] :: Interval -> Map IntervalID RelationBits
+
+-- | A specific instance of the state monad that is used to keep track of
+--   the <a>IntervalGraph</a> that is being built up during the
+--   computation.
 type Allen = State IntervalGraph
+
+-- | How intervals are uniquely identified.
 type IntervalID = Int
+
+-- | This is the main type that is used to represent the network of
+--   intervals.
 type IntervalGraph = Map IntervalID Interval
+
+-- | A type where each constructor represents one of the thirteen relations
+--   in Allen's interval algebra.
 data Relation
+
+-- | In Char form: <b>p</b>
 Precedes :: Relation
+
+-- | In Char form: <b>m</b>
 Meets :: Relation
+
+-- | In Char form: <b>o</b>
 Overlaps :: Relation
+
+-- | In Char form: <b>F</b>
 FinishedBy :: Relation
+
+-- | In Char form: <b>D</b>
 Contains :: Relation
+
+-- | In Char form: <b>s</b>
 Starts :: Relation
+
+-- | In Char form: <b>e</b>
 Equals :: Relation
+
+-- | In Char form: <b>S</b>
 StartedBy :: Relation
+
+-- | In Char form: <b>d</b>
 During :: Relation
+
+-- | In Char form: <b>f</b>
 Finishes :: Relation
+
+-- | In Char form: <b>O</b>
 OverlappedBy :: Relation
+
+-- | In Char form: <b>M</b>
 MetBy :: Relation
+
+-- | In Char form: <b>P</b>
 PrecededBy :: Relation
+
+-- | A bit representation that acts as a set of possible relations between
+--   intervals.
 type RelationBits = Word16
 
 -- | List of all possible relations.
@@ -49,6 +135,9 @@ relationUnion :: [RelationBits] -> RelationBits
 
 -- | Calculate the intersection of a list of relations.
 relationIntersection :: [RelationBits] -> RelationBits
+
+-- | Convert a relation to its Char representation.
+relationToChar :: Relation -> Char
 
 -- | Return the interval given it's ID. Panics if ID doesn't exist.
 fromID :: IntervalID -> Allen Interval
