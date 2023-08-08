@@ -1,47 +1,45 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><link rel="stylesheet" type="text/css" href="style.css" /><script type="text/javascript" src="highlight.js"></script></head><body><pre><span id="local-6989586621679051224"><span id="local-6989586621679051225"></span></span><span class="hs-pragma">{-# LANGUAGE BinaryLiterals #-}</span><span>
-</span><span id="line-2"></span><span>
-</span><span id="line-3"></span><span class="annot"><span class="hs-comment">{-|
- - Module      : Data.Allen.Types
- - Description : Types for Allen's interval algebra.
- - Maintainer  : Archaversine 
- -}</span></span><span>
-</span><span id="line-8"></span><span>
-</span><span id="line-9"></span><span class="hs-keyword">module</span><span> </span><span class="hs-identifier">Data.Allen.Types</span><span> </span><span class="hs-special">(</span><span> </span><span class="annot"><a href="Data.Allen.Types.html#Interval"><span class="hs-identifier">Interval</span></a></span><span class="hs-special">(</span><span class="hs-glyph">..</span><span class="hs-special">)</span><span>
-</span><span id="line-10"></span><span>                        </span><span class="hs-special">,</span><span> </span><span class="annot"><a href="Data.Allen.Types.html#Allen"><span class="hs-identifier">Allen</span></a></span><span>
-</span><span id="line-11"></span><span>                        </span><span class="hs-special">,</span><span> </span><span class="annot"><a href="Data.Allen.Types.html#IntervalID"><span class="hs-identifier">IntervalID</span></a></span><span>
-</span><span id="line-12"></span><span>                        </span><span class="hs-special">,</span><span> </span><span class="annot"><a href="Data.Allen.Types.html#IntervalGraph"><span class="hs-identifier">IntervalGraph</span></a></span><span>
-</span><span id="line-13"></span><span>                        </span><span class="hs-special">,</span><span> </span><span class="annot"><a href="Data.Allen.Types.html#Relation"><span class="hs-identifier">Relation</span></a></span><span class="hs-special">(</span><span class="hs-glyph">..</span><span class="hs-special">)</span><span>
-</span><span id="line-14"></span><span>                        </span><span class="hs-special">,</span><span> </span><span class="annot"><a href="Data.Allen.Types.html#RelationBits"><span class="hs-identifier">RelationBits</span></a></span><span>
-</span><span id="line-15"></span><span>                        </span><span class="hs-special">,</span><span> </span><span class="annot"><a href="Data.Allen.Types.html#allRelations"><span class="hs-identifier">allRelations</span></a></span><span>
-</span><span id="line-16"></span><span>                        </span><span class="hs-special">,</span><span> </span><span class="annot"><a href="Data.Allen.Types.html#allRelationBits"><span class="hs-identifier">allRelationBits</span></a></span><span>
-</span><span id="line-17"></span><span>                        </span><span class="hs-special">,</span><span> </span><span class="annot"><a href="Data.Allen.Types.html#toBits"><span class="hs-identifier">toBits</span></a></span><span>
-</span><span id="line-18"></span><span>                        </span><span class="hs-special">,</span><span> </span><span class="annot"><a href="Data.Allen.Types.html#fromBits"><span class="hs-identifier">fromBits</span></a></span><span>
-</span><span id="line-19"></span><span>                        </span><span class="hs-special">,</span><span> </span><span class="annot"><a href="Data.Allen.Types.html#relationUnion"><span class="hs-identifier">relationUnion</span></a></span><span>
-</span><span id="line-20"></span><span>                        </span><span class="hs-special">,</span><span> </span><span class="annot"><a href="Data.Allen.Types.html#relationIntersection"><span class="hs-identifier">relationIntersection</span></a></span><span>
-</span><span id="line-21"></span><span>                        </span><span class="hs-special">,</span><span> </span><span class="annot"><a href="Data.Allen.Types.html#fromID"><span class="hs-identifier">fromID</span></a></span><span>
-</span><span id="line-22"></span><span>                        </span><span class="hs-special">)</span><span> </span><span class="hs-keyword">where</span><span>  </span><span>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><link rel="stylesheet" type="text/css" href="style.css" /><script type="text/javascript" src="highlight.js"></script></head><body><pre><span id="local-6989586621679051224"><span id="local-6989586621679051225"></span></span><span class="hs-comment">-- |</span><span>
+</span><span id="line-2"></span><span class="hs-comment">-- Module      : Data.Allen.Types</span><span>
+</span><span id="line-3"></span><span class="hs-comment">-- Description : Types for Allen's interval algebra.</span><span>
+</span><span id="line-4"></span><span class="hs-comment">-- Maintainer  : Archaversine </span><span>
+</span><span id="line-5"></span><span class="hs-comment">--</span><span>
+</span><span id="line-6"></span><span>
+</span><span id="line-7"></span><span class="hs-keyword">module</span><span> </span><span class="hs-identifier">Data.Allen.Types</span><span> </span><span class="hs-special">(</span><span> </span><span class="annot"><a href="Data.Allen.Types.html#Interval"><span class="hs-identifier">Interval</span></a></span><span class="hs-special">(</span><span class="hs-glyph">..</span><span class="hs-special">)</span><span>
+</span><span id="line-8"></span><span>                        </span><span class="hs-special">,</span><span> </span><span class="annot"><a href="Data.Allen.Types.html#Allen"><span class="hs-identifier">Allen</span></a></span><span>
+</span><span id="line-9"></span><span>                        </span><span class="hs-special">,</span><span> </span><span class="annot"><a href="Data.Allen.Types.html#IntervalID"><span class="hs-identifier">IntervalID</span></a></span><span>
+</span><span id="line-10"></span><span>                        </span><span class="hs-special">,</span><span> </span><span class="annot"><a href="Data.Allen.Types.html#IntervalGraph"><span class="hs-identifier">IntervalGraph</span></a></span><span>
+</span><span id="line-11"></span><span>                        </span><span class="hs-special">,</span><span> </span><span class="annot"><a href="Data.Allen.Types.html#Relation"><span class="hs-identifier">Relation</span></a></span><span class="hs-special">(</span><span class="hs-glyph">..</span><span class="hs-special">)</span><span>
+</span><span id="line-12"></span><span>                        </span><span class="hs-special">,</span><span> </span><span class="annot"><a href="Data.Allen.Types.html#RelationBits"><span class="hs-identifier">RelationBits</span></a></span><span>
+</span><span id="line-13"></span><span>                        </span><span class="hs-special">,</span><span> </span><span class="annot"><a href="Data.Allen.Types.html#allRelations"><span class="hs-identifier">allRelations</span></a></span><span>
+</span><span id="line-14"></span><span>                        </span><span class="hs-special">,</span><span> </span><span class="annot"><a href="Data.Allen.Types.html#allRelationBits"><span class="hs-identifier">allRelationBits</span></a></span><span>
+</span><span id="line-15"></span><span>                        </span><span class="hs-special">,</span><span> </span><span class="annot"><a href="Data.Allen.Types.html#toBits"><span class="hs-identifier">toBits</span></a></span><span>
+</span><span id="line-16"></span><span>                        </span><span class="hs-special">,</span><span> </span><span class="annot"><a href="Data.Allen.Types.html#fromBits"><span class="hs-identifier">fromBits</span></a></span><span>
+</span><span id="line-17"></span><span>                        </span><span class="hs-special">,</span><span> </span><span class="annot"><a href="Data.Allen.Types.html#relationUnion"><span class="hs-identifier">relationUnion</span></a></span><span>
+</span><span id="line-18"></span><span>                        </span><span class="hs-special">,</span><span> </span><span class="annot"><a href="Data.Allen.Types.html#relationIntersection"><span class="hs-identifier">relationIntersection</span></a></span><span>
+</span><span id="line-19"></span><span>                        </span><span class="hs-special">,</span><span> </span><span class="annot"><a href="Data.Allen.Types.html#fromID"><span class="hs-identifier">fromID</span></a></span><span>
+</span><span id="line-20"></span><span>                        </span><span class="hs-special">)</span><span> </span><span class="hs-keyword">where</span><span>  </span><span>
+</span><span id="line-21"></span><span>
+</span><span id="line-22"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><span class="hs-identifier">Control.Monad.State</span></span><span>
 </span><span id="line-23"></span><span>
-</span><span id="line-24"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><span class="hs-identifier">Control.Monad.State</span></span><span>
-</span><span id="line-25"></span><span>
-</span><span id="line-26"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><span class="hs-identifier">Data.Bits</span></span><span>
-</span><span id="line-27"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><span class="hs-identifier">Data.List</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier">intercalate</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="hs-identifier">foldl'</span></span><span class="hs-special">)</span><span>
-</span><span id="line-28"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><span class="hs-identifier">Data.Word</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier">Word16</span></span><span class="hs-special">)</span><span>
-</span><span id="line-29"></span><span>
-</span><span id="line-30"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><span class="hs-identifier">Data.Map.Strict</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier">Map</span></span><span class="hs-special">)</span><span>
-</span><span id="line-31"></span><span class="hs-keyword">import</span><span> </span><span class="hs-keyword">qualified</span><span> </span><span class="annot"><span class="hs-identifier">Data.Map.Strict</span></span><span> </span><span class="hs-keyword">as</span><span> </span><span class="annot"><span class="hs-identifier">Map</span></span><span>
-</span><span id="line-32"></span><span>
-</span><span id="line-33"></span><span class="hs-keyword">type</span><span> </span><span id="IntervalID"><span class="annot"><a href="Data.Allen.Types.html#IntervalID"><span class="hs-identifier hs-var">IntervalID</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Int</span></span><span>
-</span><span id="line-34"></span><span class="hs-keyword">type</span><span> </span><span id="IntervalGraph"><span class="annot"><a href="Data.Allen.Types.html#IntervalGraph"><span class="hs-identifier hs-var">IntervalGraph</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Map</span></span><span> </span><span class="annot"><a href="Data.Allen.Types.html#IntervalID"><span class="hs-identifier hs-type">IntervalID</span></a></span><span> </span><span class="annot"><a href="Data.Allen.Types.html#Interval"><span class="hs-identifier hs-type">Interval</span></a></span><span>
-</span><span id="line-35"></span><span>
-</span><span id="line-36"></span><span class="hs-keyword">data</span><span> </span><span id="Interval"><span class="annot"><a href="Data.Allen.Types.html#Interval"><span class="hs-identifier hs-var">Interval</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span id="Interval"><span class="annot"><a href="Data.Allen.Types.html#Interval"><span class="hs-identifier hs-var">Interval</span></a></span></span><span> </span><span class="hs-special">{</span><span> </span><span id="intervalID"><span class="annot"><span class="annottext">Interval -&gt; Int
+</span><span id="line-24"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><span class="hs-identifier">Data.Bits</span></span><span>
+</span><span id="line-25"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><span class="hs-identifier">Data.List</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier">intercalate</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="hs-identifier">foldl'</span></span><span class="hs-special">)</span><span>
+</span><span id="line-26"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><span class="hs-identifier">Data.Word</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier">Word16</span></span><span class="hs-special">)</span><span>
+</span><span id="line-27"></span><span>
+</span><span id="line-28"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><span class="hs-identifier">Data.Map.Strict</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier">Map</span></span><span class="hs-special">)</span><span>
+</span><span id="line-29"></span><span class="hs-keyword">import</span><span> </span><span class="hs-keyword">qualified</span><span> </span><span class="annot"><span class="hs-identifier">Data.Map.Strict</span></span><span> </span><span class="hs-keyword">as</span><span> </span><span class="annot"><span class="hs-identifier">Map</span></span><span>
+</span><span id="line-30"></span><span>
+</span><span id="line-31"></span><span class="hs-keyword">type</span><span> </span><span id="IntervalID"><span class="annot"><a href="Data.Allen.Types.html#IntervalID"><span class="hs-identifier hs-var">IntervalID</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Int</span></span><span>
+</span><span id="line-32"></span><span class="hs-keyword">type</span><span> </span><span id="IntervalGraph"><span class="annot"><a href="Data.Allen.Types.html#IntervalGraph"><span class="hs-identifier hs-var">IntervalGraph</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Map</span></span><span> </span><span class="annot"><a href="Data.Allen.Types.html#IntervalID"><span class="hs-identifier hs-type">IntervalID</span></a></span><span> </span><span class="annot"><a href="Data.Allen.Types.html#Interval"><span class="hs-identifier hs-type">Interval</span></a></span><span>
+</span><span id="line-33"></span><span>
+</span><span id="line-34"></span><span class="hs-keyword">data</span><span> </span><span id="Interval"><span class="annot"><a href="Data.Allen.Types.html#Interval"><span class="hs-identifier hs-var">Interval</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span id="Interval"><span class="annot"><a href="Data.Allen.Types.html#Interval"><span class="hs-identifier hs-var">Interval</span></a></span></span><span> </span><span class="hs-special">{</span><span> </span><span id="intervalID"><span class="annot"><span class="annottext">Interval -&gt; Int
 </span><a href="Data.Allen.Types.html#intervalID"><span class="hs-identifier hs-var hs-var">intervalID</span></a></span></span><span>        </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Int</span></span><span> </span><span>
-</span><span id="line-37"></span><span>                         </span><span class="hs-special">,</span><span> </span><span id="intervalRelations"><span class="annot"><span class="annottext">Interval -&gt; Map Int RelationBits
+</span><span id="line-35"></span><span>                         </span><span class="hs-special">,</span><span> </span><span id="intervalRelations"><span class="annot"><span class="annottext">Interval -&gt; Map Int RelationBits
 </span><a href="Data.Allen.Types.html#intervalRelations"><span class="hs-identifier hs-var hs-var">intervalRelations</span></a></span></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Map</span></span><span> </span><span class="annot"><a href="Data.Allen.Types.html#IntervalID"><span class="hs-identifier hs-type">IntervalID</span></a></span><span> </span><span class="annot"><a href="Data.Allen.Types.html#RelationBits"><span class="hs-identifier hs-type">RelationBits</span></a></span><span>
-</span><span id="line-38"></span><span>                         </span><span class="hs-special">}</span><span> </span><span>
-</span><span id="line-39"></span><span>
-</span><span id="line-40"></span><span class="annot"><span class="hs-comment">-- | Ex: Interval 3 (d 1, D 2)</span></span><span>
-</span><span id="line-41"></span><span class="hs-keyword">instance</span><span> </span><span id="local-6989586621679051266"><span id="local-6989586621679051271"><span class="annot"><span class="hs-identifier hs-type">Show</span></span><span> </span><span class="annot"><a href="Data.Allen.Types.html#Interval"><span class="hs-identifier hs-type">Interval</span></a></span></span></span><span> </span><span class="hs-keyword">where</span><span> </span><span>
-</span><span id="line-42"></span><span>    </span><span id="local-6989586621679051281"><span class="annot"><span class="annottext">show :: Interval -&gt; String
+</span><span id="line-36"></span><span>                         </span><span class="hs-special">}</span><span> </span><span>
+</span><span id="line-37"></span><span>
+</span><span id="line-38"></span><span class="annot"><span class="hs-comment">-- | Ex: Interval 3 (d 1, D 2)</span></span><span>
+</span><span id="line-39"></span><span class="hs-keyword">instance</span><span> </span><span id="local-6989586621679051266"><span id="local-6989586621679051271"><span class="annot"><span class="hs-identifier hs-type">Show</span></span><span> </span><span class="annot"><a href="Data.Allen.Types.html#Interval"><span class="hs-identifier hs-type">Interval</span></a></span></span></span><span> </span><span class="hs-keyword">where</span><span> </span><span>
+</span><span id="line-40"></span><span>    </span><span id="local-6989586621679051281"><span class="annot"><span class="annottext">show :: Interval -&gt; String
 </span><a href="#local-6989586621679051281"><span class="hs-identifier hs-var hs-var hs-var hs-var">show</span></a></span></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="Data.Allen.Types.html#Interval"><span class="hs-identifier hs-type">Interval</span></a></span><span> </span><span id="local-6989586621679051283"><span class="annot"><span class="annottext">Int
 </span><a href="#local-6989586621679051283"><span class="hs-identifier hs-var">iD</span></a></span></span><span> </span><span id="local-6989586621679051284"><span class="annot"><span class="annottext">Map Int RelationBits
 </span><a href="#local-6989586621679051284"><span class="hs-identifier hs-var">rels</span></a></span></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String
@@ -60,7 +58,7 @@ forall a. Semigroup a =&gt; a -&gt; a -&gt; a
 forall a. Semigroup a =&gt; a -&gt; a -&gt; a
 </span><span class="hs-operator hs-var">&lt;&gt;</span></span><span> </span><span class="annot"><span class="annottext">String
 </span><span class="hs-string">&quot;)&quot;</span></span><span>
-</span><span id="line-43"></span><span>        </span><span class="hs-keyword">where</span><span> </span><span id="local-6989586621679051285"><span class="annot"><span class="annottext">rels' :: String
+</span><span id="line-41"></span><span>        </span><span class="hs-keyword">where</span><span> </span><span id="local-6989586621679051285"><span class="annot"><span class="annottext">rels' :: String
 </span><a href="#local-6989586621679051285"><span class="hs-identifier hs-var hs-var">rels'</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String -&gt; [String] -&gt; String
 forall a. [a] -&gt; [[a]] -&gt; [a]
 </span><span class="hs-identifier hs-var">intercalate</span></span><span> </span><span class="annot"><span class="annottext">String
@@ -78,7 +76,7 @@ forall a b. (a -&gt; b) -&gt; a -&gt; b
 forall k a. Map k a -&gt; [(k, a)]
 </span><span class="hs-identifier hs-var">Map.toList</span></span><span> </span><span class="annot"><span class="annottext">Map Int RelationBits
 </span><a href="#local-6989586621679051284"><span class="hs-identifier hs-var">rels</span></a></span><span>
-</span><span id="line-44"></span><span>              </span><span id="local-6989586621679051287"><span class="annot"><span class="annottext">showRel :: (a, RelationBits) -&gt; String
+</span><span id="line-42"></span><span>              </span><span id="local-6989586621679051287"><span class="annot"><span class="annottext">showRel :: (a, RelationBits) -&gt; String
 </span><a href="#local-6989586621679051287"><span class="hs-identifier hs-var hs-var">showRel</span></a></span></span><span> </span><span class="hs-special">(</span><span id="local-6989586621679051296"><span class="annot"><span class="annottext">a
 </span><a href="#local-6989586621679051296"><span class="hs-identifier hs-var">n</span></a></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679051297"><span class="annot"><span class="annottext">RelationBits
 </span><a href="#local-6989586621679051297"><span class="hs-identifier hs-var">r</span></a></span></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">|</span><span> </span><span class="annot"><span class="annottext">RelationBits
@@ -92,7 +90,7 @@ forall a. Semigroup a =&gt; a -&gt; a -&gt; a
 forall a. Show a =&gt; a -&gt; String
 </span><span class="hs-identifier hs-var">show</span></span><span> </span><span class="annot"><span class="annottext">a
 </span><a href="#local-6989586621679051296"><span class="hs-identifier hs-var">n</span></a></span><span>
-</span><span id="line-45"></span><span>                             </span><span class="hs-glyph">|</span><span> </span><span class="annot"><span class="annottext">Bool
+</span><span id="line-43"></span><span>                             </span><span class="hs-glyph">|</span><span> </span><span class="annot"><span class="annottext">Bool
 </span><span class="hs-identifier hs-var">otherwise</span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">(Relation -&gt; Char) -&gt; [Relation] -&gt; String
 forall a b. (a -&gt; b) -&gt; [a] -&gt; [b]
 </span><span class="hs-identifier hs-var">map</span></span><span> </span><span class="annot"><span class="annottext">Relation -&gt; Char
@@ -107,11 +105,11 @@ forall a. Semigroup a =&gt; a -&gt; a -&gt; a
 forall a. Show a =&gt; a -&gt; String
 </span><span class="hs-identifier hs-var">show</span></span><span> </span><span class="annot"><span class="annottext">a
 </span><a href="#local-6989586621679051296"><span class="hs-identifier hs-var">n</span></a></span><span>
-</span><span id="line-46"></span><span>
-</span><span id="line-47"></span><span class="hs-comment">-- | Return the interval given it's ID.</span><span>
-</span><span id="line-48"></span><span class="hs-comment">-- Panics if ID doesn't exist.</span><span>
-</span><span id="line-49"></span><span class="annot"><a href="Data.Allen.Types.html#fromID"><span class="hs-identifier hs-type">fromID</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="Data.Allen.Types.html#IntervalID"><span class="hs-identifier hs-type">IntervalID</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="Data.Allen.Types.html#Allen"><span class="hs-identifier hs-type">Allen</span></a></span><span> </span><span class="annot"><a href="Data.Allen.Types.html#Interval"><span class="hs-identifier hs-type">Interval</span></a></span><span> </span><span>
-</span><span id="line-50"></span><span id="fromID"><span class="annot"><span class="annottext">fromID :: Int -&gt; Allen Interval
+</span><span id="line-44"></span><span>
+</span><span id="line-45"></span><span class="hs-comment">-- | Return the interval given it's ID.</span><span>
+</span><span id="line-46"></span><span class="hs-comment">-- Panics if ID doesn't exist.</span><span>
+</span><span id="line-47"></span><span class="annot"><a href="Data.Allen.Types.html#fromID"><span class="hs-identifier hs-type">fromID</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="Data.Allen.Types.html#IntervalID"><span class="hs-identifier hs-type">IntervalID</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="Data.Allen.Types.html#Allen"><span class="hs-identifier hs-type">Allen</span></a></span><span> </span><span class="annot"><a href="Data.Allen.Types.html#Interval"><span class="hs-identifier hs-type">Interval</span></a></span><span> </span><span>
+</span><span id="line-48"></span><span id="fromID"><span class="annot"><span class="annottext">fromID :: Int -&gt; Allen Interval
 </span><a href="Data.Allen.Types.html#fromID"><span class="hs-identifier hs-var hs-var">fromID</span></a></span></span><span> </span><span id="local-6989586621679051299"><span class="annot"><span class="annottext">Int
 </span><a href="#local-6989586621679051299"><span class="hs-identifier hs-var">n</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">(Map Int Interval -&gt; Interval) -&gt; Allen Interval
 forall s (m :: * -&gt; *) a. MonadState s m =&gt; (s -&gt; a) -&gt; m a
@@ -119,23 +117,23 @@ forall s (m :: * -&gt; *) a. MonadState s m =&gt; (s -&gt; a) -&gt; m a
 forall k a. Ord k =&gt; Map k a -&gt; k -&gt; a
 </span><span class="hs-operator hs-var">Map.!</span></span><span> </span><span class="annot"><span class="annottext">Int
 </span><a href="#local-6989586621679051299"><span class="hs-identifier hs-var">n</span></a></span><span class="hs-special">)</span><span>
+</span><span id="line-49"></span><span>
+</span><span id="line-50"></span><span class="hs-keyword">type</span><span> </span><span id="Allen"><span class="annot"><a href="Data.Allen.Types.html#Allen"><span class="hs-identifier hs-var">Allen</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="hs-identifier hs-type">State</span></span><span> </span><span class="annot"><a href="Data.Allen.Types.html#IntervalGraph"><span class="hs-identifier hs-type">IntervalGraph</span></a></span><span>
 </span><span id="line-51"></span><span>
-</span><span id="line-52"></span><span class="hs-keyword">type</span><span> </span><span id="Allen"><span class="annot"><a href="Data.Allen.Types.html#Allen"><span class="hs-identifier hs-var">Allen</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="hs-identifier hs-type">State</span></span><span> </span><span class="annot"><a href="Data.Allen.Types.html#IntervalGraph"><span class="hs-identifier hs-type">IntervalGraph</span></a></span><span>
-</span><span id="line-53"></span><span>
-</span><span id="line-54"></span><span class="hs-keyword">data</span><span> </span><span id="Relation"><span class="annot"><a href="Data.Allen.Types.html#Relation"><span class="hs-identifier hs-var">Relation</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span id="Precedes"><span class="annot"><a href="Data.Allen.Types.html#Precedes"><span class="hs-identifier hs-var">Precedes</span></a></span></span><span> </span><span>
-</span><span id="line-55"></span><span>              </span><span class="hs-glyph">|</span><span> </span><span id="Meets"><span class="annot"><a href="Data.Allen.Types.html#Meets"><span class="hs-identifier hs-var">Meets</span></a></span></span><span> </span><span>
-</span><span id="line-56"></span><span>              </span><span class="hs-glyph">|</span><span> </span><span id="Overlaps"><span class="annot"><a href="Data.Allen.Types.html#Overlaps"><span class="hs-identifier hs-var">Overlaps</span></a></span></span><span> </span><span>
-</span><span id="line-57"></span><span>              </span><span class="hs-glyph">|</span><span> </span><span id="FinishedBy"><span class="annot"><a href="Data.Allen.Types.html#FinishedBy"><span class="hs-identifier hs-var">FinishedBy</span></a></span></span><span>
-</span><span id="line-58"></span><span>              </span><span class="hs-glyph">|</span><span> </span><span id="Contains"><span class="annot"><a href="Data.Allen.Types.html#Contains"><span class="hs-identifier hs-var">Contains</span></a></span></span><span> </span><span>
-</span><span id="line-59"></span><span>              </span><span class="hs-glyph">|</span><span> </span><span id="Starts"><span class="annot"><a href="Data.Allen.Types.html#Starts"><span class="hs-identifier hs-var">Starts</span></a></span></span><span> </span><span>
-</span><span id="line-60"></span><span>              </span><span class="hs-glyph">|</span><span> </span><span id="Equals"><span class="annot"><a href="Data.Allen.Types.html#Equals"><span class="hs-identifier hs-var">Equals</span></a></span></span><span> </span><span>
-</span><span id="line-61"></span><span>              </span><span class="hs-glyph">|</span><span> </span><span id="StartedBy"><span class="annot"><a href="Data.Allen.Types.html#StartedBy"><span class="hs-identifier hs-var">StartedBy</span></a></span></span><span> </span><span>
-</span><span id="line-62"></span><span>              </span><span class="hs-glyph">|</span><span> </span><span id="During"><span class="annot"><a href="Data.Allen.Types.html#During"><span class="hs-identifier hs-var">During</span></a></span></span><span> </span><span>
-</span><span id="line-63"></span><span>              </span><span class="hs-glyph">|</span><span> </span><span id="Finishes"><span class="annot"><a href="Data.Allen.Types.html#Finishes"><span class="hs-identifier hs-var">Finishes</span></a></span></span><span> </span><span>
-</span><span id="line-64"></span><span>              </span><span class="hs-glyph">|</span><span> </span><span id="OverlappedBy"><span class="annot"><a href="Data.Allen.Types.html#OverlappedBy"><span class="hs-identifier hs-var">OverlappedBy</span></a></span></span><span> </span><span>
-</span><span id="line-65"></span><span>              </span><span class="hs-glyph">|</span><span> </span><span id="MetBy"><span class="annot"><a href="Data.Allen.Types.html#MetBy"><span class="hs-identifier hs-var">MetBy</span></a></span></span><span>
-</span><span id="line-66"></span><span>              </span><span class="hs-glyph">|</span><span> </span><span id="PrecededBy"><span class="annot"><a href="Data.Allen.Types.html#PrecededBy"><span class="hs-identifier hs-var">PrecededBy</span></a></span></span><span>
-</span><span id="line-67"></span><span>              </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679051317"><span id="local-6989586621679051319"><span class="annot"><span class="annottext">Relation -&gt; Relation -&gt; Bool
+</span><span id="line-52"></span><span class="hs-keyword">data</span><span> </span><span id="Relation"><span class="annot"><a href="Data.Allen.Types.html#Relation"><span class="hs-identifier hs-var">Relation</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span id="Precedes"><span class="annot"><a href="Data.Allen.Types.html#Precedes"><span class="hs-identifier hs-var">Precedes</span></a></span></span><span> </span><span>
+</span><span id="line-53"></span><span>              </span><span class="hs-glyph">|</span><span> </span><span id="Meets"><span class="annot"><a href="Data.Allen.Types.html#Meets"><span class="hs-identifier hs-var">Meets</span></a></span></span><span> </span><span>
+</span><span id="line-54"></span><span>              </span><span class="hs-glyph">|</span><span> </span><span id="Overlaps"><span class="annot"><a href="Data.Allen.Types.html#Overlaps"><span class="hs-identifier hs-var">Overlaps</span></a></span></span><span> </span><span>
+</span><span id="line-55"></span><span>              </span><span class="hs-glyph">|</span><span> </span><span id="FinishedBy"><span class="annot"><a href="Data.Allen.Types.html#FinishedBy"><span class="hs-identifier hs-var">FinishedBy</span></a></span></span><span>
+</span><span id="line-56"></span><span>              </span><span class="hs-glyph">|</span><span> </span><span id="Contains"><span class="annot"><a href="Data.Allen.Types.html#Contains"><span class="hs-identifier hs-var">Contains</span></a></span></span><span> </span><span>
+</span><span id="line-57"></span><span>              </span><span class="hs-glyph">|</span><span> </span><span id="Starts"><span class="annot"><a href="Data.Allen.Types.html#Starts"><span class="hs-identifier hs-var">Starts</span></a></span></span><span> </span><span>
+</span><span id="line-58"></span><span>              </span><span class="hs-glyph">|</span><span> </span><span id="Equals"><span class="annot"><a href="Data.Allen.Types.html#Equals"><span class="hs-identifier hs-var">Equals</span></a></span></span><span> </span><span>
+</span><span id="line-59"></span><span>              </span><span class="hs-glyph">|</span><span> </span><span id="StartedBy"><span class="annot"><a href="Data.Allen.Types.html#StartedBy"><span class="hs-identifier hs-var">StartedBy</span></a></span></span><span> </span><span>
+</span><span id="line-60"></span><span>              </span><span class="hs-glyph">|</span><span> </span><span id="During"><span class="annot"><a href="Data.Allen.Types.html#During"><span class="hs-identifier hs-var">During</span></a></span></span><span> </span><span>
+</span><span id="line-61"></span><span>              </span><span class="hs-glyph">|</span><span> </span><span id="Finishes"><span class="annot"><a href="Data.Allen.Types.html#Finishes"><span class="hs-identifier hs-var">Finishes</span></a></span></span><span> </span><span>
+</span><span id="line-62"></span><span>              </span><span class="hs-glyph">|</span><span> </span><span id="OverlappedBy"><span class="annot"><a href="Data.Allen.Types.html#OverlappedBy"><span class="hs-identifier hs-var">OverlappedBy</span></a></span></span><span> </span><span>
+</span><span id="line-63"></span><span>              </span><span class="hs-glyph">|</span><span> </span><span id="MetBy"><span class="annot"><a href="Data.Allen.Types.html#MetBy"><span class="hs-identifier hs-var">MetBy</span></a></span></span><span>
+</span><span id="line-64"></span><span>              </span><span class="hs-glyph">|</span><span> </span><span id="PrecededBy"><span class="annot"><a href="Data.Allen.Types.html#PrecededBy"><span class="hs-identifier hs-var">PrecededBy</span></a></span></span><span>
+</span><span id="line-65"></span><span>              </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679051317"><span id="local-6989586621679051319"><span class="annot"><span class="annottext">Relation -&gt; Relation -&gt; Bool
 (Relation -&gt; Relation -&gt; Bool)
 -&gt; (Relation -&gt; Relation -&gt; Bool) -&gt; Eq Relation
 forall a. (a -&gt; a -&gt; Bool) -&gt; (a -&gt; a -&gt; Bool) -&gt; Eq a
@@ -205,64 +203,64 @@ minBound :: Relation
 $cmaxBound :: Relation
 maxBound :: Relation
 </span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Bounded</span></span></span></span><span class="hs-special">)</span><span>
-</span><span id="line-68"></span><span>
-</span><span id="line-69"></span><span class="annot"><a href="Data.Allen.Types.html#relationToChar"><span class="hs-identifier hs-type">relationToChar</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="Data.Allen.Types.html#Relation"><span class="hs-identifier hs-type">Relation</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Char</span></span><span> </span><span>
-</span><span id="line-70"></span><span id="relationToChar"><span class="annot"><span class="annottext">relationToChar :: Relation -&gt; Char
+</span><span id="line-66"></span><span>
+</span><span id="line-67"></span><span class="annot"><a href="Data.Allen.Types.html#relationToChar"><span class="hs-identifier hs-type">relationToChar</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="Data.Allen.Types.html#Relation"><span class="hs-identifier hs-type">Relation</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Char</span></span><span> </span><span>
+</span><span id="line-68"></span><span id="relationToChar"><span class="annot"><span class="annottext">relationToChar :: Relation -&gt; Char
 </span><a href="Data.Allen.Types.html#relationToChar"><span class="hs-identifier hs-var hs-var">relationToChar</span></a></span></span><span> </span><span id="local-6989586621679051376"><span class="annot"><span class="annottext">Relation
 </span><a href="#local-6989586621679051376"><span class="hs-identifier hs-var">r</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-keyword">case</span><span> </span><span class="annot"><span class="annottext">Relation
 </span><a href="#local-6989586621679051376"><span class="hs-identifier hs-var">r</span></a></span><span> </span><span class="hs-keyword">of</span><span> </span><span>
-</span><span id="line-71"></span><span>    </span><span class="annot"><span class="annottext">Relation
+</span><span id="line-69"></span><span>    </span><span class="annot"><span class="annottext">Relation
 </span><a href="Data.Allen.Types.html#Precedes"><span class="hs-identifier hs-var">Precedes</span></a></span><span>     </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Char
 </span><span class="hs-char">'p'</span></span><span>
-</span><span id="line-72"></span><span>    </span><span class="annot"><span class="annottext">Relation
+</span><span id="line-70"></span><span>    </span><span class="annot"><span class="annottext">Relation
 </span><a href="Data.Allen.Types.html#Meets"><span class="hs-identifier hs-var">Meets</span></a></span><span>        </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Char
 </span><span class="hs-char">'m'</span></span><span>
-</span><span id="line-73"></span><span>    </span><span class="annot"><span class="annottext">Relation
+</span><span id="line-71"></span><span>    </span><span class="annot"><span class="annottext">Relation
 </span><a href="Data.Allen.Types.html#Overlaps"><span class="hs-identifier hs-var">Overlaps</span></a></span><span>     </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Char
 </span><span class="hs-char">'o'</span></span><span>
-</span><span id="line-74"></span><span>    </span><span class="annot"><span class="annottext">Relation
+</span><span id="line-72"></span><span>    </span><span class="annot"><span class="annottext">Relation
 </span><a href="Data.Allen.Types.html#FinishedBy"><span class="hs-identifier hs-var">FinishedBy</span></a></span><span>   </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Char
 </span><span class="hs-char">'F'</span></span><span>
-</span><span id="line-75"></span><span>    </span><span class="annot"><span class="annottext">Relation
+</span><span id="line-73"></span><span>    </span><span class="annot"><span class="annottext">Relation
 </span><a href="Data.Allen.Types.html#Contains"><span class="hs-identifier hs-var">Contains</span></a></span><span>     </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Char
 </span><span class="hs-char">'D'</span></span><span>
-</span><span id="line-76"></span><span>    </span><span class="annot"><span class="annottext">Relation
+</span><span id="line-74"></span><span>    </span><span class="annot"><span class="annottext">Relation
 </span><a href="Data.Allen.Types.html#Starts"><span class="hs-identifier hs-var">Starts</span></a></span><span>       </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Char
 </span><span class="hs-char">'s'</span></span><span>
-</span><span id="line-77"></span><span>    </span><span class="annot"><span class="annottext">Relation
+</span><span id="line-75"></span><span>    </span><span class="annot"><span class="annottext">Relation
 </span><a href="Data.Allen.Types.html#Equals"><span class="hs-identifier hs-var">Equals</span></a></span><span>       </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Char
 </span><span class="hs-char">'e'</span></span><span>
-</span><span id="line-78"></span><span>    </span><span class="annot"><span class="annottext">Relation
+</span><span id="line-76"></span><span>    </span><span class="annot"><span class="annottext">Relation
 </span><a href="Data.Allen.Types.html#StartedBy"><span class="hs-identifier hs-var">StartedBy</span></a></span><span>    </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Char
 </span><span class="hs-char">'S'</span></span><span>
-</span><span id="line-79"></span><span>    </span><span class="annot"><span class="annottext">Relation
+</span><span id="line-77"></span><span>    </span><span class="annot"><span class="annottext">Relation
 </span><a href="Data.Allen.Types.html#During"><span class="hs-identifier hs-var">During</span></a></span><span>       </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Char
 </span><span class="hs-char">'d'</span></span><span>
-</span><span id="line-80"></span><span>    </span><span class="annot"><span class="annottext">Relation
+</span><span id="line-78"></span><span>    </span><span class="annot"><span class="annottext">Relation
 </span><a href="Data.Allen.Types.html#Finishes"><span class="hs-identifier hs-var">Finishes</span></a></span><span>     </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Char
 </span><span class="hs-char">'f'</span></span><span>
-</span><span id="line-81"></span><span>    </span><span class="annot"><span class="annottext">Relation
+</span><span id="line-79"></span><span>    </span><span class="annot"><span class="annottext">Relation
 </span><a href="Data.Allen.Types.html#OverlappedBy"><span class="hs-identifier hs-var">OverlappedBy</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Char
 </span><span class="hs-char">'O'</span></span><span>
-</span><span id="line-82"></span><span>    </span><span class="annot"><span class="annottext">Relation
+</span><span id="line-80"></span><span>    </span><span class="annot"><span class="annottext">Relation
 </span><a href="Data.Allen.Types.html#MetBy"><span class="hs-identifier hs-var">MetBy</span></a></span><span>        </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Char
 </span><span class="hs-char">'M'</span></span><span>
-</span><span id="line-83"></span><span>    </span><span class="annot"><span class="annottext">Relation
+</span><span id="line-81"></span><span>    </span><span class="annot"><span class="annottext">Relation
 </span><a href="Data.Allen.Types.html#PrecededBy"><span class="hs-identifier hs-var">PrecededBy</span></a></span><span>   </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Char
 </span><span class="hs-char">'P'</span></span><span>
+</span><span id="line-82"></span><span>
+</span><span id="line-83"></span><span class="hs-keyword">type</span><span> </span><span id="RelationBits"><span class="annot"><a href="Data.Allen.Types.html#RelationBits"><span class="hs-identifier hs-var">RelationBits</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Word16</span></span><span>
 </span><span id="line-84"></span><span>
-</span><span id="line-85"></span><span class="hs-keyword">type</span><span> </span><span id="RelationBits"><span class="annot"><a href="Data.Allen.Types.html#RelationBits"><span class="hs-identifier hs-var">RelationBits</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Word16</span></span><span>
-</span><span id="line-86"></span><span>
-</span><span id="line-87"></span><span class="annot"><span class="hs-comment">-- | List of all possible relations.</span></span><span>
-</span><span id="line-88"></span><span class="annot"><a href="Data.Allen.Types.html#allRelations"><span class="hs-identifier hs-type">allRelations</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="hs-special">[</span><span class="annot"><a href="Data.Allen.Types.html#Relation"><span class="hs-identifier hs-type">Relation</span></a></span><span class="hs-special">]</span><span>
-</span><span id="line-89"></span><span id="allRelations"><span class="annot"><span class="annottext">allRelations :: [Relation]
+</span><span id="line-85"></span><span class="annot"><span class="hs-comment">-- | List of all possible relations.</span></span><span>
+</span><span id="line-86"></span><span class="annot"><a href="Data.Allen.Types.html#allRelations"><span class="hs-identifier hs-type">allRelations</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="hs-special">[</span><span class="annot"><a href="Data.Allen.Types.html#Relation"><span class="hs-identifier hs-type">Relation</span></a></span><span class="hs-special">]</span><span>
+</span><span id="line-87"></span><span id="allRelations"><span class="annot"><span class="annottext">allRelations :: [Relation]
 </span><a href="Data.Allen.Types.html#allRelations"><span class="hs-identifier hs-var hs-var">allRelations</span></a></span></span><span>  </span><span class="hs-glyph">=</span><span> </span><span class="hs-special">[</span><span class="annot"><span class="annottext">Relation
 forall a. Bounded a =&gt; a
 </span><span class="hs-identifier hs-var">minBound</span></span><span class="hs-glyph">..</span><span class="hs-special">]</span><span>
-</span><span id="line-90"></span><span>
-</span><span id="line-91"></span><span class="annot"><span class="hs-comment">-- | Bit representation of all possible relations.</span></span><span>
-</span><span id="line-92"></span><span class="annot"><a href="Data.Allen.Types.html#allRelationBits"><span class="hs-identifier hs-type">allRelationBits</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="Data.Allen.Types.html#RelationBits"><span class="hs-identifier hs-type">RelationBits</span></a></span><span>
-</span><span id="line-93"></span><span id="allRelationBits"><span class="annot"><span class="annottext">allRelationBits :: RelationBits
+</span><span id="line-88"></span><span>
+</span><span id="line-89"></span><span class="annot"><span class="hs-comment">-- | Bit representation of all possible relations.</span></span><span>
+</span><span id="line-90"></span><span class="annot"><a href="Data.Allen.Types.html#allRelationBits"><span class="hs-identifier hs-type">allRelationBits</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="Data.Allen.Types.html#RelationBits"><span class="hs-identifier hs-type">RelationBits</span></a></span><span>
+</span><span id="line-91"></span><span id="allRelationBits"><span class="annot"><span class="annottext">allRelationBits :: RelationBits
 </span><a href="Data.Allen.Types.html#allRelationBits"><span class="hs-identifier hs-var hs-var">allRelationBits</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">[RelationBits] -&gt; RelationBits
 </span><a href="Data.Allen.Types.html#relationUnion"><span class="hs-identifier hs-var">relationUnion</span></a></span><span> </span><span class="annot"><span class="annottext">([RelationBits] -&gt; RelationBits) -&gt; [RelationBits] -&gt; RelationBits
 forall a b. (a -&gt; b) -&gt; a -&gt; b
@@ -271,10 +269,10 @@ forall a b. (a -&gt; b) -&gt; [a] -&gt; [b]
 </span><span class="hs-identifier hs-var">map</span></span><span> </span><span class="annot"><span class="annottext">Relation -&gt; RelationBits
 </span><a href="Data.Allen.Types.html#toBits"><span class="hs-identifier hs-var">toBits</span></a></span><span> </span><span class="annot"><span class="annottext">[Relation]
 </span><a href="Data.Allen.Types.html#allRelations"><span class="hs-identifier hs-var">allRelations</span></a></span><span>
-</span><span id="line-94"></span><span>
-</span><span id="line-95"></span><span class="annot"><span class="hs-comment">-- | Convert a Relation type to its bit representation.</span></span><span>
-</span><span id="line-96"></span><span class="annot"><a href="Data.Allen.Types.html#toBits"><span class="hs-identifier hs-type">toBits</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="Data.Allen.Types.html#Relation"><span class="hs-identifier hs-type">Relation</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="Data.Allen.Types.html#RelationBits"><span class="hs-identifier hs-type">RelationBits</span></a></span><span>
-</span><span id="line-97"></span><span id="toBits"><span class="annot"><span class="annottext">toBits :: Relation -&gt; RelationBits
+</span><span id="line-92"></span><span>
+</span><span id="line-93"></span><span class="annot"><span class="hs-comment">-- | Convert a Relation type to its bit representation.</span></span><span>
+</span><span id="line-94"></span><span class="annot"><a href="Data.Allen.Types.html#toBits"><span class="hs-identifier hs-type">toBits</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="Data.Allen.Types.html#Relation"><span class="hs-identifier hs-type">Relation</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="Data.Allen.Types.html#RelationBits"><span class="hs-identifier hs-type">RelationBits</span></a></span><span>
+</span><span id="line-95"></span><span id="toBits"><span class="annot"><span class="annottext">toBits :: Relation -&gt; RelationBits
 </span><a href="Data.Allen.Types.html#toBits"><span class="hs-identifier hs-var hs-var">toBits</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Int -&gt; RelationBits
 forall a. Bits a =&gt; Int -&gt; a
 </span><span class="hs-identifier hs-var">bit</span></span><span> </span><span class="annot"><span class="annottext">(Int -&gt; RelationBits)
@@ -283,10 +281,10 @@ forall b c a. (b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; c
 </span><span class="hs-operator hs-var">.</span></span><span> </span><span class="annot"><span class="annottext">Relation -&gt; Int
 forall a. Enum a =&gt; a -&gt; Int
 </span><span class="hs-identifier hs-var">fromEnum</span></span><span>
-</span><span id="line-98"></span><span>
-</span><span id="line-99"></span><span class="annot"><span class="hs-comment">-- | Convert a bit representation to a list of Relation types.</span></span><span>
-</span><span id="line-100"></span><span class="annot"><a href="Data.Allen.Types.html#fromBits"><span class="hs-identifier hs-type">fromBits</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="Data.Allen.Types.html#RelationBits"><span class="hs-identifier hs-type">RelationBits</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="hs-special">[</span><span class="annot"><a href="Data.Allen.Types.html#Relation"><span class="hs-identifier hs-type">Relation</span></a></span><span class="hs-special">]</span><span>
-</span><span id="line-101"></span><span id="fromBits"><span class="annot"><span class="annottext">fromBits :: RelationBits -&gt; [Relation]
+</span><span id="line-96"></span><span>
+</span><span id="line-97"></span><span class="annot"><span class="hs-comment">-- | Convert a bit representation to a list of Relation types.</span></span><span>
+</span><span id="line-98"></span><span class="annot"><a href="Data.Allen.Types.html#fromBits"><span class="hs-identifier hs-type">fromBits</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="Data.Allen.Types.html#RelationBits"><span class="hs-identifier hs-type">RelationBits</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="hs-special">[</span><span class="annot"><a href="Data.Allen.Types.html#Relation"><span class="hs-identifier hs-type">Relation</span></a></span><span class="hs-special">]</span><span>
+</span><span id="line-99"></span><span id="fromBits"><span class="annot"><span class="annottext">fromBits :: RelationBits -&gt; [Relation]
 </span><a href="Data.Allen.Types.html#fromBits"><span class="hs-identifier hs-var hs-var">fromBits</span></a></span></span><span> </span><span id="local-6989586621679051381"><span class="annot"><span class="annottext">RelationBits
 </span><a href="#local-6989586621679051381"><span class="hs-identifier hs-var">bits</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-special">[</span><span class="annot"><span class="annottext">Relation
 </span><a href="#local-6989586621679051382"><span class="hs-identifier hs-var">x</span></a></span><span> </span><span class="hs-glyph">|</span><span> </span><span id="local-6989586621679051382"><span class="annot"><span class="annottext">Relation
@@ -300,10 +298,10 @@ forall a. Bits a =&gt; a -&gt; a -&gt; a
 forall a. Eq a =&gt; a -&gt; a -&gt; Bool
 </span><span class="hs-operator hs-var">/=</span></span><span> </span><span class="annot"><span class="annottext">RelationBits
 </span><span class="hs-number">0</span></span><span class="hs-special">]</span><span>
-</span><span id="line-102"></span><span>
-</span><span id="line-103"></span><span class="annot"><span class="hs-comment">-- | Calculate the union of a list of relations.</span></span><span>
-</span><span id="line-104"></span><span class="annot"><a href="Data.Allen.Types.html#relationUnion"><span class="hs-identifier hs-type">relationUnion</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="hs-special">[</span><span class="annot"><a href="Data.Allen.Types.html#RelationBits"><span class="hs-identifier hs-type">RelationBits</span></a></span><span class="hs-special">]</span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="Data.Allen.Types.html#RelationBits"><span class="hs-identifier hs-type">RelationBits</span></a></span><span>
-</span><span id="line-105"></span><span id="relationUnion"><span class="annot"><span class="annottext">relationUnion :: [RelationBits] -&gt; RelationBits
+</span><span id="line-100"></span><span>
+</span><span id="line-101"></span><span class="annot"><span class="hs-comment">-- | Calculate the union of a list of relations.</span></span><span>
+</span><span id="line-102"></span><span class="annot"><a href="Data.Allen.Types.html#relationUnion"><span class="hs-identifier hs-type">relationUnion</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="hs-special">[</span><span class="annot"><a href="Data.Allen.Types.html#RelationBits"><span class="hs-identifier hs-type">RelationBits</span></a></span><span class="hs-special">]</span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="Data.Allen.Types.html#RelationBits"><span class="hs-identifier hs-type">RelationBits</span></a></span><span>
+</span><span id="line-103"></span><span id="relationUnion"><span class="annot"><span class="annottext">relationUnion :: [RelationBits] -&gt; RelationBits
 </span><a href="Data.Allen.Types.html#relationUnion"><span class="hs-identifier hs-var hs-var">relationUnion</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">(RelationBits -&gt; RelationBits -&gt; RelationBits)
 -&gt; RelationBits -&gt; [RelationBits] -&gt; RelationBits
 forall b a. (b -&gt; a -&gt; b) -&gt; b -&gt; [a] -&gt; b
@@ -314,10 +312,10 @@ Foldable t =&gt;
 forall a. Bits a =&gt; a -&gt; a -&gt; a
 </span><span class="hs-operator hs-var">(.|.)</span></span><span> </span><span class="annot"><span class="annottext">RelationBits
 </span><span class="hs-number">0</span></span><span>
-</span><span id="line-106"></span><span>
-</span><span id="line-107"></span><span class="annot"><span class="hs-comment">-- | Calculate the intersection of a list of relations.</span></span><span>
-</span><span id="line-108"></span><span class="annot"><a href="Data.Allen.Types.html#relationIntersection"><span class="hs-identifier hs-type">relationIntersection</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="hs-special">[</span><span class="annot"><a href="Data.Allen.Types.html#RelationBits"><span class="hs-identifier hs-type">RelationBits</span></a></span><span class="hs-special">]</span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="Data.Allen.Types.html#RelationBits"><span class="hs-identifier hs-type">RelationBits</span></a></span><span> </span><span>
-</span><span id="line-109"></span><span id="relationIntersection"><span class="annot"><span class="annottext">relationIntersection :: [RelationBits] -&gt; RelationBits
+</span><span id="line-104"></span><span>
+</span><span id="line-105"></span><span class="annot"><span class="hs-comment">-- | Calculate the intersection of a list of relations.</span></span><span>
+</span><span id="line-106"></span><span class="annot"><a href="Data.Allen.Types.html#relationIntersection"><span class="hs-identifier hs-type">relationIntersection</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="hs-special">[</span><span class="annot"><a href="Data.Allen.Types.html#RelationBits"><span class="hs-identifier hs-type">RelationBits</span></a></span><span class="hs-special">]</span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="Data.Allen.Types.html#RelationBits"><span class="hs-identifier hs-type">RelationBits</span></a></span><span> </span><span>
+</span><span id="line-107"></span><span id="relationIntersection"><span class="annot"><span class="annottext">relationIntersection :: [RelationBits] -&gt; RelationBits
 </span><a href="Data.Allen.Types.html#relationIntersection"><span class="hs-identifier hs-var hs-var">relationIntersection</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">(RelationBits -&gt; RelationBits -&gt; RelationBits)
 -&gt; RelationBits -&gt; [RelationBits] -&gt; RelationBits
 forall b a. (b -&gt; a -&gt; b) -&gt; b -&gt; [a] -&gt; b
@@ -328,5 +326,5 @@ Foldable t =&gt;
 forall a. Bits a =&gt; a -&gt; a -&gt; a
 </span><span class="hs-operator hs-var">(.&amp;.)</span></span><span> </span><span class="annot"><span class="annottext">RelationBits
 </span><span class="hs-number">0</span></span><span>
-</span><span id="line-110"></span><span>
-</span><span id="line-111"></span></pre></body></html>
+</span><span id="line-108"></span><span>
+</span><span id="line-109"></span></pre></body></html>

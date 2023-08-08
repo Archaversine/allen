@@ -1,10 +1,8 @@
-{-# LANGUAGE BinaryLiterals #-}
-
-{-|
- - Module      : Data.Allen.Types
- - Description : Types for Allen's interval algebra.
- - Maintainer  : Archaversine 
- -}
+-- |
+-- Module      : Data.Allen.Types
+-- Description : Types for Allen's interval algebra.
+-- Maintainer  : Archaversine 
+--
 
 module Data.Allen.Types ( Interval(..)
                         , Allen

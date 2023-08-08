@@ -129,7 +129,10 @@ interval = do
 intervalCount :: Allen Int 
 intervalCount = gets Map.size
 
--- | Set the relations between two intervals.
+-- | Given two intervals, return a copy of the first interval such that it now 
+-- has the specified set of relations to the second interval.
+--
+-- This has no effect on the second interval or the network representation.
 setRelation :: Interval -> RelationBits -> IntervalID -> Interval 
 setRelation i1 r i2 = i1 { intervalRelations = relations }
     where relations = Map.insert i2 r $ intervalRelations i1

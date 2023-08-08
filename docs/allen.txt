@@ -8,11 +8,6 @@
 @version 0.1.0.0
 
 
--- | <ul>
---   <li>Module : Data.Allen.Types</li>
---   <li>Description : Types for Allen's interval algebra.</li>
---   <li>Maintainer : Archaversine</li>
---   </ul>
 module Data.Allen.Types
 data Interval
 Interval :: Int -> Map IntervalID RelationBits -> Interval
@@ -237,7 +232,11 @@ assumeSet :: IntervalID -> [Relation] -> IntervalID -> Allen ()
 -- | Define a relation between two intervals using RelationBits.
 assumeBits :: IntervalID -> RelationBits -> IntervalID -> Allen ()
 
--- | Set the relations between two intervals.
+-- | Given two intervals, return a copy of the first interval such that it
+--   now has the specified set of relations to the second interval.
+--   
+--   This has no effect on the second interval or the network
+--   representation.
 setRelation :: Interval -> RelationBits -> IntervalID -> Interval
 
 -- | Return the set of possible constraints/relations between two
