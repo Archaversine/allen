@@ -59,3 +59,13 @@ before, or after my friend calls.
 
 To view more information for library functions, you can view the documentation 
 for this library [here](https://archaversine.github.io/allen/Data-Allen.html).
+
+## Interactive REPL
+
+You can use an interactive REPL to perform calculations from the command line.
+Currently, only Linux has been compiled. Windows is planned to be compiled soon.
+
+You can download the interactive version here: 
+
+- [Linux](https://github.com/Archaversine/allen/releases/tag/v1.0.0-linux)
+- Windows (Coming Soon!)
