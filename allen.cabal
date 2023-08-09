@@ -6,7 +6,9 @@ cabal-version: 1.12
 
 name:           allen
 version:        0.1.0.0
+synopsis:       A monadic way of calculating relations between intervals of time.
 description:    Please see the README on GitHub at <https://github.com/archaversine/allen#readme>
+category:       Algebra
 homepage:       https://github.com/archaversine/allen#readme
 bug-reports:    https://github.com/archaversine/allen/issues
 author:         Adam Brohl

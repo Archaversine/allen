@@ -4,6 +4,8 @@ github:              "archaversine/allen"
 license:             BSD3
 author:              "Adam Brohl"
 maintainer:          "awbrohl@knox.edu"
+category:            Algebra
+synopsis:            A monadic way of calculating relations between intervals of time.
 copyright:           "2023 Adam Brohl"
 
 extra-source-files:
