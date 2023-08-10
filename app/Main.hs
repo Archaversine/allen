@@ -1,8 +1,11 @@
+{-# LANGUAGE OverloadedStrings #-}
+
 module Main (main) where
 
 import Control.Monad
 import Control.Monad.State
 
+import Data.Aeson
 import Data.Allen
 import Data.List (sortBy)
 import Data.Ord (comparing)
@@ -11,6 +14,26 @@ import Data.Map.Strict (Map)
 import qualified Data.Map.Strict as Map
 
 import System.IO
+
+data RelationJSON = RelationJSON { realtionFrom :: String 
+                                 , relationTo   :: String 
+                                 , relBits      :: Int
+                                 }
+
+data NetworkJSON = NetworkJSON { ivNames   :: [String] 
+                               , relations :: [RelationJSON]
+                               }
+
+instance FromJSON RelationJSON where 
+    parseJSON = withObject "RelationJSON" $ \v -> RelationJSON 
+        <$> v .: "from"
+        <*> v .: "to"
+        <*> v .: "bits"
+
+instance FromJSON NetworkJSON where 
+    parseJSON = withObject "NetworkJSON" $ \v -> NetworkJSON 
+        <$> v .: "intervals" 
+        <*> v .: "relations"
 
 data REPLState = REPLState { graph :: Allen (), intervalNames :: Map String IntervalID }
 type REPL = StateT REPLState IO
