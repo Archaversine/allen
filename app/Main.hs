@@ -17,10 +17,10 @@ import System.IO
 
 data RelationJSON = RelationJSON { realtionFrom :: String 
                                  , relationTo   :: String 
-                                 , relBits      :: Int
+                                 , relChars     :: String
                                  }
 
-data NetworkJSON = NetworkJSON { ivNames   :: [String] 
+data NetworkJSON = NetworkJSON { ivNames   :: [String]
                                , relations :: [RelationJSON]
                                }
 
@@ -28,7 +28,7 @@ instance FromJSON RelationJSON where
     parseJSON = withObject "RelationJSON" $ \v -> RelationJSON 
         <$> v .: "from"
         <*> v .: "to"
-        <*> v .: "bits"
+        <*> v .: "relation"
 
 instance FromJSON NetworkJSON where 
     parseJSON = withObject "NetworkJSON" $ \v -> NetworkJSON 
