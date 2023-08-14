@@ -26,6 +26,8 @@ dependencies:
 - mtl
 - vector
 - containers
+- bytestring
+- text
 
 ghc-options:
 - -Wall

@@ -1,3 +1,4 @@
+{-# LANGUAGE DeriveGeneric #-}
 {-# LANGUAGE OverloadedStrings #-}
 
 module Main (main) where
@@ -9,20 +10,40 @@ import Data.Aeson
 import Data.Allen
 import Data.List (sortBy)
 import Data.Ord (comparing)
+import Data.Text (Text, pack, unpack)
 
 import Data.Map.Strict (Map)
 import qualified Data.Map.Strict as Map
+import qualified Data.ByteString as BS
 
-import System.IO
+import GHC.Generics (Generic)
 
-data RelationJSON = RelationJSON { realtionFrom :: String 
-                                 , relationTo   :: String 
-                                 , relChars     :: String
-                                 }
+import System.IO 
+import System.Environment
 
-data NetworkJSON = NetworkJSON { ivNames   :: [String]
+data RelationJSON = RelationJSON { relationFrom :: Int
+                                 , relationTo   :: Int
+                                 , relChars     :: Text
+                                 } deriving Generic
+
+data NetworkJSON = NetworkJSON { ivCount   :: Int
                                , relations :: [RelationJSON]
                                }
+
+data IntervalJSON = IntervalJSON { ivID   :: Int
+                                 , ivRels :: [RelationJSON]
+                                 } deriving Generic
+
+newtype ResultJSON = ResultJSON { result :: [IntervalJSON] } deriving Generic
+
+instance ToJSON RelationJSON where 
+    toJSON (RelationJSON a b r) = object [ "from" .= a, "to" .= b, "relation" .= r ]
+    
+instance ToJSON IntervalJSON where 
+    toJSON (IntervalJSON i r) = object [ "id" .= i, "relations" .= r ]
+
+instance ToJSON ResultJSON where 
+    toJSON (ResultJSON r) = object [ "intervals" .= r ]
 
 instance FromJSON RelationJSON where 
     parseJSON = withObject "RelationJSON" $ \v -> RelationJSON 
@@ -148,13 +169,53 @@ repl = do
             liftIO $ putStrLn "Error: Invalid Command"
             repl
 
-main :: IO ()
-main = do 
-    -- Fix buffering so that we can see the prompt
-    hSetBuffering stdout NoBuffering
+addRelationJSON :: RelationJSON -> Allen ()
+addRelationJSON rel = assumeBits a r b
+    where a = relationFrom rel
+          b = relationTo   rel
+          r = bitsFromString $ unpack $ relChars rel
+
+jsonToGraph :: NetworkJSON -> IntervalGraph
+jsonToGraph network = execAllen $ do 
+    replicateM_ (ivCount network) interval
+    mapM_ addRelationJSON (relations network)
+
+toResultJSON :: IntervalGraph -> ResultJSON
+toResultJSON = ResultJSON . map toIntervalJSON . Map.toList
+    where toIntervalJSON (iD, iv  ) = IntervalJSON iD (map toRelationJSON $ Map.toList $ intervalRelations iv)
+          toRelationJSON (iD, bits) = RelationJSON iD (iD + 1) (pack $ map relationToChar $ fromBits bits)
+
+calcJSON :: NetworkJSON -> ResultJSON 
+calcJSON = toResultJSON . jsonToGraph
+
+startRepl :: IO ()
+startRepl = do 
     putStrLn "Interactive Allen's Interval Algebra Solver"
     putStrLn "Author: Archaversine"
     putStrLn "Type 'help' for a list of commands"
     putStrLn "------------------------------------------"
     evalStateT repl newREPLState
+
+main :: IO ()
+main = do 
+    -- Fix buffering so that we can see the prompt
+    hSetBuffering stdout NoBuffering
+
+    args <- getArgs
+
+    case args of 
+        [        ] -> startRepl
+        [from, to] -> do 
+            contents <- BS.readFile from
+
+            let  decoded = eitherDecode (BS.fromStrict contents) :: Either String NetworkJSON
+            case decoded of 
+                Left  m -> errorWithoutStackTrace m
+                Right j -> BS.writeFile to (BS.toStrict $ encode $ calcJSON j)
+
+        _ -> do 
+            putStrLn "Usage: allen [input] [output]"
+            putStrLn "       allen"
+
+            errorWithoutStackTrace "Invalid Arguments."
 
