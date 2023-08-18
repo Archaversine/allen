@@ -26,7 +26,6 @@ dependencies:
 - mtl
 - vector
 - containers
-- bytestring
 - text
 
 ghc-options:
@@ -54,6 +53,7 @@ executables:
     dependencies:
     - allen
     - aeson
+    - bytestring
 
 tests:
   allen-test:
