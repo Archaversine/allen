@@ -54,10 +54,10 @@ executable allen-calculator
       aeson >=2.1.2 && <2.2
     , allen
     , base >=4.7 && <5
-    , bytestring >=0.10.12 && <0.11
+    , bytestring >=0.11.2.0 && <0.12
     , containers >=0.6.4 && <0.7
     , mtl >=2.2.2 && <2.3
-    , text >=1.2.5 && <1.3
+    , text ==2.0.2.*
     , vector >=0.13.0 && <0.14
   default-language: Haskell2010
 
