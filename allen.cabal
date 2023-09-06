@@ -38,9 +38,9 @@ library
   ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints
   build-depends:
       base >=4.7 && <5
-    , containers
-    , mtl
-    , vector
+    , containers >=0.6.4 && <0.7
+    , mtl >=2.2.2 && <2.3
+    , vector >=0.13.0 && <0.14
   default-language: Haskell2010
 
 executable allen-calculator
@@ -51,11 +51,14 @@ executable allen-calculator
       app
   ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints -threaded -rtsopts -with-rtsopts=-N
   build-depends:
-      allen
+      aeson >=2.1.2 && <2.2
+    , allen
     , base >=4.7 && <5
-    , containers
-    , mtl
-    , vector
+    , bytestring >=0.11.2.0 && <0.12
+    , containers >=0.6.4 && <0.7
+    , mtl >=2.2.2 && <2.3
+    , text ==2.0.2.*
+    , vector >=0.13.0 && <0.14
   default-language: Haskell2010
 
 test-suite allen-test
@@ -67,12 +70,12 @@ test-suite allen-test
       test
   ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints -threaded -rtsopts -with-rtsopts=-N
   build-depends:
-      QuickCheck
+      QuickCheck >=2.14.3 && <2.15
     , allen
     , base >=4.7 && <5
-    , containers
-    , mtl
-    , vector
+    , containers >=0.6.4 && <0.7
+    , mtl >=2.2.2 && <2.3
+    , vector >=0.13.0 && <0.14
   default-language: Haskell2010
 
 benchmark allen-benchmarks
@@ -86,8 +89,8 @@ benchmark allen-benchmarks
   build-depends:
       allen
     , base >=4.7 && <5
-    , containers
-    , criterion
-    , mtl
-    , vector
+    , containers >=0.6.4 && <0.7
+    , criterion >=1.6.2 && <1.7
+    , mtl >=2.2.2 && <2.3
+    , vector >=0.13.0 && <0.14
   default-language: Haskell2010

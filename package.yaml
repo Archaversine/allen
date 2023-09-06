@@ -23,9 +23,9 @@ description:         Please see the README on GitHub at <https://github.com/arch
 
 dependencies:
 - base >= 4.7 && < 5
-- mtl
-- vector
-- containers
+- mtl >= 2.2.2 && < 2.3
+- vector >= 0.13.0 && < 0.14
+- containers >= 0.6.4 && < 0.7
 
 ghc-options:
 - -Wall
@@ -51,6 +51,9 @@ executables:
     - -with-rtsopts=-N
     dependencies:
     - allen
+    - aeson >= 2.1.2 && < 2.2
+    - bytestring >= 0.11.2.0 && < 0.12
+    - text >= 2.0.2 && < 2.0.3
 
 tests:
   allen-test:
@@ -62,7 +65,7 @@ tests:
     - -with-rtsopts=-N
     dependencies:
     - allen
-    - QuickCheck
+    - QuickCheck >= 2.14.3 && < 2.15
 
 benchmarks:
   allen-benchmarks:
@@ -74,4 +77,4 @@ benchmarks:
     - -with-rtsopts=-N
     dependencies: 
     - allen
-    - criterion
+    - criterion >= 1.6.2 && < 1.7
