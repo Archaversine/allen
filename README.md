@@ -15,6 +15,8 @@ and [Allen's Interval Algebra](https://www.ics.uci.edu/~alspaugh/cls/shr/allen.h
 
 ## Examples
 
+### A Simple Example
+
 Assume a situation with three intervals:
 
 1. I am walking.
@@ -54,6 +56,82 @@ And this gives the result:
 
 Which means that we can deduce that walking either happens before, directly 
 before, or after my friend calls.
+
+### A Complex Example
+
+Consider the following sentence:
+
+*John was not in the room when I touched the switch to turn on the light.*
+ 
+From this sentence we can derive three intervals ***R***, ***S***, and ***L*** where
+***R*** is the time that John was in the room, ***S*** is the time where the light 
+switched was touched, and ***L*** the time where the light was on. 
+
+From the sentence, we know at least the following:
+
+- ***S*** overlaps *or* meets ***L**
+- ***S*** is before, meets, is met by, or is after ***R***.
+
+To represent this as a reusable network, the following code can be written:
+
+```haskell 
+network :: Allen (IntervalID, IntervalID, IntervalID)
+network = do 
+    r <- interval 
+    s <- interval 
+    l <- interval 
+
+    assumeSet s [Overlaps, Meets] l
+    assumeSet s [Precedes, Meets, MetBy, PrecededBy] r
+
+    return (r, s, l)
+```
+
+If we wanted to learn the possible relations between r and l the following code 
+can be used (NOTE that `evalAllen` is used to actually evaluate the calculation):
+
+```haskell 
+relationsRL :: [Relation]
+relationsRL = evalAllen $ do 
+    -- Use the previously constructed network
+    -- `s` is discarded since it is not used
+    (r, _, l) <- network
+
+    -- `getConstraints` returns the bitset of relations
+    fromBits <$> getConstraints r l
+```
+
+Running the above code, we get the following result:
+
+```
+[Precedes,Starts,Equals,StartedBy,During,Finishes,OverlappedBy,MetBy,PrecededBy]
+```
+
+Assume that at some point we learn the following extra information:
+
+***L*** overlaps, starts, or is during ***R***.
+
+To calculate the updated relations between ***L*** and ***R*** and between 
+***S*** and ***R*** the following code can be used.
+
+```haskell 
+updatedRelations :: ([Relation], [Relation])
+updatedRelations = evalAllen $ do 
+    (r, s, l) <- network
+
+    assumeSet s [Starts, Overlaps, During] r
+
+    lrRelations <- fromBits <$> getConstraints l r 
+    srRelations <- fromBits <$> getConstraints s r
+
+    return (lrRelations, srRelations)
+```
+
+This would provide the result:
+
+```
+([Overlaps,Starts],[Precedes,Meets])
+```
 
 ## Documentation
 
