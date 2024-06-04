@@ -1,0 +1,10 @@
+{
+    "intervals": 2,
+    "relations": [
+        {
+            "from": 0,
+            "to": 1,
+            "relation": "p"
+        }
+    ]
+}
