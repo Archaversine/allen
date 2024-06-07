@@ -119,7 +119,7 @@ updatedRelations :: ([Relation], [Relation])
 updatedRelations = evalAllen $ do 
     (r, s, l) <- network
 
-    assumeSet s [Starts, Overlaps, During] r
+    assumeSet l [Starts, Overlaps, During] r
 
     lrRelations <- fromBits <$> getConstraints l r 
     srRelations <- fromBits <$> getConstraints s r
